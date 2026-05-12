@@ -1,7 +1,17 @@
+/* =========================
+   RESET
+========================= */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+    height: 100%;
+    overflow: hidden;
 }
 
 body {
@@ -9,58 +19,92 @@ body {
     background-color: #f5f7fa;
 }
 
-/* HEADER */
+/* =========================
+   SHARED SHELL
+   Used by: HomeLayout, AuthLayout, ModuleLayout
+   Locks the page to 100vh with flex column,
+   no page-level scrollbar ever.
+========================= */
+.layout {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
 
+/* =========================
+   HEADER
+========================= */
 header {
     height: 64px;
+    flex-shrink: 0;
     background-color: white;
     border-bottom: 1px solid #ddd;
-
     display: flex;
     align-items: center;
-
     padding: 0 24px;
 }
 
-/* FOOTER */
-
+/* =========================
+   FOOTER
+========================= */
 footer {
     height: 50px;
+    flex-shrink: 0;
     background-color: white;
     border-top: 1px solid #ddd;
-
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-/* MAIN APP LAYOUT */
-
-.app-layout {
+/* =========================
+   AUTH LAYOUT  (login page)
+   flex: 1 fills the space between header and footer,
+   centers the card, never overflows.
+========================= */
+.auth-main {
+    flex: 1;
     display: flex;
-
-    min-height: calc(100vh - 114px);
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
-/* SIDEBAR */
-
-aside {
-    width: 240px;
-    background-color: #111827;
-    color: white;
-
-    padding: 20px;
-}
-
-/* MAIN CONTENT */
-
+/* =========================
+   HOME LAYOUT  (module selector)
+   main-content scrolls internally.
+========================= */
 .main-content {
     flex: 1;
-
-    padding: 24px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
 }
 
-/* SIDEBAR LINKS */
+/* =========================
+   MODULE LAYOUT  (sidebar + page)
+========================= */
+.app-layout {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    min-height: 0;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+aside {
+    width: 240px;
+    flex-shrink: 0;
+    background-color: #111827;
+    color: white;
+    padding: 20px;
+    overflow-y: auto;
+}
 
 aside ul {
     list-style: none;

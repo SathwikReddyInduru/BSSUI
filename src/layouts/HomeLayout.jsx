@@ -1,13 +1,14 @@
 import { Outlet } from "react-router-dom";
+
 import Header from "../components/common/Header";
 import Footer from "../components/common/Footer";
 
-function AuthLayout() {
+function HomeLayout() {
     return (
         <div className="layout">
             <Header />
 
-            <main className="auth-main">
+            <main className="main-content">
                 <Outlet />
             </main>
 
@@ -16,4 +17,4 @@ function AuthLayout() {
     );
 }
 
-export default AuthLayout;
+export default HomeLayout;

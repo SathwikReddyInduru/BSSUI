@@ -1,9 +1,14 @@
-function Footer() {
+import React from "react";
+import styles from "../../styles/Footer.module.css";
+
+const Footer = () => {
     return (
-        <footer>
-            <p>© 2026 Xius</p>
+        <footer className={styles.footer}>
+            <p>
+                © 2025 SOARG TECHNOLOGIES PRIVATE LIMITED. All Rights Reserved
+            </p>
         </footer>
     );
-}
+};
 
 export default Footer;

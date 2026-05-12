@@ -4,9 +4,9 @@ import Header from "../components/common/Header";
 import Footer from "../components/common/Footer";
 import Sidebar from "../components/common/Sidebar";
 
-function AppLayout() {
+function ModuleLayout() {
     return (
-        <>
+        <div className="layout">
             <Header />
 
             <div className="app-layout">
@@ -18,8 +18,8 @@ function AppLayout() {
             </div>
 
             <Footer />
-        </>
+        </div>
     );
 }
 
-export default AppLayout;
+export default ModuleLayout;

@@ -1,0 +1,187 @@
+/* =========================================
+   GLOBAL RESET
+   ========================================= */
+:global(*),
+:global(*::before),
+:global(*::after) {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:global(html),
+:global(body),
+:global(#root) {
+    height: 100%;
+    overflow: hidden;
+}
+
+:global(body) {
+    font-family: Arial, sans-serif;
+    background-color: #f5f7fa;
+    color: #111827;
+}
+
+/* =========================================
+   SHARED SHELL
+   ========================================= */
+.layout {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* =========================================
+   AUTH LAYOUT
+   ========================================= */
+.authMain {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* =========================================
+   HOME LAYOUT
+   ========================================= */
+.mainContent {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+/* =========================================
+   BREADCRUMB BAR
+   ========================================= */
+.breadcrumbBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
+    flex-shrink: 0;
+}
+
+.breadcrumbLeft {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+}
+
+.bcLink {
+    color: #3b82f6;
+    cursor: pointer;
+    font-weight: 500;
+    transition: color 0.15s;
+}
+
+.bcLink:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+}
+
+.bcSep {
+    color: #9ca3af;
+    font-size: 14px;
+}
+
+.bcCurrent {
+    color: #374151;
+    font-weight: 500;
+}
+
+.backBtn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #6b7280;
+    background: none;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    cursor: pointer;
+    padding: 5px 12px;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+    font-family: inherit;
+    white-space: nowrap;
+}
+
+.backBtn:hover {
+    color: #111827;
+    border-color: #9ca3af;
+    background: #f9fafb;
+}
+
+/* =========================================
+   PLMN TOP TAB BAR
+   ========================================= */
+.plmnTabBar {
+    display: flex;
+    align-items: stretch;
+    background: #fff;
+    border-bottom: 2px solid #e5e7eb;
+    padding: 0 20px;
+    gap: 0;
+    flex-shrink: 0;
+}
+
+.plmnTab {
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #6b7280;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: color 0.15s, border-color 0.15s;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.plmnTab:hover {
+    color: #111827;
+    border-bottom-color: #d1d5db;
+}
+
+.plmnTabActive {
+    color: #3b82f6;
+    border-bottom-color: #3b82f6;
+    font-weight: 600;
+}
+
+/* =========================================
+   MODULE LAYOUT
+   ========================================= */
+.appLayout {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    min-height: 0;
+}
+
+.moduleContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-width: 0;
+    background: white;
+}
+
+.moduleContent {
+    flex: 1;
+    overflow-y: auto;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #fff;
+    margin: 20px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}

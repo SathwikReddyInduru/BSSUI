@@ -1,0 +1,276 @@
+/* ─── Sidebar shell ─────────────────────────────────────────────────────────── */
+.sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    background: #ffffff;
+    border-right: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 0;
+}
+
+/* ─── Module header row ─────────────────────────────────────────────────────── */
+.moduleHeader {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 14px 14px 14px;
+    flex-shrink: 0;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+/* Blue square icon box — matches reference image */
+.moduleIconBox {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.moduleTitle {
+    flex: 1;
+    font-size: 13px;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+}
+
+.collapseBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #9ca3af;
+    flex-shrink: 0;
+    padding: 0;
+    transition: background 0.12s, color 0.12s;
+}
+
+.collapseBtn:hover {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+/* ─── Tab nav (CLC / CMS / TSG rows) ─────────────────────────────────────── */
+.tabNav {
+    display: flex;
+    flex-direction: column;
+    padding: 6px 8px 2px;
+    gap: 1px;
+    flex-shrink: 0;
+}
+
+.tabRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 10px;
+    border-radius: 7px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: #4b5563;
+    transition: background 0.12s, color 0.12s;
+    width: 100%;
+}
+
+.tabRow:hover {
+    background: #f9fafb;
+    color: #111827;
+}
+
+.tabRowActive {
+    font-weight: 600;
+    border-radius: 7px;
+}
+
+.tabBullet {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: background 0.15s;
+}
+
+.tabLabel {
+    flex: 1;
+    line-height: 1.35;
+}
+
+/* ─── Divider ────────────────────────────────────────────────────────────── */
+.divider {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 6px 0 4px;
+    flex-shrink: 0;
+}
+
+/* ─── Item nav (scrollable sub-items) ────────────────────────────────────── */
+.itemNav {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 4px 8px 16px;
+}
+
+.itemNav::-webkit-scrollbar {
+    width: 3px;
+}
+
+.itemNav::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.itemNav::-webkit-scrollbar-thumb {
+    background: #e5e7eb;
+    border-radius: 2px;
+}
+
+/* ─── Nav list ───────────────────────────────────────────────────────────── */
+.navList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+/* ─── Group block ────────────────────────────────────────────────────────── */
+.groupBlock {
+    margin-top: 8px;
+}
+
+.groupBlock:first-child {
+    margin-top: 0;
+}
+
+.groupLabel {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    padding: 4px 10px 5px;
+    user-select: none;
+}
+
+/* ─── Nav row (shared) ───────────────────────────────────────────────────── */
+.navRow {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 7px 10px;
+    border-radius: 7px;
+    border: none;
+    background: none;
+    text-decoration: none;
+    color: #4b5563;
+    font-size: 12.5px;
+    font-weight: 400;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    font-family: inherit;
+    transition: background 0.1s, color 0.1s;
+    line-height: 1.35;
+}
+
+.navRow:hover {
+    background: #f3f4f6;
+    color: #111827;
+}
+
+/* Active state — color is injected inline, bg is color at 8% */
+.navRowActive {
+    background: #eff6ff;
+    font-weight: 600;
+}
+
+/* Indented (inside group) */
+.navRowDeep {
+    padding-left: 18px;
+}
+
+/* ─── Dot bullet ─────────────────────────────────────────────────────────── */
+.navDot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #d1d5db;
+    flex-shrink: 0;
+    transition: background 0.12s;
+}
+
+.navRowActive .navDot {
+    background: currentColor;
+}
+
+/* ─── Nav icon (card, tag etc.) ──────────────────────────────────────────── */
+.navIcon {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    color: #9ca3af;
+}
+
+.navRowActive .navIcon {
+    color: inherit;
+}
+
+/* ─── Nav label ──────────────────────────────────────────────────────────── */
+.navLabel {
+    flex: 1;
+    line-height: 1.35;
+}
+
+/* ─── Sub-list (children of accordion) ──────────────────────────────────── */
+.subList {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 2px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.navRowSub {
+    padding-left: 28px;
+    font-size: 12px;
+    color: #6b7280;
+    position: relative;
+}
+
+.navRowSub:hover {
+    background: #f9fafb;
+    color: #111827;
+}
+
+.navRowSubActive {
+    font-weight: 600;
+    background: #eff6ff;
+}
+
+/* Left border line for sub items */
+.subLine {
+    position: absolute;
+    left: 18px;
+    top: 0;
+    bottom: 0;
+    width: 0;
+    border-left: 1.5px solid #e5e7eb;
+}

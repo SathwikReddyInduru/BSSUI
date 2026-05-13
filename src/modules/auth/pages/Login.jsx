@@ -10,7 +10,7 @@ function Login() {
     const dispatch = useDispatch();
     const { loading, error, } = useSelector((state) => state.auth);
 
-    const [isAdmin, setIsAdmin] = useState(true);
+    const [isAdmin, setIsAdmin] = useState(false);
     const [networkName, setNetworkName] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");

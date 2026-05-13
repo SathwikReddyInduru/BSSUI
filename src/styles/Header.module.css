@@ -1,31 +1,105 @@
 .appHeader {
-    height: 64px;
+    height: 72px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 24px;
     background: white;
     border-bottom: 1px solid #ddd;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 .headerLeft {
     display: flex;
     align-items: center;
+    gap: 16px;
 }
 
 .headerLogo {
-    height: 38px;
+    height: 48px;
     width: auto;
 }
 
 .headerTitle {
-    flex: 1;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
+    align-items: center;
     justify-content: center;
+    width: max-content;
 }
 
 .headerTitle h2 {
-    font-size: 18px;
+    font-size: 25px;
     font-weight: 700;
     color: #6b46c1;
+}
+
+.headerRight {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+/* TIMER */
+.timerContainer {
+    font-size: 16px;
+    font-weight: 600;
+    color: #525050;
+    padding: 8px 14px;
+    border-radius: 8px;
+    background: #ffffff;
+}
+
+/* MENU */
+.menuWrapper {
+    position: relative;
+}
+
+.menuButton {
+    border: none;
+    background: transparent;
+    font-size: 26px;
+    cursor: pointer;
+    color: #222;
+    transition: 0.3s;
+}
+
+.menuButton:hover {
+    color: #5b3cc4;
+}
+
+/* DROPDOWN */
+.dropdownMenu {
+    position: absolute;
+    top: 42px;
+    right: 0;
+    width: 140px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    z-index: 999;
+}
+
+.dropdownItem {
+    width: 100%;
+    padding: 14px 16px;
+    border: none;
+    background: white;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+}
+
+.dropdownItem:hover {
+    background: #f3f4f6;
 }

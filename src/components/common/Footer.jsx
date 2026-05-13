@@ -5,7 +5,7 @@ const Footer = () => {
     return (
         <footer className={styles.footer}>
             <p>
-                © 2025 SOARG TECHNOLOGIES PRIVATE LIMITED. All Rights Reserved
+                © 2026 XIUS. All Rights Reserved
             </p>
         </footer>
     );

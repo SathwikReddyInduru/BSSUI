@@ -1,0 +1,411 @@
+.screen-layout-user {
+  width: 100%;
+  height: 100%;
+  padding: 22px;
+  box-sizing: border-box;
+}
+
+.container-userManagement-screen {
+  width: 100%;
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 24px;
+}
+
+/* ACTION BUTTONS */
+
+.create {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.create button,
+.changePassword,
+.active {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: #ffffff;
+  border: 1px solid #d8dee8;
+  border-radius: 14px;
+
+  padding: 12px 18px;
+  min-height: 48px;
+
+  font-size: 15px;
+  font-weight: 600;
+  color: #4b5563;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.create button:hover,
+.changePassword:hover,
+.active:hover {
+  border-color: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.08);
+}
+
+.create button:disabled,
+.changePassword:disabled,
+.active:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* SEARCH */
+
+.search {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.searchbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.searchbar span,
+.viewper span {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.searchbar select,
+.searchbar input,
+.viewper select {
+  height: 42px;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  background: white;
+  padding: 0 14px;
+  font-size: 14px;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+.searchbar input {
+  min-width: 240px;
+}
+
+.searchbar select:focus,
+.searchbar input:focus,
+.viewper select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
+}
+
+.searchedge {
+  height: 42px;
+  padding: 0 20px;
+  border: none;
+  border-radius: 12px;
+  background: #2563eb;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.searchedge:hover {
+  background: #1d4ed8;
+}
+
+.viewper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* TABLE */
+
+.tab {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+
+  background: white;
+}
+
+.tab thead tr {
+  background: #d4d4d4;
+}
+
+.tableheader {
+  padding: 16px 18px;
+  text-align: left;
+
+  font-size: 15px;
+  font-weight: 700;
+  color: #374151;
+}
+
+.tab td {
+  padding: 18px;
+  border-top: 1px solid #edf1f5;
+  font-size: 15px;
+  color: #374151;
+}
+
+.tab tbody tr {
+  transition: 0.18s ease;
+}
+
+.tab tbody tr:hover {
+  background: #f8fbff;
+}
+
+.tab td:first-child,
+.tab th:first-child {
+  width: 60px;
+  text-align: center;
+}
+
+.tab td:last-child {
+  white-space: nowrap;
+}
+
+.tab a {
+  text-decoration: none;
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.tab a:hover {
+  color: #1d4ed8;
+}
+
+/* STATES */
+
+.loading,
+.usernot {
+  padding: 50px !important;
+  text-align: center;
+  color: #6b7280;
+}
+
+/* PAGINATION */
+
+.pagination {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 12px;
+  margin: 0 4px;
+
+  font-weight: 700;
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.pagination:hover {
+  transform: translateY(-1px);
+}
+
+/* PRINT */
+
+.printButton {
+  padding: 10px 22px;
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
+  background: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* MODALS */
+
+.viewmodal,
+.modify-rolemodalstyle {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(3px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 999;
+  padding: 20px;
+}
+
+.viewroles-content,
+.modifyrole {
+  width: 100%;
+  max-width: 650px;
+
+  background: white;
+  border-radius: 24px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 10px 25px rgba(15, 23, 42, 0.12),
+    0 25px 60px rgba(15, 23, 42, 0.2);
+}
+
+.viewheader,
+.modal-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid #e5e7eb;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+
+  background: #f8fafc;
+}
+
+.viewclose,
+.modifyfor {
+  border: none;
+  background: transparent;
+  font-size: 28px;
+  cursor: pointer;
+  color: #6b7280;
+}
+
+/* ROLE LIST */
+
+.rolesloading,
+.roleuse {
+  padding: 24px;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.roledata {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.roleid {
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #f8fafc;
+  margin-bottom: 10px;
+}
+
+.userol {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.all-roles {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.all-roles:hover {
+  border-color: #93c5fd;
+  background: #f8fbff;
+}
+
+/* FOOTER */
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 14px;
+
+  padding: 20px 24px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.modify-button,
+.submit-role {
+  border: none;
+  border-radius: 12px;
+
+  padding: 12px 22px;
+
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.modify-button {
+  background: #e5e7eb;
+}
+
+.submit-role {
+  background: #2563eb;
+  color: white;
+}
+
+.submit-role:hover {
+  background: #1d4ed8;
+}
+
+/* MOBILE */
+
+@media (max-width: 900px) {
+  .search {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .searchbar {
+    width: 100%;
+  }
+
+  .searchbar input {
+    min-width: unset;
+    width: 100%;
+  }
+
+  .tab {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .create {
+    flex-direction: column;
+  }
+
+  .create button,
+  .changePassword,
+  .active {
+    width: 100%;
+    justify-content: center;
+  }
+}

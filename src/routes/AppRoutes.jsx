@@ -302,6 +302,21 @@ import NetworkStatusCode from "../screens/NetworkStatusCode";
 import NetworkStatusModify from "../screens/NetworkStatusModify";
 
 /* =========================
+   USER MANAGEMENT SCREENS
+========================= */
+
+import UserManagementGrid from "../modules/userManagement/pages/UserManagementGrid";
+import UserManagementScreen from "../modules/userManagement/pages/UserManagementScreen";
+import ModifyUserInfo from "../modules/userManagement/pages/ModifyUserInfo";
+import ViewUserInfoPage from "../modules/userManagement/pages/ViewUserInfoPage";
+import RoleManagement from "../modules/userManagement/pages/RoleManagement";
+import CreateRole from "../modules/userManagement/pages/CreateRole";
+import ModifyRole from "../modules/userManagement/pages/ModifyRole";
+import ViewRole from "../modules/userManagement/pages/ViewRole";
+import RoleCreationStatus from "../modules/userManagement/pages/RoleCreationStatus";
+import RoleModifyStatus from "../modules/userManagement/pages/RoleModifyStatus";
+
+/* =========================
    ADMIN ROUTE
 ========================= */
 
@@ -461,8 +476,17 @@ function AppRoutes() {
 
                     {/* UMS */}
 
-                    <Route path="/ums" element={<Navigate to="/ums/main" replace />} />
-                    <Route path="/ums/main" element={<PlaceholderPage title="User Management System" />} />
+                    <Route path="/ums" element={<Navigate to="/ums/users" replace />} />
+                    <Route path="/ums/users" element={<UserManagementGrid />} />
+                    <Route path="/ums/create-user" element={<UserManagementScreen />} />
+                    <Route path="/ums/modify-user/:id" element={<ModifyUserInfo />} />
+                    <Route path="/ums/view-user/:id" element={<ViewUserInfoPage />} />
+                    <Route path="/ums/roles" element={<RoleManagement />} />
+                    <Route path="/ums/create-role" element={<CreateRole />} />
+                    <Route path="/ums/modify-role/:id" element={<ModifyRole />} />
+                    <Route path="/ums/view-role/:id" element={<ViewRole />} />
+                    <Route path="/ums/role-create-status" element={<RoleCreationStatus />} />
+                    <Route path="/ums/role-modify-status" element={<RoleModifyStatus />} />
 
                     {/* ICB */}
 

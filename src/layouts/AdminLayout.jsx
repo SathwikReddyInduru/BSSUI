@@ -30,12 +30,12 @@ function AdminLayout() {
 
                             <li
                                 className={
-                                    location.pathname.includes("/network")
+                                    location.pathname.includes("/admin/network")
                                         ? styles.active
                                         : ""
                                 }
                                 onClick={() =>
-                                    navigate("/networkmanagementgrid")
+                                    navigate("/admin/networkmanagementgrid")
                                 }
                             >
 

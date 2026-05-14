@@ -1,178 +1,532 @@
 /* ============================================================
    networkmodify.module.css
-   Shared by: NetworkManagement (create) + NetworkManagementModify
    ============================================================ */
-
-/* ── Page wrapper ─────────────────────────────────────────── */
-.screenLayoutUser {
-  width: 100%;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
+
+/* ─────────────────────────────────────────
+   MAIN SCREEN
+───────────────────────────────────────── */
+
+.screenLayoutUser {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #f8fafc;
+}
+
+/* ─────────────────────────────────────────
+   MAIN CONTAINER
+───────────────────────────────────────── */
 
 .screenContainerUserManagement {
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 12px rgba(0,0,0,.07);
-  padding: 28px 32px 36px;
+  display: flex;
+  flex-direction: column;
   width: 100%;
+  height: 100%;
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #dbeafe;
+  box-shadow:
+    0 4px 20px rgba(37, 99, 235, 0.08);
+  overflow: hidden;
 }
 
-/* ── Page title ───────────────────────────────────────────── */
+/* ─────────────────────────────────────────
+   HEADER
+───────────────────────────────────────── */
+
+.pageTitleBar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  height: 62px;
+  background:
+    linear-gradient(135deg,
+      #eff6ff,
+      #ffffff);
+  border-bottom: 2px solid #dbeafe;
+}
+
 .pageTitle {
-  font-size: 18px;
+  margin: 0;
+  font-size: 24px;
   font-weight: 700;
-  color: #1e293b;
-  margin: 0 0 22px;
-  padding-bottom: 14px;
-  border-bottom: 2px solid #e2e8f0;
-  letter-spacing: .01em;
+  color: #1e40af;
+  letter-spacing: -0.02em;
 }
 
-/* ── Form container ───────────────────────────────────────── */
+/* ─────────────────────────────────────────
+   BACK BUTTON
+───────────────────────────────────────── */
+
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 10px;
+  background:
+    linear-gradient(135deg,
+      #3b82f6,
+      #1d4ed8);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 0.15s,
+    opacity 0.2s,
+    box-shadow 0.2s;
+  box-shadow:
+    0 4px 14px rgba(37, 99, 235, 0.24);
+}
+
+.backButton:hover {
+  opacity: 0.95;
+}
+
+.backButton:active {
+  transform: scale(0.98);
+}
+
+/* ─────────────────────────────────────────
+   FORM BODY
+───────────────────────────────────────── */
+
+.form-label span {
+  font-size: 12.5px;
+}
+
 .networkForm {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 30px 30px 20px;
+  background: #f8fafc;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+/* SCROLLBAR */
+
+.networkForm::-webkit-scrollbar {
+  width: 8px;
+}
+
+.networkForm::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.networkForm::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+
+  border-radius: 999px;
+}
+
+.networkForm::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* ─────────────────────────────────────────
+   SECTION LABEL
+───────────────────────────────────────── */
+
+.sectionLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin:
+    26px 0 22px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #3b82f6;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.sectionLabel::before {
+  content: '';
+  width: 4px;
+  height: 14px;
+  border-radius: 999px;
+  background: #3b82f6;
+}
+
+.sectionLabel::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background:
+    linear-gradient(to right,
+      #bfdbfe,
+      transparent);
+}
+
+/* ─────────────────────────────────────────
+   GRID
+───────────────────────────────────────── */
+
+.formGrid3 {
+  display: grid;
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+  gap: 26px 28px;
+  margin-bottom: 28px;
+  align-items: start;
+}
+
+/* ─────────────────────────────────────────
+   FIELD GROUP
+───────────────────────────────────────── */
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   width: 100%;
 }
 
-/* ── Required asterisk ────────────────────────────────────── */
+/* ─────────────────────────────────────────
+   LABEL
+───────────────────────────────────────── */
+
+.fieldLabel {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #334155;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+}
+
 .required {
   color: #dc2626;
   margin-right: 3px;
-  font-weight: 700;
 }
 
-/* ── Description + Browser Display row ───────────────────── */
-.descriptionRow {
-  display: flex;
-  gap: 20px;
-  margin-bottom: 18px;
-  align-items: flex-start;
-}
+/* ─────────────────────────────────────────
+   INPUTS
+───────────────────────────────────────── */
 
-.descriptionRow > div:first-child {
-  flex: 3;
-  min-width: 0;
-}
-
-.descriptionRow > div:last-child {
-  flex: 1;
-  min-width: 160px;
-}
-
-/* ── Textarea ─────────────────────────────────────────────── */
-.form_textarea1 {
+.textInput,
+.selectInput,
+.formInput,
+input[type='text'],
+input[type='password'],
+input[type='number'],
+select {
   width: 100%;
-  padding: 8px 10px;
-  border: 1px solid #d1d5db;
-  border-radius: 4px;
+  padding: 8px 12px;
+  border: 1.5px solid #d1d5db;
+  border-radius: 10px;
+  background: #ffffff;
   font-size: 13px;
   color: #1e293b;
-  background: #fff;
-  resize: vertical;
   font-family: inherit;
-  min-height: 90px;
-  transition: border-color .2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    background 0.2s;
+  box-sizing: border-box;
 }
 
-.form_textarea1:focus {
+.textInput:hover,
+.selectInput:hover,
+input:hover,
+select:hover {
+  border-color: #94a3b8;
+}
+
+.textInput:focus,
+.selectInput:focus,
+input:focus,
+select:focus {
   outline: none;
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37,99,235,.1);
+  border-color: #3b82f6;
+  box-shadow:
+    0 0 0 3px rgba(59, 130, 246, 0.12);
 }
 
-/* ── Checkbox row ─────────────────────────────────────────── */
+.textInput:disabled,
+.selectInput:disabled,
+input:disabled,
+select:disabled {
+  background: #f1f5f9;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* ─────────────────────────────────────────
+   TEXTAREA
+───────────────────────────────────────── */
+
+.formTextarea,
+textarea {
+  width: 100%;
+  min-height: 110px;
+  padding: 12px 14px;
+  border: 1.5px solid #d1d5db;
+  border-radius: 10px;
+  background: #ffffff;
+  resize: vertical;
+  font-size: 13px;
+  color: #1e293b;
+  font-family: inherit;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.formTextarea:focus,
+textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow:
+    0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+/* ─────────────────────────────────────────
+   DESCRIPTION ROW
+───────────────────────────────────────── */
+
+.descriptionRow {
+  display: grid;
+  grid-template-columns:
+    2fr 1fr;
+  gap: 28px;
+  margin-bottom: 28px;
+}
+
+/* ─────────────────────────────────────────
+   CHECKBOX
+───────────────────────────────────────── */
+
 .checkboxRow {
-  display: inline-flex;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 42px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkboxRow input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  accent-color: #2563eb;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* ─────────────────────────────────────────
+   RADIO GROUP
+───────────────────────────────────────── */
+
+.radioGroup {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  min-height: 42px;
+}
+
+.radioGroup label {
+  display: flex;
   align-items: center;
   gap: 8px;
   font-size: 13px;
   font-weight: 500;
   color: #374151;
   cursor: pointer;
-  user-select: none;
-  margin: 10px 0 6px;
 }
 
-.checkboxRow input[type="checkbox"] {
-  width: 15px;
-  height: 15px;
+.radioGroup input[type='radio'] {
   accent-color: #2563eb;
   cursor: pointer;
 }
 
-/* ── Conditional panel (VOIP / Low Balance / SIM Upload) ──── */
+/* ─────────────────────────────────────────
+   CONDITIONAL PANEL
+───────────────────────────────────────── */
+
 .conditionalPanel {
-  margin: 6px 0 18px 20px;
-  padding: 18px 20px;
-  background: #f8fafc;
-  border-left: 3px solid #93c5fd;
-  border-radius: 0 8px 8px 0;
+  margin:
+    10px 0 28px;
+  padding: 22px;
+  background: #ffffff;
+  border: 1px solid #dbeafe;
+  border-left: 4px solid #3b82f6;
+  border-radius: 12px;
+  box-shadow:
+    0 2px 10px rgba(37, 99, 235, 0.05);
 }
 
-/* ── SIM Upload UI checkboxes grid ───────────────────────── */
+/* ─────────────────────────────────────────
+   UI ACCESS GRID
+───────────────────────────────────────── */
+
 .uiAccessGrid {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px 28px;
-  padding: 4px 0;
+  gap: 18px 34px;
+  padding:
+    12px 0 6px;
 }
 
-/* ── IP address octets ────────────────────────────────────── */
+/* ─────────────────────────────────────────
+   IP GROUP
+───────────────────────────────────────── */
+
 .ipGroup {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
 }
 
 .ipOctet {
-  width: 52px !important;
+  width: 60px !important;
   text-align: center;
-  padding: 0 4px !important;
 }
 
 .ipSep {
+  font-size: 18px;
   font-weight: 700;
   color: #64748b;
-  font-size: 15px;
 }
 
-/* ── Button group ─────────────────────────────────────────── */
+/* ─────────────────────────────────────────
+   BUTTON GROUP
+───────────────────────────────────────── */
+
 .buttonGroup {
   display: flex;
-  gap: 14px;
   justify-content: flex-end;
-  margin-top: 32px;
-  padding-top: 20px;
-  border-top: 1px solid #e2e8f0;
+  gap: 14px;
+  margin-top: 38px;
+  padding-top: 24px;
+  border-top: 1px solid #dbeafe;
 }
+
+/* COMMON BUTTON */
 
 .button {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 9px 24px;
-  border-radius: 5px;
-  font-size: 13.5px;
+  min-width: 140px;
+  height: 44px;
+  padding: 0 24px;
+  border-radius: 10px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  border: 1px solid transparent;
-  transition: background .18s, transform .1s, box-shadow .18s;
+  transition:
+    transform 0.15s,
+    opacity 0.2s,
+    box-shadow 0.2s;
+  font-family: inherit;
 }
 
-.button:active { transform: scale(.97); }
+.button:active {
+  transform: scale(0.98);
+}
+
+/* SUBMIT */
 
 .buttonSubmit {
-  background: #2563eb;
-  color: #fff;
-  border-color: #2563eb;
-  box-shadow: 0 2px 6px rgba(37,99,235,.3);
+  border: none;
+  background:
+    linear-gradient(135deg,
+      #3b82f6,
+      #1d4ed8);
+  color: #ffffff;
+  box-shadow:
+    0 4px 14px rgba(37, 99, 235, 0.24);
 }
 
-.buttonSubmit:hover { background: #1d4ed8; box-shadow: 0 4px 10px rgba(37,99,235,.35); }
-.buttonSubmit:disabled { opacity: .55; cursor: not-allowed; }
+.buttonSubmit:hover {
+  opacity: 0.94;
+}
+
+.buttonSubmit:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* CANCEL */
 
 .buttonCancel {
-  background: #f1f5f9;
+  background: #ffffff;
+  border: 1.5px solid #d1d5db;
   color: #374151;
-  border-color: #d1d5db;
 }
 
-.buttonCancel:hover { background: #e2e8f0; }
+.buttonCancel:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+}
+
+/* ─────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────── */
+
+@media (max-width: 1200px) {
+
+  .formGrid3 {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .descriptionRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .networkForm {
+    padding: 18px;
+  }
+
+  .pageTitleBar {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 12px;
+    height: auto;
+    padding: 18px;
+  }
+
+  .formGrid3 {
+    grid-template-columns: 1fr;
+  }
+
+  .buttonGroup {
+    flex-direction: column;
+  }
+
+  .button {
+    width: 100%;
+  }
+
+  .uiAccessGrid {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .radioGroup {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}

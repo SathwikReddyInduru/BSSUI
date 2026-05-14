@@ -201,143 +201,228 @@
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    /* REMOVE BROWSER SCROLL */
 }
 
 :root {
-  --sidebar-width: 230px;
+    --sidebar-width: 230px;
 
-  --color-primary: #1e3a5f;
-  --color-accent: #2563eb;
+    --color-primary: #1e3a5f;
+    --color-accent: #2563eb;
 
-  --color-bg: #f1f5f9;
-  --color-surface: #ffffff;
+    --color-bg: #f1f5f9;
+    --color-surface: #ffffff;
 
-  --color-border: #e2e8f0;
+    --color-border: #e2e8f0;
 
-  --color-text: #1e293b;
+    --color-text: #1e293b;
 
-  --transition: 0.22s ease;
+    --transition: 0.22s ease;
 }
 
-/* ── Layout ───────────────────────── */
+/* ──────────────────────────────────
+   MAIN LAYOUT
+────────────────────────────────── */
 
 .adminLayout {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
-  background: var(--color-bg);
-  font-family: "Segoe UI", system-ui, sans-serif;
-  color: var(--color-text);
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    background: var(--color-bg);
+
+    font-family: "Segoe UI", system-ui, sans-serif;
+
+    color: var(--color-text);
 }
+
+/* ──────────────────────────────────
+   BODY
+────────────────────────────────── */
 
 .adminBody {
-  display: flex;
-  flex: 1;
-  overflow: hidden;
+    flex: 1;
+
+    display: flex;
+
+    overflow: hidden;
+
+    min-height: 0;
 }
 
-/* ── Sidebar ─────────────────────── */
+/* ──────────────────────────────────
+   SIDEBAR
+────────────────────────────────── */
 
 .adminSidebar {
-  width: var(--sidebar-width);
-  min-width: var(--sidebar-width);
+    width: var(--sidebar-width);
 
-  background: var(--color-primary);
+    min-width: var(--sidebar-width);
 
-  display: flex;
-  flex-direction: column;
+    background: linear-gradient(180deg, #1e3a8a 0%, #1e40af 50%, #3b82f6 100%);
 
-  overflow-y: auto;
-  overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
 
-  transition: width var(--transition);
+    overflow-y: auto;
+    overflow-x: hidden;
 
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.12);
+    transition: width var(--transition);
 
-  z-index: 10;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.12);
+
+    z-index: 10;
 }
 
-/* ── Sidebar Menu ────────────────── */
+/* SIDEBAR SCROLLBAR */
+
+.adminSidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.adminSidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.18);
+
+    border-radius: 10px;
+}
+
+/* ──────────────────────────────────
+   SIDEBAR MENU
+────────────────────────────────── */
 
 .sidebarMenu {
-  flex: 1;
-  padding: 8px 0;
+    flex: 1;
+
+    padding: 8px 0;
 }
 
 .sidebarMenu ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+    list-style: none;
+
+    margin: 0;
+    padding: 0;
 }
 
 .sidebarMenu li {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+    display: flex;
 
-  padding: 11px 18px;
+    align-items: center;
 
-  cursor: pointer;
+    gap: 10px;
 
-  color: #b8cde8;
+    padding: 12px 18px;
 
-  font-size: 13.5px;
-  font-weight: 500;
+    cursor: pointer;
 
-  transition:
-    background var(--transition),
-    color var(--transition),
-    padding-left var(--transition);
+    color: #b8cde8;
 
-  border-left: 3px solid transparent;
+    font-size: 13.5px;
 
-  user-select: none;
+    font-weight: 500;
 
-  white-space: nowrap;
+    transition:
+        background var(--transition),
+        color var(--transition),
+        padding-left var(--transition);
+
+    border-left: 3px solid transparent;
+
+    white-space: nowrap;
 }
 
 .sidebarMenu li:hover {
-  background: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.08);
 
-  color: #fff;
+    color: #fff;
 
-  padding-left: 22px;
+    padding-left: 22px;
 }
 
-/* Active Menu */
+/* ACTIVE MENU */
 
 .active {
-  background: rgba(37, 99, 235, 0.25);
+    background: rgba(37, 99, 235, 0.25);
 
-  color: #fff !important;
+    color: #fff !important;
 
-  border-left-color: #60a5fa;
+    border-left-color: #60a5fa;
 }
 
 .menuIcon {
-  font-size: 16px;
+    width: 22px;
 
-  width: 22px;
+    flex-shrink: 0;
 
-  text-align: center;
+    text-align: center;
 
-  flex-shrink: 0;
+    font-size: 16px;
 }
 
-/* ── Content Area ────────────────── */
+/* ──────────────────────────────────
+   CONTENT AREA
+────────────────────────────────── */
 
 .adminContent {
-  flex: 1;
+    flex: 1;
 
-  overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 
-  background: var(--color-bg);
+    overflow: hidden;
+
+    min-width: 0;
+    min-height: 0;
+
+    background: var(--color-bg);
 }
 
-.contentWrapper {
-  padding: 24px;
+/* ──────────────────────────────────
+   INTERNAL PAGE SCROLL CONTAINER
+────────────────────────────────── */
 
-  min-height: 100%;
+.contentWrapper {
+    flex: 1;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    min-height: 0;
+
+    padding: 20px;
+
+    scrollbar-width: thin;
+
+    scrollbar-color: #cbd5e1 transparent;
+}
+
+/* INTERNAL SCROLLBAR */
+
+.contentWrapper::-webkit-scrollbar {
+    width: 8px;
+}
+
+.contentWrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.contentWrapper::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+
+    border-radius: 10px;
+}
+
+.contentWrapper::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
 }

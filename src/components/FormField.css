@@ -1,0 +1,64 @@
+/* FormField Styles */
+.form-field {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-label {
+    margin-bottom: 5px;
+    /* font-weight: bold; */
+    color: black;
+    font-size: 13px;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    /* border-radius: 5px; */
+    font-size: 13px;
+    width: 100%;
+    /* Ensure inputs take full width of their container */
+    box-sizing: border-box;
+    /* Include padding and border in element's total width and height */
+}
+
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.input-wrapper.has-icon .form-input {
+    padding-left: 30px;
+    /* Make space for icon */
+}
+
+.field-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+}
+
+.info-text {
+    font-size: 0.8em;
+    color: #777;
+    margin-top: 4px;
+}
+
+/* Adjust radio group display */
+.radio-group {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.radio-label {
+    font-weight: normal;
+    font-size: 1em;
+    color: #333;
+}

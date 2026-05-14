@@ -48,8 +48,8 @@
 /* TIMER */
 .timerContainer {
     font-size: 16px;
-    font-weight: 600;
-    color: #525050;
+    font-weight: 500;
+    color: #4d4c4c;
     padding: 8px 14px;
     border-radius: 8px;
     background: #ffffff;
@@ -65,12 +65,12 @@
     background: transparent;
     font-size: 26px;
     cursor: pointer;
-    color: #222;
+    color: #1a1919;
     transition: 0.3s;
 }
 
 .menuButton:hover {
-    color: #5b3cc4;
+    color: #0c0c0c;
 }
 
 /* DROPDOWN */

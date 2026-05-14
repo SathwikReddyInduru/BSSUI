@@ -60,9 +60,20 @@ function Login() {
             })
         );
 
-        if (loginUser.fulfilled.match(result)) {
-            navigate("/home");
-        }
+       if (loginUser.fulfilled.match(result)) {
+
+    const userData = result.payload;
+
+    // ADMIN
+    if (userData?.networkId === 0) {
+        navigate("/admin");
+    }
+
+    // NORMAL USER
+    else {
+        navigate("/home");
+    }
+}
     };
 
     return (

@@ -1,0 +1,98 @@
+/* ============================================================
+   statusmessage.module.css
+   Used by: NetworkStatusCode
+   ============================================================ */
+
+.messageCard {
+  max-width: 560px;
+  margin: 0 auto;
+  border-radius: 12px;
+  padding: 36px 32px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,.1);
+}
+
+.success {
+  background: #f0fdf4;
+  border: 2px solid #86efac;
+}
+
+.error {
+  background: #fef2f2;
+  border: 2px solid #fca5a5;
+}
+
+/* ── Icon ─────────────────────────────────────────────────── */
+.icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0 auto 16px;
+}
+
+.success .icon {
+  background: #dcfce7;
+  color: #16a34a;
+  border: 2px solid #86efac;
+}
+
+.error .icon {
+  background: #fee2e2;
+  color: #dc2626;
+  border: 2px solid #fca5a5;
+}
+
+/* ── Titles ───────────────────────────────────────────────── */
+.title {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 12px;
+}
+
+.success .title { color: #15803d; }
+.error   .title { color: #b91c1c; }
+
+.networkInfo {
+  font-size: 13.5px;
+  color: #4b5563;
+  margin-bottom: 10px;
+}
+
+.message {
+  font-size: 14px;
+  color: #374151;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  white-space: pre-line;
+}
+
+/* ── Status badge ─────────────────────────────────────────── */
+.statusBadge {
+  display: inline-block;
+  padding: 5px 14px;
+  background: #dbeafe;
+  color: #1e40af;
+  border-radius: 20px;
+  font-size: 13px;
+  margin-bottom: 24px;
+}
+
+/* ── Home button ──────────────────────────────────────────── */
+.homeButton {
+  padding: 10px 28px;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(37,99,235,.3);
+  transition: background .18s;
+}
+.homeButton:hover { background: #1d4ed8; }

@@ -1,0 +1,228 @@
+/* ============================================================
+   usermanagementgrid.module.css
+   Used by: NetworkManagementGrid
+   ============================================================ */
+
+.screen-layout-user {
+  width: 100%;
+}
+
+.container-userManagement-screen {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.07);
+  width: 100%;
+}
+
+/* ── Page title ───────────────────────────────────────────── */
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 20px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+/* ── Action buttons bar ───────────────────────────────────── */
+.create {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+/* Base action button */
+.create-button,
+.changePassword,
+.active,
+.deactive {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  border-radius: 5px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid;
+  transition: background .18s, opacity .18s, transform .1s;
+  background: #fff;
+  white-space: nowrap;
+}
+
+.create-button:active,
+.changePassword:active,
+.active:active,
+.deactive:active { transform: scale(.97); }
+
+.create-button {
+  color: #16a34a;
+  border-color: #bbf7d0;
+  background: #f0fdf4;
+}
+.create-button:hover { background: #dcfce7; }
+
+.changePassword {
+  color: #7c3aed;
+  border-color: #ddd6fe;
+  background: #faf5ff;
+}
+.changePassword:hover { background: #ede9fe; }
+.changePassword:disabled { opacity: .4; cursor: not-allowed; }
+
+.active {
+  color: #16a34a;
+  border-color: #bbf7d0;
+  background: #f0fdf4;
+}
+.active:hover:not(:disabled) { background: #dcfce7; }
+.active:disabled { opacity: .4; cursor: not-allowed; }
+
+.deactive {
+  color: #dc2626;
+  border-color: #fecaca;
+  background: #fef2f2;
+}
+.deactive:hover:not(:disabled) { background: #fee2e2; }
+.deactive:disabled { opacity: .4; cursor: not-allowed; }
+
+/* ── Search bar section ───────────────────────────────────── */
+.search {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding: 12px 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 7px;
+}
+
+.searchbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.searchbar select {
+  height: 34px;
+  padding: 0 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 13px;
+  background: #fff;
+  min-width: 130px;
+}
+
+.search-button {
+  height: 34px;
+  padding: 0 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 13px;
+  background: #fff;
+  min-width: 200px;
+}
+
+.searchedge {
+  height: 34px;
+  padding: 0 16px;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .18s;
+}
+.searchedge:hover { background: #1d4ed8; }
+
+.viewper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.viewper select {
+  height: 34px;
+  padding: 0 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 13px;
+  background: #fff;
+}
+
+/* ── Table ────────────────────────────────────────────────── */
+.tab {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.tab thead tr {
+  background: #e2e8f0;
+}
+
+.tab th {
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #374151;
+  font-size: 12.5px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  border-bottom: 2px solid #cbd5e1;
+  white-space: nowrap;
+}
+
+.tab td {
+  padding: 9px 12px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #1e293b;
+  vertical-align: middle;
+}
+
+.tab tbody tr:hover {
+  background: #f8fafc;
+}
+
+.tab tbody tr:nth-child(even) {
+  background: #fafafa;
+}
+
+.tab td a {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 12.5px;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: background .15s;
+}
+.tab td a:hover { background: #dbeafe; }
+
+/* ── Pagination ───────────────────────────────────────────── */
+.pagination {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 4px;
+  border: 1px solid #e2e8f0;
+  font-size: 13px;
+  cursor: pointer;
+  margin: 0 3px;
+  transition: background .15s, color .15s;
+}
+
+.pagination:hover { background: #dbeafe; border-color: #93c5fd; }

@@ -5,7 +5,7 @@
 .homeRoot {
     flex: 1;
     background-color: #f5f7fa;
-    padding: 25px 0;
+    padding: 25px;
 }
 
 .homeInner {
@@ -200,10 +200,12 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg,
-            transparent 0%,
-            rgba(255, 255, 255, 0.55) 50%,
-            transparent 100%);
+    background: linear-gradient(
+        135deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.55) 50%,
+        transparent 100%
+    );
     transform: translateX(-100%) skewX(-15deg);
     transition: transform 0.55s ease;
     pointer-events: none;
@@ -234,7 +236,6 @@
         opacity: 0;
         transform: translateY(12px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
@@ -244,7 +245,7 @@
 /* Card number badge */
 .cardNum {
     position: absolute;
-    top: 16px;
+    bottom: 16px;
     right: 20px;
     font-size: 11px;
     font-weight: 700;
@@ -354,214 +355,64 @@
    ========================================= */
 
 /* Blue */
-.modBlue {
-    border-top: 3px solid #3b82f6;
-}
-
-.modBlue .cardIconWrap {
-    background: #eff6ff;
-}
-
-.modBlue .cardNum {
-    color: #3b82f6;
-}
-
-.modBlue .openLink {
-    color: #3b82f6;
-}
-
-.modBlue:hover {
-    border-color: #3b82f6;
-    box-shadow: 0 16px 32px -4px rgba(59, 130, 246, 0.15), 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-}
-
-.modBlue:hover .cardTitle {
-    color: #1d4ed8;
-}
-
-.modBlue:hover .cardTag {
-    background: #eff6ff;
-    color: #1d4ed8;
-}
-
-.modBlue:hover .cardFooter {
-    border-color: #bfdbfe;
-}
+.modBlue { border-top: 3px solid #3b82f6; }
+.modBlue .cardIconWrap { background: #eff6ff; }
+.modBlue .cardNum { color: #3b82f6; }
+.modBlue .openLink { color: #3b82f6; }
+.modBlue:hover { border-color: #3b82f6; box-shadow: 0 16px 32px -4px rgba(59, 130, 246, 0.15), 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+.modBlue:hover .cardTitle { color: #1d4ed8; }
+.modBlue:hover .cardTag { background: #eff6ff; color: #1d4ed8; }
+.modBlue:hover .cardFooter { border-color: #bfdbfe; }
 
 /* Teal */
-.modTeal {
-    border-top: 3px solid #10b981;
-}
-
-.modTeal .cardIconWrap {
-    background: #ecfdf5;
-}
-
-.modTeal .cardNum {
-    color: #10b981;
-}
-
-.modTeal .openLink {
-    color: #10b981;
-}
-
-.modTeal:hover {
-    border-color: #10b981;
-    box-shadow: 0 16px 32px -4px rgba(16, 185, 129, 0.15), 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-}
-
-.modTeal:hover .cardTitle {
-    color: #065f46;
-}
-
-.modTeal:hover .cardTag {
-    background: #d1fae5;
-    color: #065f46;
-}
-
-.modTeal:hover .cardFooter {
-    border-color: #a7f3d0;
-}
+.modTeal { border-top: 3px solid #10b981; }
+.modTeal .cardIconWrap { background: #ecfdf5; }
+.modTeal .cardNum { color: #10b981; }
+.modTeal .openLink { color: #10b981; }
+.modTeal:hover { border-color: #10b981; box-shadow: 0 16px 32px -4px rgba(16, 185, 129, 0.15), 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+.modTeal:hover .cardTitle { color: #065f46; }
+.modTeal:hover .cardTag { background: #d1fae5; color: #065f46; }
+.modTeal:hover .cardFooter { border-color: #a7f3d0; }
 
 /* Amber */
-.modAmber {
-    border-top: 3px solid #f59e0b;
-}
-
-.modAmber .cardIconWrap {
-    background: #fffbeb;
-}
-
-.modAmber .cardNum {
-    color: #f59e0b;
-}
-
-.modAmber .openLink {
-    color: #d97706;
-}
-
-.modAmber:hover {
-    border-color: #f59e0b;
-    box-shadow: 0 16px 32px -4px rgba(245, 158, 11, 0.15), 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-}
-
-.modAmber:hover .cardTitle {
-    color: #92400e;
-}
-
-.modAmber:hover .cardTag {
-    background: #fef3c7;
-    color: #92400e;
-}
-
-.modAmber:hover .cardFooter {
-    border-color: #fde68a;
-}
+.modAmber { border-top: 3px solid #f59e0b; }
+.modAmber .cardIconWrap { background: #fffbeb; }
+.modAmber .cardNum { color: #f59e0b; }
+.modAmber .openLink { color: #d97706; }
+.modAmber:hover { border-color: #f59e0b; box-shadow: 0 16px 32px -4px rgba(245, 158, 11, 0.15), 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+.modAmber:hover .cardTitle { color: #92400e; }
+.modAmber:hover .cardTag { background: #fef3c7; color: #92400e; }
+.modAmber:hover .cardFooter { border-color: #fde68a; }
 
 /* Purple */
-.modPurple {
-    border-top: 3px solid #8b5cf6;
-}
-
-.modPurple .cardIconWrap {
-    background: #f5f3ff;
-}
-
-.modPurple .cardNum {
-    color: #8b5cf6;
-}
-
-.modPurple .openLink {
-    color: #8b5cf6;
-}
-
-.modPurple:hover {
-    border-color: #8b5cf6;
-    box-shadow: 0 16px 32px -4px rgba(139, 92, 246, 0.15), 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-}
-
-.modPurple:hover .cardTitle {
-    color: #4c1d95;
-}
-
-.modPurple:hover .cardTag {
-    background: #ede9fe;
-    color: #4c1d95;
-}
-
-.modPurple:hover .cardFooter {
-    border-color: #ddd6fe;
-}
+.modPurple { border-top: 3px solid #8b5cf6; }
+.modPurple .cardIconWrap { background: #f5f3ff; }
+.modPurple .cardNum { color: #8b5cf6; }
+.modPurple .openLink { color: #8b5cf6; }
+.modPurple:hover { border-color: #8b5cf6; box-shadow: 0 16px 32px -4px rgba(139, 92, 246, 0.15), 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+.modPurple:hover .cardTitle { color: #4c1d95; }
+.modPurple:hover .cardTag { background: #ede9fe; color: #4c1d95; }
+.modPurple:hover .cardFooter { border-color: #ddd6fe; }
 
 /* Coral */
-.modCoral {
-    border-top: 3px solid #ef4444;
-}
-
-.modCoral .cardIconWrap {
-    background: #fef2f2;
-}
-
-.modCoral .cardNum {
-    color: #ef4444;
-}
-
-.modCoral .openLink {
-    color: #ef4444;
-}
-
-.modCoral:hover {
-    border-color: #ef4444;
-    box-shadow: 0 16px 32px -4px rgba(239, 68, 68, 0.15), 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-}
-
-.modCoral:hover .cardTitle {
-    color: #7f1d1d;
-}
-
-.modCoral:hover .cardTag {
-    background: #fee2e2;
-    color: #7f1d1d;
-}
-
-.modCoral:hover .cardFooter {
-    border-color: #fecaca;
-}
+.modCoral { border-top: 3px solid #ef4444; }
+.modCoral .cardIconWrap { background: #fef2f2; }
+.modCoral .cardNum { color: #ef4444; }
+.modCoral .openLink { color: #ef4444; }
+.modCoral:hover { border-color: #ef4444; box-shadow: 0 16px 32px -4px rgba(239, 68, 68, 0.15), 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+.modCoral:hover .cardTitle { color: #7f1d1d; }
+.modCoral:hover .cardTag { background: #fee2e2; color: #7f1d1d; }
+.modCoral:hover .cardFooter { border-color: #fecaca; }
 
 /* Green */
-.modGreen {
-    border-top: 3px solid #16a34a;
-}
-
-.modGreen .cardIconWrap {
-    background: #f0fdf4;
-}
-
-.modGreen .cardNum {
-    color: #16a34a;
-}
-
-.modGreen .openLink {
-    color: #16a34a;
-}
-
-.modGreen:hover {
-    border-color: #16a34a;
-    box-shadow: 0 16px 32px -4px rgba(22, 163, 74, 0.15), 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-}
-
-.modGreen:hover .cardTitle {
-    color: #14532d;
-}
-
-.modGreen:hover .cardTag {
-    background: #dcfce7;
-    color: #14532d;
-}
-
-.modGreen:hover .cardFooter {
-    border-color: #bbf7d0;
-}
+.modGreen { border-top: 3px solid #16a34a; }
+.modGreen .cardIconWrap { background: #f0fdf4; }
+.modGreen .cardNum { color: #16a34a; }
+.modGreen .openLink { color: #16a34a; }
+.modGreen:hover { border-color: #16a34a; box-shadow: 0 16px 32px -4px rgba(22, 163, 74, 0.15), 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+.modGreen:hover .cardTitle { color: #14532d; }
+.modGreen:hover .cardTag { background: #dcfce7; color: #14532d; }
+.modGreen:hover .cardFooter { border-color: #bbf7d0; }
 
 /* =========================================
    EMPTY STATE
@@ -578,9 +429,7 @@
     text-align: center;
 }
 
-.homeEmpty svg {
-    opacity: 0.4;
-}
+.homeEmpty svg { opacity: 0.4; }
 
 .homeEmpty p {
     font-size: 15px;
@@ -588,36 +437,19 @@
     margin: 0;
 }
 
-.homeEmpty strong {
-    color: #374151;
-}
+.homeEmpty strong { color: #374151; }
 
 /* =========================================
    RESPONSIVE
    ========================================= */
 
 @media (max-width: 1024px) {
-    .modulesGrid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+    .modulesGrid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 640px) {
-    .modulesGrid {
-        grid-template-columns: 1fr;
-    }
-
-    .homeHeaderRow {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .homeControls {
-        justify-content: space-between;
-        width: 100%;
-    }
-
-    .searchInput {
-        width: 100%;
-    }
+    .modulesGrid { grid-template-columns: 1fr; }
+    .homeHeaderRow { flex-direction: column; align-items: flex-start; }
+    .homeControls { width: 100%; }
+    .searchInput { width: 100%; }
 }

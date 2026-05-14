@@ -5,7 +5,7 @@ import Footer from "../components/common/Footer";
 import ModuleSidebar from "../components/common/ModuleSidebar";
 import { MODULE_REGISTRY, PLMN_TABS } from "../components/common/ModuleSidebar";
 import styles from "../styles/Layout.module.css";
-import { HomeIcon } from "lucide-react";
+import { HomeIcon, MoveLeft } from "lucide-react";
 
 function ModuleLayout() {
     const location = useLocation();
@@ -59,7 +59,7 @@ function ModuleLayout() {
                                 )}
                             </div>
                             <button className={styles.backBtn} onClick={() => navigate("/home")}>
-                                <HomeIcon size={16} />
+                                <MoveLeft size={16} />
                                 Back to modules
                             </button>
                         </div>

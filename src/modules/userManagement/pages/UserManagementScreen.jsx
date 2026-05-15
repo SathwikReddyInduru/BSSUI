@@ -8,7 +8,7 @@ import FormField from '../../../components/FormField';
 import { useAppContext } from '../../../contexts/AppContext';
 import { showError, showSuccess } from "../../../utils/toast";
 
-// import styles from '../CssModules/usermanagement.module.css';
+import styles from '../styles/usermanagementsscreen.module.css';
 
 // Countries
 import {
@@ -293,7 +293,7 @@ const UserManagement = () => {
     setSelectedRoleIds([]);
     setCreatedLoginName('');
     //setStep(1);
-    navigate('/usermanagementgrid');
+    navigate('/ums/users');
   };
 
   // Dynamic Workgroup dropdown

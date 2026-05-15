@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
-// import styles from '../CssModules/viewuserinfo.module.css'; // adjust path
+import styles from '../styles/viewuserinfo.module.css';
 import { useAppContext } from '../../../contexts/AppContext';
 import {
   fetchUserInfo,
@@ -38,7 +38,7 @@ const ViewUserInfoPreview = () => {
     // if (!selectedLoginId) {
     //console.warn('No login ID received in navigation state');
     // alert('No user selected!'); // keep your alert
-    //navigate('/usermanagementgrid');
+    //navigate('/ums/users');
     // return;
     //  }
 
@@ -66,7 +66,7 @@ const ViewUserInfoPreview = () => {
           <h2> {getLabel('ViewUserInfo.Errorviewuser')}</h2>
           <p>{error}</p>
           <button
-            onClick={() => navigate('/usermanagementgrid')}
+            onClick={() => navigate('/ums/users')}
             className={styles.ViewUserInfoPage}
           >
             {getLabel('ViewUserInfo.viewHome')}
@@ -89,6 +89,8 @@ const ViewUserInfoPreview = () => {
     statusCode: '',
     statusDate: '-'
   };
+
+  console.log("userInfo => ", userInfo);
 
   return (
     <div className="screen-layout-user">
@@ -196,7 +198,7 @@ const ViewUserInfoPreview = () => {
 
         <div style={{ padding: '30px 0', textAlign: 'center' }}>
           <button
-            onClick={() => navigate('/usermanagementgrid')}
+            onClick={() => navigate('/ums/users')}
             className={styles.ViewUserInfoHomeButton}
           >
             {getLabel('ViewUserInfo.viewHome')}

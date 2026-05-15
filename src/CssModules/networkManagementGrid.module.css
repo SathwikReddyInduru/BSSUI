@@ -1,375 +1,332 @@
-/* ─────────────────────────────────────────
-   MAIN SCREEN
-───────────────────────────────────────── */
+/* ============================================================
+   networkManagementGrid.module.css  –  v4  (height-fix)
+   KEY GOAL:
+     • Card fills all available height (no browser scrollbar)
+     • fixedTop  → never scrolls
+     • tableScrollArea → flex:1, overflows with thin custom bar
+     • bottomBar → always pinned at bottom, never hidden
+   ============================================================ */
 
-.screen-layout-user {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    min-height: 0;
-    width: 100%;
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+
+/* ── Tokens ───────────────────────────────────────────────── */
+:root {
+    --ng-font: 'DM Sans', system-ui, sans-serif;
+    --ng-bg-page: #f0f4f8;
+    --ng-bg-card: #ffffff;
+    --ng-bg-thead: #e8edf5;
+    --ng-bg-row-alt: #fafbfd;
+    --ng-bg-row-hover: #f0f5ff;
+    --ng-bg-row-sel: #ebf3ff;
+    --ng-border: #e2e8f0;
+    --ng-border-input: #d1d5db;
+    --ng-border-focus: #2563eb;
+    --ng-accent: #2563eb;
+    --ng-accent-dark: #1d4ed8;
+    --ng-accent-soft: #dbeafe;
+    --ng-green: #16a34a;
+    --ng-green-soft: #f0fdf4;
+    --ng-green-border: #bbf7d0;
+    --ng-green-hover: #dcfce7;
+    --ng-purple: #7c3aed;
+    --ng-purple-soft: #faf5ff;
+    --ng-purple-border: #ddd6fe;
+    --ng-purple-hover: #ede9fe;
+    --ng-red: #dc2626;
+    --ng-red-soft: #fef2f2;
+    --ng-red-border: #fecaca;
+    --ng-red-hover: #fee2e2;
+    --ng-text-dark: #0f1f3d;
+    --ng-text-body: #1e293b;
+    --ng-text-label: #374151;
+    --ng-text-muted: #64748b;
+    --ng-text-th: #334155;
+    --ng-shadow-card: 0 4px 24px rgba(15, 31, 61, .08), 0 1px 4px rgba(15, 31, 61, .04);
+    --ng-radius-card: 14px;
+    --ng-radius-btn: 8px;
+    --ng-radius-input: 9px;
+    --ng-t: 0.18s ease;
 }
 
-/* ─────────────────────────────────────────
-   MAIN CONTAINER
-───────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   CRITICAL HEIGHT CHAIN
+   Every ancestor must propagate height down so flex:1 works.
+   If your app wraps this in extra divs, add height:100% there too.
+══════════════════════════════════════════════════════════ */
 
-.container-userManagement-screen {
+/* html, body must be full height – add this in your global CSS if not already there */
+/* html, body { height: 100%; margin: 0; } */
+
+/* ── Outer page shell ─────────────────────────────────────── */
+.screenLayoutUser {
+    /* Takes all space given by its parent (sidebar layout flex row) */
     flex: 1;
+    min-height: 0;
+    /* ← CRITICAL: allows flex child to shrink below content size */
     height: 100%;
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    /* kill browser scrollbar at this level */
+    width: 100%;
+    font-family: var(--ng-font);
+    background: var(--ng-bg-page);
+    /* padding: 16px; */
+    box-sizing: border-box;
+}
+
+/* ── Card ─────────────────────────────────────────────────── */
+.containerScreen {
+    flex: 1;
+    /* grow to fill screenLayoutUser */
     min-height: 0;
-    background: #ffffff;
-    border-radius: 14px;
-    padding: 24px;
-    box-shadow:
-        0 2px 12px rgba(0, 0, 0, 0.06);
-    border: 1px solid #e5e7eb;
-}
-
-
-/* ─────────────────────────────────────────
-   FIXED TOP SECTION
-───────────────────────────────────────── */
-
-.fixedTopSection {
-    flex-shrink: 0;
-    background: #ffffff;
-    z-index: 5;
-}
-
-/* ─────────────────────────────────────────
-   PAGE TITLE
-───────────────────────────────────────── */
-
-.title {
-    font-size: 28px;
-    font-weight: 700;
-    color: #1e293b;
-    margin: 0 0 24px;
-    padding-bottom: 14px;
-    border-bottom: 2px solid #e2e8f0;
-}
-
-/* ─────────────────────────────────────────
-   ACTION BUTTONS
-───────────────────────────────────────── */
-
-.create {
+    /* ← CRITICAL */
     display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 20px;
+    flex-direction: column;
+    overflow: hidden;
+    /* clip, do NOT scroll here */
+    background: var(--ng-bg-card);
+    border-radius: var(--ng-radius-card);
+    /* box-shadow: var(--ng-shadow-card); */
+    border: 1px solid var(--ng-border);
+    animation: ngUp 0.28s ease both;
 }
 
-/* COMMON BUTTON STYLE */
+@keyframes ngUp {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
 
-.create-button,
-.changePassword,
-.active,
-.deactive {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    padding: 10px 18px;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    border: 1px solid;
-    transition:
-        all 0.2s ease;
-    background: #fff;
-    white-space: nowrap;
-    box-shadow:
-        0 1px 3px rgba(0, 0, 0, 0.04);
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-/* CLICK EFFECT */
-
-.create-button:active,
-.changePassword:active,
-.active:active,
-.deactive:active {
-    transform: scale(0.97);
+/* ══════════════════════════════════════════════════════════
+   FIXED TOP  (title row + action buttons)
+   flex-shrink:0 → never compressed, always full height it needs
+══════════════════════════════════════════════════════════ */
+.fixedTop {
+    flex-shrink: 0;
+    /* ← never shrink */
+    background: var(--ng-bg-card);
+    padding: 20px 24px 14px;
+    border-bottom: 1px solid var(--ng-border);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
 }
 
-/* CREATE */
-
-.create-button {
-    color: #16a34a;
-    border-color: #bbf7d0;
-    background: #f0fdf4;
-}
-
-.create-button:hover {
-    background: #dcfce7;
-}
-
-/* CHANGE PASSWORD */
-
-.changePassword {
-    color: #7c3aed;
-    border-color: #ddd6fe;
-    background: #faf5ff;
-}
-
-.changePassword:hover {
-    background: #ede9fe;
-}
-
-.changePassword:disabled {
-    opacity: 0.45;
-    cursor: not-allowed;
-}
-
-/* ACTIVATE */
-
-.active {
-    color: #16a34a;
-    border-color: #bbf7d0;
-    background: #f0fdf4;
-}
-
-.active:hover:not(:disabled) {
-    background: #dcfce7;
-}
-
-.active:disabled {
-    opacity: 0.45;
-    cursor: not-allowed;
-}
-
-/* DEACTIVATE */
-
-.deactive {
-    color: #dc2626;
-    border-color: #fecaca;
-    background: #fef2f2;
-}
-
-.deactive:hover:not(:disabled) {
-    background: #fee2e2;
-}
-
-.deactive:disabled {
-    opacity: 0.45;
-    cursor: not-allowed;
-}
-
-/* ─────────────────────────────────────────
-   SEARCH SECTION
-───────────────────────────────────────── */
-
-.search {
+/* Title + Search on same row */
+.titleRow {
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 24px;
-    margin-bottom: 20px;
-    padding: 18px 20px;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 14px;
-    box-shadow:
-        0 2px 10px rgba(15, 23, 42, 0.04);
+    /* padding: 0 28px; */
+    height: 62px;
+    /* background: linear-gradient(135deg, #eff6ff, #ffffff); */
+    border-bottom: 2px solid #dbeafe;
 }
 
-/* LEFT */
-
-.searchLeft {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    flex: 1;
-    min-width: 0;
+.title {
+    /* font-size: 20px;
+  font-weight: 700;
+  color: var(--ng-text-dark);
+  margin: 0;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  letter-spacing: -0.01em; */
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: #1e40af;
+    letter-spacing: -0.02em;
 }
 
-/* SEARCH FIELD */
 
-.searchField {
+/* .title::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 22px;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, var(--ng-accent) 0%, var(--ng-accent-dark) 100%);
+  border-radius: 2px;
+} */
+
+/* Search box */
+.searchBox {
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 10px;
+    width: 260px;
     flex-shrink: 0;
 }
 
-/* LABEL */
-
-.searchField span,
-.searchRight span {
-    font-size: 14px;
-    font-weight: 600;
-    color: #374151;
-    white-space: nowrap;
+.searchIcon {
+    position: absolute;
+    left: 11px;
+    pointer-events: none;
 }
-
-/* SELECT */
-
-.searchSelect,
-.pageSelect {
-    height: 42px;
-    /* min-width: 180px; */
-    padding: 0 14px;
-    border: 1px solid #d1d5db;
-    border-radius: 10px;
-    background: #ffffff;
-    font-size: 14px;
-    color: #1e293b;
-    outline: none;
-    transition:
-        border-color 0.2s,
-        box-shadow 0.2s;
-}
-
-.searchSelect:focus,
-.pageSelect:focus {
-    border-color: #2563eb;
-    box-shadow:
-        0 0 0 3px rgba(37, 99, 235, 0.12);
-}
-
-/* SEARCH INPUT */
 
 .searchInput {
-    flex: 1;
-    min-width: 240px;
-    max-width: 340px;
-    height: 42px;
-    padding: 0 14px;
-    border: 1px solid #d1d5db;
-    border-radius: 10px;
-    background: #ffffff;
-    font-size: 14px;
-    color: #1e293b;
+    width: 100%;
+    height: 36px;
+    padding: 0 34px 0 34px;
+    border: 1.5px solid var(--ng-border-input);
+    border-radius: var(--ng-radius-input);
+    background: #fff;
+    font-size: 13px;
+    font-family: var(--ng-font);
+    color: var(--ng-text-body);
     outline: none;
-    transition:
-        border-color 0.2s,
-        box-shadow 0.2s;
+    transition: border-color var(--ng-t), box-shadow var(--ng-t);
 }
 
 .searchInput:focus {
-    border-color: #2563eb;
-    box-shadow:
-        0 0 0 3px rgba(37, 99, 235, 0.12);
+    border-color: var(--ng-border-focus);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, .12);
 }
 
-/* SEARCH BUTTON */
+.searchInput::placeholder {
+    color: #a0aec0;
+}
 
-.searchButton {
-    height: 42px;
-    padding: 0 24px;
+.clearBtn {
+    position: absolute;
+    right: 10px;
+    background: none;
     border: none;
-    border-radius: 10px;
-    background:
-        linear-gradient(135deg,
-            #2563eb,
-            #1d4ed8);
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: 600;
     cursor: pointer;
-    transition:
-        transform 0.15s,
-        box-shadow 0.2s;
-    box-shadow:
-        0 4px 12px rgba(37, 99, 235, 0.24);
+    font-size: 11px;
+    color: var(--ng-text-muted);
+    padding: 0;
+    line-height: 1;
+    transition: color var(--ng-t);
+}
+
+.clearBtn:hover {
+    color: var(--ng-red);
+}
+
+/* Action buttons row */
+.actionRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Shared button base */
+.btnCreate,
+.btnPassword,
+.btnActivate,
+.btnDeactivate {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 16px;
+    border-radius: var(--ng-radius-btn);
+    font-size: 13px;
+    font-weight: 600;
+    font-family: var(--ng-font);
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    transition: background var(--ng-t), box-shadow var(--ng-t), transform var(--ng-t);
     white-space: nowrap;
 }
 
-.searchButton:hover {
-    transform: translateY(-1px);
-    box-shadow:
-        0 6px 16px rgba(37, 99, 235, 0.32);
+.btnCreate:active,
+.btnPassword:active,
+.btnActivate:active,
+.btnDeactivate:active {
+    transform: scale(0.97);
 }
 
-.searchButton:active {
-    transform: scale(0.98);
+.btnCreate {
+    color: var(--ng-green);
+    border-color: var(--ng-green-border);
+    background: var(--ng-green-soft);
 }
 
-/* RIGHT */
-
-.searchRight {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-shrink: 0;
+.btnCreate:hover {
+    background: var(--ng-green-hover);
+    box-shadow: 0 2px 8px rgba(22, 163, 74, .18);
 }
 
-/* ─────────────────────────────────────────
-   RESPONSIVE
-───────────────────────────────────────── */
-
-@media (max-width: 992px) {
-
-    .search {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .searchLeft {
-        width: 100%;
-        flex-wrap: wrap;
-    }
-
-    .searchInput {
-        flex: 1;
-        max-width: 100%;
-    }
-
-    .searchRight {
-        justify-content: flex-end;
-    }
+.btnPassword {
+    color: var(--ng-purple);
+    border-color: var(--ng-purple-border);
+    background: var(--ng-purple-soft);
 }
 
-@media (max-width: 768px) {
-
-    .searchLeft {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .searchField {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .searchSelect,
-    .searchInput,
-    .searchButton {
-        width: 100%;
-        max-width: 100%;
-    }
-
-    .searchRight {
-        width: 100%;
-        justify-content: space-between;
-    }
+.btnPassword:hover:not(:disabled) {
+    background: var(--ng-purple-hover);
 }
 
-/* ─────────────────────────────────────────
-   SCROLLABLE TABLE AREA
-───────────────────────────────────────── */
+.btnPassword:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
 
+.btnActivate {
+    color: var(--ng-green);
+    border-color: var(--ng-green-border);
+    background: var(--ng-green-soft);
+}
+
+.btnActivate:hover:not(:disabled) {
+    background: var(--ng-green-hover);
+}
+
+.btnActivate:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
+
+.btnDeactivate {
+    color: var(--ng-red);
+    border-color: var(--ng-red-border);
+    background: var(--ng-red-soft);
+}
+
+.btnDeactivate:hover:not(:disabled) {
+    background: var(--ng-red-hover);
+}
+
+.btnDeactivate:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
+
+/* ══════════════════════════════════════════════════════════
+   TABLE SCROLL AREA
+   flex:1 + min-height:0 → takes all remaining space
+   overflow-y:auto → custom thin scrollbar, browser one hidden
+══════════════════════════════════════════════════════════ */
 .tableScrollArea {
     flex: 1;
+    /* ← fills all space between fixedTop and bottomBar */
+    min-height: 0;
+    /* ← CRITICAL: allows flex child to shrink */
     overflow-y: auto;
     overflow-x: auto;
-    min-height: 0;
-    margin-top: 12px;
-    padding-right: 4px;
+
+    /* Custom thin scrollbar (visible, not browser default) */
     scrollbar-width: thin;
     scrollbar-color: #cbd5e1 transparent;
 }
 
-/* SCROLLBAR */
-
+/* Custom scrollbar – Webkit */
 .tableScrollArea::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 5px;
+    height: 5px;
 }
 
 .tableScrollArea::-webkit-scrollbar-track {
@@ -385,171 +342,325 @@
     background: #94a3b8;
 }
 
-/* ─────────────────────────────────────────
-   TABLE
-───────────────────────────────────────── */
-
-.tab {
+/* ── Table ────────────────────────────────────────────────── */
+.table {
     width: 100%;
-    min-width: 900px;
+    min-width: 700px;
     border-collapse: collapse;
     font-size: 13px;
+    font-family: var(--ng-font);
 }
 
-/* STICKY HEADER */
-
-.tab thead {
+.table thead {
     position: sticky;
     top: 0;
-    z-index: 3;
+    z-index: 4;
 }
 
-.tab thead tr {
-    background: #dfe6ee;
+.table thead tr {
+    background: var(--ng-bg-thead);
 }
 
-.tab th {
-    padding: 12px 14px;
+.table th {
+    padding: 11px 16px;
     text-align: center;
     font-weight: 700;
-    color: #374151;
-    font-size: 12px;
+    color: var(--ng-text-th);
+    font-size: 11.5px;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border-bottom: 2px solid #cbd5e1;
+    letter-spacing: 0.07em;
+    border-bottom: 2px solid var(--ng-border);
     white-space: nowrap;
 }
 
-.tab td {
-    padding: 12px 14px;
+.thCheck {
+    width: 48px;
+}
+
+.table td {
+    padding: 11px 16px;
     border-bottom: 1px solid #f1f5f9;
-    color: #1e293b;
+    color: var(--ng-text-body);
     vertical-align: middle;
     text-align: center;
     white-space: nowrap;
 }
 
-/* ROW HOVER */
-
-.tab tbody tr:hover {
-    background: #f8fafc;
+.table tbody tr:nth-child(even) td {
+    background: var(--ng-bg-row-alt);
 }
 
-/* ALTERNATE ROW */
-
-.tab tbody tr:nth-child(even) {
-    background: #fafafa;
+.table tbody tr:hover td {
+    background: var(--ng-bg-row-hover);
 }
 
-/* ACTION LINKS */
+.rowSelected td {
+    background: var(--ng-bg-row-sel) !important;
+}
 
-.tab td a {
+.table td input[type="radio"] {
+    width: 15px;
+    height: 15px;
+    accent-color: var(--ng-accent);
+    cursor: pointer;
+}
+
+/* Status badges */
+.badgeActive,
+.badgeInactive {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+
+.badgeActive {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.badgeInactive {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+/* Action cell */
+.actionCell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+}
+
+.actionLink {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    color: #2563eb;
+    color: #f59e0b;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 12.5px;
-    padding: 2px 5px;
-    border-radius: 4px;
-    transition: background 0.15s ease;
+    padding: 3px 7px;
+    border-radius: 5px;
+    transition: background var(--ng-t), color var(--ng-t);
 }
 
-.tab td a:hover {
-    background: #dbeafe;
+.actionLink:hover {
+    background: #fef3c7;
+    color: #d97706;
 }
 
-/* ─────────────────────────────────────────
-   PAGINATION
-───────────────────────────────────────── */
+.sep {
+    color: #cbd5e1;
+    font-size: 13px;
+    user-select: none;
+    padding: 0 1px;
+}
 
-.paginationWrapper {
+/* Empty / loading states */
+.stateCell {
+    padding: 52px 20px;
     text-align: center;
-    margin: 30px 0;
+    color: var(--ng-text-muted);
+    font-size: 14px;
 }
 
-.pagination {
+.loadingSpinner {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--ng-accent-soft);
+    border-top-color: var(--ng-accent);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ══════════════════════════════════════════════════════════
+   BOTTOM BAR
+   flex-shrink:0 → always visible, never pushed off screen
+   [View Per Page ▾]   [‹ 1 2 3 ›]   [🖨 Print]
+══════════════════════════════════════════════════════════ */
+.bottomBar {
+    flex-shrink: 0;
+    /* ← never compressed */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px 20px;
+    background: var(--ng-bg-card);
+    border-top: 1.5px solid var(--ng-border);
+    min-height: 52px;
+}
+
+/* Left */
+.perPageWrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.perPageWrapper span {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ng-text-label);
+    white-space: nowrap;
+}
+
+.pageSelect {
+    height: 32px;
+    padding: 0 10px;
+    border: 1.5px solid var(--ng-border-input);
+    border-radius: 7px;
+    background: #fff;
+    font-size: 13px;
+    font-family: var(--ng-font);
+    color: var(--ng-text-body);
+    outline: none;
+    cursor: pointer;
+    transition: border-color var(--ng-t);
+}
+
+.pageSelect:focus {
+    border-color: var(--ng-border-focus);
+}
+
+/* Center */
+.paginationWrapper {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.pageBtn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 6px;
-    border: 1px solid #e2e8f0;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 6px;
+    border-radius: 7px;
+    border: 1.5px solid var(--ng-border);
     font-size: 13px;
+    font-weight: 500;
+    font-family: var(--ng-font);
     cursor: pointer;
-    margin: 0 4px;
-    transition: all 0.15s ease;
     background: #fff;
+    color: var(--ng-text-body);
+    transition: all var(--ng-t);
 }
 
-.pagination:hover {
-    background: #dbeafe;
-    border-color: #93c5fd;
+.pageBtn:hover:not(:disabled) {
+    background: var(--ng-accent-soft);
+    border-color: var(--ng-accent);
+    color: var(--ng-accent-dark);
 }
 
-/* ─────────────────────────────────────────
-   PRINT BUTTON
-───────────────────────────────────────── */
+.pageBtn:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
 
+.pageBtnActive {
+    background: var(--ng-accent) !important;
+    border-color: var(--ng-accent-dark) !important;
+    color: #fff !important;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, .28);
+}
+
+/* Right */
 .printWrapper {
-    text-align: right;
-    margin-top: 20px;
-    padding-bottom: 20px;
+    flex-shrink: 0;
 }
 
-.printWrapper button {
-    padding: 10px 24px;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
+.printBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 16px;
+    border: 1.5px solid var(--ng-border);
+    border-radius: var(--ng-radius-btn);
     background: #fff;
     cursor: pointer;
+    font-size: 13px;
     font-weight: 600;
-    transition: all 0.2s ease;
+    font-family: var(--ng-font);
+    color: var(--ng-text-label);
+    transition: background var(--ng-t), border-color var(--ng-t), box-shadow var(--ng-t);
 }
 
-.printWrapper button:hover {
+.printBtn:hover {
     background: #f1f5f9;
+    border-color: #94a3b8;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .07);
 }
 
-/* ─────────────────────────────────────────
+/* ══════════════════════════════════════════════════════════
    RESPONSIVE
-───────────────────────────────────────── */
-
+══════════════════════════════════════════════════════════ */
 @media (max-width: 768px) {
+    .screenLayoutUser {
+        padding: 10px;
+    }
 
-    .search {
+    .fixedTop {
+        padding: 16px 16px 12px;
+    }
+
+    .titleRow {
         flex-direction: column;
         align-items: stretch;
+        gap: 10px;
     }
 
-    .searchbar {
+    .searchBox {
         width: 100%;
     }
 
-    .search-button {
-        min-width: 100%;
-        width: 100%;
-    }
-
-    .searchedge {
-        width: 100%;
-    }
-
-    .viewper {
-        justify-content: flex-end;
-    }
-
-    .create {
+    .actionRow {
         flex-direction: column;
     }
 
-    .create-button,
-    .changePassword,
-    .active,
-    .deactive {
+    .btnCreate,
+    .btnPassword,
+    .btnActivate,
+    .btnDeactivate {
         width: 100%;
         justify-content: center;
+    }
+
+    .bottomBar {
+        flex-wrap: wrap;
+        gap: 8px;
+        min-height: auto;
+        padding: 10px 14px;
+    }
+
+    .paginationWrapper {
+        order: 1;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .perPageWrapper {
+        order: 0;
+    }
+
+    .printWrapper {
+        order: 2;
+        margin-left: auto;
     }
 }

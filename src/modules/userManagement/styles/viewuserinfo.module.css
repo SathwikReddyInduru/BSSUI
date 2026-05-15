@@ -1,0 +1,126 @@
+/* ─── PAGE WRAPPER ───────────────────────────────────────── */
+
+.ViewUserInfoPage {
+  width: 100%;
+  padding: 22px;
+  box-sizing: border-box;
+}
+
+/* ─── HEADING ────────────────────────────────────────────── */
+
+.Heading {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 28px;
+}
+
+/* ─── TWO-COLUMN INFO LAYOUT ─────────────────────────────── */
+
+.ViewHeading {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+/* ─── LEFT TABLE ─────────────────────────────────────────── */
+
+.TableHeading {
+  border-collapse: collapse;
+  flex: 1;
+  min-width: 280px;
+}
+
+.TableHeading tr + tr td {
+  padding-top: 14px;
+}
+
+.labelCell {
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding-right: 24px;
+  white-space: nowrap;
+  vertical-align: top;
+  padding-bottom: 14px;
+}
+
+.dataCell {
+  font-size: 15px;
+  color: #111827;
+  font-weight: 500;
+  vertical-align: top;
+  padding-bottom: 14px;
+}
+
+/* ─── RIGHT TABLE ────────────────────────────────────────── */
+
+.Righttable {
+  border-collapse: collapse;
+  flex: 1;
+  min-width: 280px;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  overflow: hidden;
+  align-self: flex-start;
+}
+
+.Righttable tr + tr td {
+  border-top: 1px solid #edf1f5;
+}
+
+.viewlabelCell {
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 12px 18px;
+  white-space: nowrap;
+  width: 140px;
+}
+
+.viewdataCell {
+  font-size: 14px;
+  color: #111827;
+  font-weight: 500;
+  padding: 12px 18px;
+}
+
+/* ─── BACK BUTTON ────────────────────────────────────────── */
+
+.ViewUserInfoHomeButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 24px;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  background: white;
+  color: #374151;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.ViewUserInfoHomeButton:hover {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+/* ─── MOBILE ─────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .ViewHeading {
+    flex-direction: column;
+  }
+
+  .Righttable {
+    width: 100%;
+  }
+}

@@ -1231,7 +1231,7 @@ const NetworkManagementModify = () => {
           <div
             className="button-group"
             style={{
-              marginTop: "48px",
+              marginTop: "20px",
               display: "flex",
               gap: "16px",
               justifyContent: "flex-end",

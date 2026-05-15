@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { showSuccess, showError } from "../../../utils/toast";
 
-// import styles from '../CssModules/createrole.module.css'; // Reusing create role styles, adjust if needed
+import styles from '../styles/createrole.module.css';
 import { useAppContext } from '../../../contexts/AppContext';
 
 // Slices
@@ -109,7 +109,7 @@ const ModifyRole = () => {
       }
     }
 
-    navigate('/role-modify-status', {
+    navigate('/ums/role-modify-status', {
       state: {
         isSuccess,
         message,
@@ -171,7 +171,7 @@ const ModifyRole = () => {
   };
 
   const handleBack = () => {
-    navigate('/rolemanagement');
+    navigate('/ums/roles');
   };
 
   if (privilegesLoading) return <div className={styles['loading-container']}>{getLabel('modifyRole.loadingPrivileges')}</div>;

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-
-//import './RoleCreationStatus.module.css'; // ← we'll add this CSS file next
+import styles from '../styles/status.module.css';
 
 const RoleCreationStatus = () => {
   const location = useLocation();
@@ -63,7 +62,7 @@ const RoleCreationStatus = () => {
 
           <div className="button-group">
             <button
-              onClick={() => navigate('/rolemanagement')}
+              onClick={() => navigate('/ums/roles')}
               className="button button-submit"
               style={{ minWidth: '150px' }}
             >

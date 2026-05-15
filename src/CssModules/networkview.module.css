@@ -1,123 +1,491 @@
 /* ============================================================
-   networkview.module.css
+   networkview.module.css  –  Enhanced
    Used by: NetworkView
    ============================================================ */
 
-.screenLayoutUser { width: 100%; }
+/* ── Google Font import ───────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap');
 
-.screenContainerUserManagement {
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 12px rgba(0,0,0,.07);
-  padding: 28px 32px 36px;
+/* ── Design tokens ────────────────────────────────────────── */
+:root {
+  --nv-bg-page: #f0f4f8;
+  --nv-bg-card: #ffffff;
+  --nv-bg-section: #f7f9fc;
+  --nv-bg-section-hover: #f0f5ff;
+
+  --nv-border: #dde5f0;
+  --nv-border-accent: #b8cce8;
+
+  --nv-accent: #2563eb;
+  --nv-accent-soft: #dbeafe;
+  --nv-accent-dark: #1d4ed8;
+
+  --nv-text-heading: #0f1f3d;
+  --nv-text-body: #1e293b;
+  --nv-text-label: #5a7296;
+  --nv-text-muted: #94a3b8;
+
+  --nv-shadow-card: 0 4px 24px rgba(15, 31, 61, 0.08), 0 1px 4px rgba(15, 31, 61, 0.04);
+  --nv-shadow-section: 0 1px 6px rgba(15, 31, 61, 0.05);
+  --nv-shadow-btn: 0 2px 8px rgba(37, 99, 235, 0.22);
+
+  --nv-radius-card: 14px;
+  --nv-radius-section: 10px;
+  --nv-radius-btn: 8px;
+  --nv-radius-badge: 6px;
+
+  --nv-font-body: 'DM Sans', sans-serif;
+  --nv-font-mono: 'DM Mono', monospace;
+
+  --nv-transition: 0.2s ease;
+}
+
+/* ── Page layout ──────────────────────────────────────────── */
+.screenLayoutUser {
   width: 100%;
+  height: 100%;
+  /* full viewport height */
+  background: var(--nv-bg-page);
+  padding: 10px 10px;
+  box-sizing: border-box;
+  font-family: var(--nv-font-body);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+/* ── Card container: flex column, fixed height = fills page ── */
+.screenContainerUserManagement {
+  background: var(--nv-bg-card);
+  border-radius: var(--nv-radius-card);
+  box-shadow: var(--nv-shadow-card);
+  width: 100%;
+  /* max-width: 1100px; */
+  height: 100%;
+  /* fill the padded viewport */
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--nv-border);
+  animation: nvFadeUp 0.35s ease both;
+  overflow: hidden;
+  /* clip children to rounded corners */
+}
+
+@keyframes nvFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Sticky card header (title + back button) ─────────────── */
+.cardHeader {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 32px 18px;
+  background: var(--nv-bg-card);
+  /* border-bottom: 2px solid var(--nv-accent-soft); */
+  gap: 16px;
+  /* stays fixed while body scrolls */
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* ── Page title (screen-title global class support) ──────── */
+.screenContainerUserManagement :global(.screen-title) {
+  font-family: var(--nv-font-body);
+  font-size: 24px;
+  font-weight: 600;
+  color: #1e40af;
+  margin: 0;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  background: linear-gradient(135deg, #eff6ff, #ffffff);
+  border-bottom: 2px solid #dbeafe;
+
+}
+
+
+
+/* .screenContainerUserManagement :global(.screen-title)::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 22px;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, var(--nv-accent) 0%, var(--nv-accent-dark) 100%);
+  border-radius: 2px;
+} */
+
+/* ── Scrollable content body ──────────────────────────────── */
+.cardBody {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 32px 36px;
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+.cardBody::-webkit-scrollbar {
+  width: 6px;
+}
+
+.cardBody::-webkit-scrollbar-track {
+  background: var(--nv-bg-page);
+  border-radius: 3px;
+}
+
+.cardBody::-webkit-scrollbar-thumb {
+  background: var(--nv-border-accent);
+  border-radius: 3px;
+}
+
+.cardBody::-webkit-scrollbar-thumb:hover {
+  background: var(--nv-accent);
 }
 
 /* ── Section ──────────────────────────────────────────────── */
 .section {
-  margin-bottom: 24px;
-  padding: 18px 20px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
+  margin-bottom: 16px;
+  padding: 20px 22px;
+  background: var(--nv-bg-section);
+  border: 1px solid var(--nv-border);
+  border-radius: var(--nv-radius-section);
+  box-shadow: var(--nv-shadow-section);
+  transition: border-color var(--nv-transition), background var(--nv-transition);
+  position: relative;
+  overflow: hidden;
 }
 
+.section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--nv-accent) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity var(--nv-transition);
+}
+
+.section:hover {
+  border-color: var(--nv-border-accent);
+  background: var(--nv-bg-section-hover);
+}
+
+.section:hover::before {
+  opacity: 1;
+}
+
+/* ── Section title ────────────────────────────────────────── */
 .sectionTitle {
-  font-size: 13.5px;
-  font-weight: 700;
-  color: #1e3a5f;
-  margin: 0 0 14px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid #e2e8f0;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--nv-accent);
+  margin: 0 0 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--nv-border);
   text-transform: uppercase;
-  letter-spacing: .05em;
+  letter-spacing: 0.1em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sectionTitle::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--nv-accent);
+  flex-shrink: 0;
 }
 
 /* ── Detail grid ──────────────────────────────────────────── */
 .detailGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 14px 24px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px 28px;
 }
 
+/* ── Detail items ─────────────────────────────────────────── */
 .detailItem {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 5px;
+  padding: 10px 12px;
+  background: #fff;
+  border: 1px solid var(--nv-border);
+  border-radius: 8px;
+  transition: box-shadow var(--nv-transition), border-color var(--nv-transition);
+}
+
+.detailItem:hover {
+  box-shadow: 0 2px 10px rgba(37, 99, 235, 0.09);
+  border-color: var(--nv-border-accent);
 }
 
 .detailItemFull {
   grid-column: 1 / -1;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 5px;
+  padding: 10px 12px;
+  background: #fff;
+  border: 1px solid var(--nv-border);
+  border-radius: 8px;
+  transition: box-shadow var(--nv-transition), border-color var(--nv-transition);
 }
 
+.detailItemFull:hover {
+  box-shadow: 0 2px 10px rgba(37, 99, 235, 0.09);
+  border-color: var(--nv-border-accent);
+}
+
+/* ── Label ────────────────────────────────────────────────── */
 .label {
-  font-size: 11.5px;
+  font-size: 10.5px;
   font-weight: 600;
-  color: #64748b;
+  color: var(--nv-text-label);
   text-transform: uppercase;
-  letter-spacing: .04em;
+  letter-spacing: 0.07em;
+  line-height: 1.3;
 }
 
+/* ── Value ────────────────────────────────────────────────── */
 .value {
   font-size: 13.5px;
-  color: #1e293b;
+  color: var(--nv-text-body);
   font-weight: 500;
   word-break: break-word;
+  line-height: 1.5;
+  font-family: var(--nv-font-body);
+}
+
+/* Numeric / mono values feel sharper in mono */
+.value[data-type="number"],
+.value[data-mono="true"] {
+  font-family: var(--nv-font-mono);
+  font-size: 13px;
+  color: var(--nv-accent-dark);
 }
 
 /* ── SIM Upload section ───────────────────────────────────── */
-.simUploadContainer { display: flex; flex-direction: column; gap: 12px; }
-/* .simUploadMain {} */
+.simUploadContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.simUploadMain {
+  display: flex;
+  align-items: center;
+}
 
 .checkboxLabel {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 500;
-  color: #374151;
+  gap: 9px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--nv-text-body);
+  cursor: default;
+  user-select: none;
 }
 
+.checkboxLabel input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--nv-accent);
+  border-radius: 4px;
+  cursor: default;
+}
+
+/* ── UI access checkboxes grid ────────────────────────────── */
 .uiAccessGrid {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 24px;
-  padding-left: 8px;
+  gap: 10px 12px;
+  padding: 14px 16px;
+  background: #fff;
+  border: 1px solid var(--nv-border);
+  border-radius: 8px;
 }
 
 .checkboxItem {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   font-size: 13px;
-  color: #374151;
+  font-weight: 500;
+  color: var(--nv-text-body);
+  padding: 6px 12px;
+  background: var(--nv-bg-section);
+  border: 1px solid var(--nv-border);
+  border-radius: 6px;
+  cursor: default;
+  user-select: none;
+  transition: background var(--nv-transition), border-color var(--nv-transition);
 }
 
-/* ── Footer / back button ─────────────────────────────────── */
+.checkboxItem:has(input:checked) {
+  background: var(--nv-accent-soft);
+  border-color: var(--nv-accent);
+  color: var(--nv-accent-dark);
+  font-weight: 600;
+}
+
+.checkboxItem input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  accent-color: var(--nv-accent);
+  cursor: default;
+  flex-shrink: 0;
+}
+
+/* ── Footer (kept for any legacy use, now hidden) ─────────── */
 .footer {
-  margin-top: 28px;
-  padding-top: 18px;
-  border-top: 1px solid #e2e8f0;
-  display: flex;
-  justify-content: flex-end;
+  display: none;
 }
 
+/* ── Back button — lives in .cardHeader top-right ─────────── */
 .backBtn {
-  padding: 8px 22px;
-  background: #f1f5f9;
-  border: 1px solid #d1d5db;
-  border-radius: 5px;
+  padding: 9px 26px;
+  background: var(--nv-bg-card);
+  border: 1.5px solid var(--nv-border-accent);
+  border-radius: var(--nv-radius-btn);
   font-size: 13px;
   font-weight: 600;
-  color: #374151;
+  font-family: var(--nv-font-body);
+  color: var(--nv-accent);
   cursor: pointer;
-  transition: background .18s;
+  transition: background var(--nv-transition), box-shadow var(--nv-transition), transform var(--nv-transition), border-color var(--nv-transition);
+  letter-spacing: 0.01em;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
 }
-.backBtn:hover { background: #e2e8f0; }
 
-/* ── Loading / error states ───────────────────────────────── */
-.loading { padding: 40px; text-align: center; color: #64748b; font-size: 14px; }
-.error   { padding: 40px; text-align: center; color: #dc2626; font-size: 14px; }
+.backBtn::before {
+  content: '←';
+  font-size: 15px;
+  line-height: 1;
+  transition: transform var(--nv-transition);
+}
+
+.backBtn:hover {
+  background: var(--nv-accent-soft);
+  border-color: var(--nv-accent);
+  box-shadow: var(--nv-shadow-btn);
+  transform: translateY(-1px);
+}
+
+.backBtn:hover::before {
+  transform: translateX(-3px);
+}
+
+.backBtn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* ── Loading state ────────────────────────────────────────── */
+.loading {
+  padding: 56px 40px;
+  text-align: center;
+  color: var(--nv-text-muted);
+  font-size: 14px;
+  font-family: var(--nv-font-body);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.loading::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--nv-accent-soft);
+  border-top-color: var(--nv-accent);
+  border-radius: 50%;
+  animation: nvSpin 0.7s linear infinite;
+}
+
+@keyframes nvSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Error state ──────────────────────────────────────────── */
+.error {
+  padding: 48px 40px;
+  text-align: center;
+  color: #dc2626;
+  font-size: 14px;
+  font-family: var(--nv-font-body);
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.error::before {
+  content: '⚠';
+  font-size: 28px;
+  color: #ef4444;
+  opacity: 0.8;
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .screenLayoutUser {
+    padding: 12px 10px;
+  }
+
+  .cardHeader {
+    padding: 14px 18px 12px;
+  }
+
+  .cardBody {
+    padding: 16px 18px 28px;
+  }
+
+  .detailGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cardHeader {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .detailGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .uiAccessGrid {
+    flex-direction: column;
+    gap: 8px;
+  }
+}

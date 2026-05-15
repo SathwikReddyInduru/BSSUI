@@ -1,81 +1,134 @@
-/* ─── Sidebar shell ─────────────────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   Enterprise Module Sidebar
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── Shell ──────────────────────────────────────────────────── */
 .sidebar {
-    width: 260px;
+    width: 268px;
     flex-shrink: 0;
     background: #ffffff;
-    border-right: 1px solid #e5e7eb;
+    border-right: 1px solid #e2e8f0;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     min-height: 0;
+    box-shadow: 1px 0 0 0 #f1f5f9;
 }
 
-/* ─── Module header row ─────────────────────────────────────────────────────── */
+/* ─── Module header ──────────────────────────────────────────── */
 .moduleHeader {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 14px 14px 14px 14px;
+    gap: 12px;
+    padding: 16px 14px;
     flex-shrink: 0;
-    border-bottom: 1px solid #f3f4f6;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
 }
 
-/* Blue square icon box — matches reference image */
 .moduleIconBox {
-    width: 34px;
-    height: 34px;
-    border-radius: 8px;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+.moduleEmoji {
+    font-size: 16px;
+    line-height: 1;
+    filter: grayscale(0.1);
+}
+
+.moduleTitleBlock {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
 }
 
 .moduleTitle {
-    flex: 1;
     font-size: 13px;
     font-weight: 700;
-    color: #111827;
+    color: #0f172a;
     line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     letter-spacing: -0.01em;
 }
 
+.moduleSubtitle {
+    font-size: 11px;
+    color: #94a3b8;
+    font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: 0;
+}
+
+/* Collapse button — PLMN only */
 .collapseBtn {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 24px;
-    height: 24px;
-    border-radius: 6px;
+    width: 26px;
+    height: 26px;
+    border-radius: 7px;
     background: none;
-    border: none;
+    border: 1px solid #e2e8f0;
     cursor: pointer;
-    color: #9ca3af;
+    color: #94a3b8;
     flex-shrink: 0;
     padding: 0;
-    transition: background 0.12s, color 0.12s;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
 
 .collapseBtn:hover {
-    background: #f3f4f6;
-    color: #374151;
+    background: #f1f5f9;
+    color: #475569;
+    border-color: #cbd5e1;
 }
 
-/* ─── Tab nav (CLC / CMS / TSG rows) ─────────────────────────────────────── */
+/* ─── Divider ────────────────────────────────────────────────── */
+.divider {
+    height: 1px;
+    background: #e2e8f0;
+    flex-shrink: 0;
+}
+
+/* ─── Tab nav (PLMN sub-module switcher: CLC / CMS / TSG) ───── */
 .tabNav {
     display: flex;
     flex-direction: column;
-    padding: 6px 8px 2px;
-    gap: 1px;
+    padding: 8px 10px 6px;
+    gap: 2px;
     flex-shrink: 0;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.tabNavLabel {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #94a3b8;
+    padding: 2px 6px 6px;
+    user-select: none;
 }
 
 .tabRow {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 7px 10px;
-    border-radius: 7px;
+    padding: 8px 10px;
+    border-radius: 8px;
     border: none;
     background: none;
     cursor: pointer;
@@ -83,27 +136,31 @@
     font-family: inherit;
     font-size: 12.5px;
     font-weight: 500;
-    color: #4b5563;
+    color: #64748b;
     transition: background 0.12s, color 0.12s;
     width: 100%;
+    line-height: 1.35;
 }
 
 .tabRow:hover {
-    background: #f9fafb;
-    color: #111827;
+    background: #f1f5f9;
+    color: #1e293b;
 }
 
 .tabRowActive {
+    background: #f0f9ff;
     font-weight: 600;
-    border-radius: 7px;
+    color: #0369a1;
 }
 
-.tabBullet {
-    width: 7px;
-    height: 7px;
+/* Small circle indicator on left of tab */
+.tabIndicator {
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
+    border: 1.5px solid;
     flex-shrink: 0;
-    transition: background 0.15s;
+    transition: all 0.15s;
 }
 
 .tabLabel {
@@ -111,24 +168,26 @@
     line-height: 1.35;
 }
 
-/* ─── Divider ────────────────────────────────────────────────────────────── */
-.divider {
-    height: 1px;
-    background: #e5e7eb;
-    margin: 6px 0 4px;
+/* Small pill badge showing tab ID when active */
+.tabActivePill {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 20px;
+    letter-spacing: 0.04em;
     flex-shrink: 0;
 }
 
-/* ─── Item nav (scrollable sub-items) ────────────────────────────────────── */
+/* ─── Item nav (scrollable content area) ─────────────────────── */
 .itemNav {
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 4px 8px 16px;
+    padding: 8px 8px 20px;
 }
 
 .itemNav::-webkit-scrollbar {
-    width: 3px;
+    width: 4px;
 }
 
 .itemNav::-webkit-scrollbar-track {
@@ -136,11 +195,15 @@
 }
 
 .itemNav::-webkit-scrollbar-thumb {
-    background: #e5e7eb;
+    background: #e2e8f0;
     border-radius: 2px;
 }
 
-/* ─── Nav list ───────────────────────────────────────────────────────────── */
+.itemNav::-webkit-scrollbar-thumb:hover {
+    background: #cbd5e1;
+}
+
+/* ─── Nav list ───────────────────────────────────────────────── */
 .navList {
     list-style: none;
     margin: 0;
@@ -150,26 +213,36 @@
     gap: 1px;
 }
 
-/* ─── Group block ────────────────────────────────────────────────────────── */
+/* ─── Group block (section headers inside item nav) ──────────── */
 .groupBlock {
-    margin-top: 8px;
+    margin-top: 14px;
 }
 
 .groupBlock:first-child {
-    margin-top: 0;
+    margin-top: 4px;
 }
 
 .groupLabel {
     font-size: 10px;
     font-weight: 700;
-    letter-spacing: 0.07em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #9ca3af;
-    padding: 4px 10px 5px;
+    color: #94a3b8;
+    padding: 2px 10px 6px;
     user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
-/* ─── Nav row (shared) ───────────────────────────────────────────────────── */
+.groupLabel::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #e2e8f0;
+}
+
+/* ─── Nav row (shared base for all items) ────────────────────── */
 .navRow {
     display: flex;
     align-items: center;
@@ -179,98 +252,128 @@
     border: none;
     background: none;
     text-decoration: none;
-    color: #4b5563;
-    font-size: 12.5px;
+    color: #475569;
+    font-size: 13px;
     font-weight: 400;
     cursor: pointer;
     width: 100%;
     text-align: left;
     font-family: inherit;
     transition: background 0.1s, color 0.1s;
-    line-height: 1.35;
+    line-height: 1.4;
+    position: relative;
 }
 
 .navRow:hover {
-    background: #f3f4f6;
-    color: #111827;
+    background: #f1f5f9;
+    color: #0f172a;
 }
 
-/* Active state — color is injected inline, bg is color at 8% */
+/* Active — background tint, bold */
 .navRowActive {
-    background: #eff6ff;
+    background: #f0f9ff;
     font-weight: 600;
+    color: inherit;
 }
 
-/* Indented (inside group) */
+/* Left accent bar on active items */
+.navRowActive::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 20%;
+    bottom: 20%;
+    width: 3px;
+    border-radius: 0 2px 2px 0;
+    background: currentColor;
+}
+
+/* Indented row (inside group) */
 .navRowDeep {
-    padding-left: 18px;
+    padding-left: 20px;
+    font-size: 12.5px;
 }
 
-/* ─── Dot bullet ─────────────────────────────────────────────────────────── */
+/* ─── Dot bullet ─────────────────────────────────────────────── */
 .navDot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: #d1d5db;
+    background: #cbd5e1;
     flex-shrink: 0;
-    transition: background 0.12s;
+    transition: background 0.12s, transform 0.12s;
 }
 
 .navRowActive .navDot {
     background: currentColor;
+    transform: scale(1.2);
 }
 
-/* ─── Nav icon (card, tag etc.) ──────────────────────────────────────────── */
+.navRow:hover .navDot {
+    background: #94a3b8;
+}
+
+/* ─── Nav icon (card / tag) ──────────────────────────────────── */
 .navIcon {
     display: flex;
     align-items: center;
     flex-shrink: 0;
-    color: #9ca3af;
+    color: #94a3b8;
+    transition: color 0.1s;
 }
 
 .navRowActive .navIcon {
     color: inherit;
 }
 
-/* ─── Nav label ──────────────────────────────────────────────────────────── */
+/* ─── Nav label ──────────────────────────────────────────────── */
 .navLabel {
     flex: 1;
-    line-height: 1.35;
+    line-height: 1.4;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-/* ─── Sub-list (children of accordion) ──────────────────────────────────── */
+/* ─── Sub-list (accordion children) ─────────────────────────── */
 .subList {
     list-style: none;
-    margin: 0;
-    padding: 0 0 2px 0;
+    margin: 2px 0 2px 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
     gap: 1px;
 }
 
 .navRowSub {
-    padding-left: 28px;
+    padding-left: 30px;
     font-size: 12px;
-    color: #6b7280;
-    position: relative;
+    color: #64748b;
+    font-weight: 400;
 }
 
 .navRowSub:hover {
-    background: #f9fafb;
-    color: #111827;
+    background: #f8fafc;
+    color: #0f172a;
 }
 
 .navRowSubActive {
     font-weight: 600;
-    background: #eff6ff;
+    background: #f0f9ff;
 }
 
-/* Left border line for sub items */
+/* Vertical guide line for sub-items */
 .subLine {
     position: absolute;
-    left: 18px;
+    left: 19px;
     top: 0;
     bottom: 0;
     width: 0;
-    border-left: 1.5px solid #e5e7eb;
+    border-left: 1.5px solid #e2e8f0;
+}
+
+.navRowSubActive .subLine {
+    border-color: currentColor;
+    opacity: 0.4;
 }

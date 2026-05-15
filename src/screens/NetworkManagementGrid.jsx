@@ -6,7 +6,6 @@ import { showError, showSuccess } from "../utils/toast";
 import styles from "../CssModules/networkManagementGrid.module.css";
 import { useAppContext } from "../contexts/AppContext";
 
-// List slice
 import {
   fetchNetworkList,
   selectNetworkListData,
@@ -14,7 +13,6 @@ import {
   selectNetworkListError,
 } from "../store/slices/networkListSlice";
 
-// Status slice
 import {
   updateNetworkStatus,
   selectNetworkStatusLoading,
@@ -32,38 +30,30 @@ const NetworkManagementGrid = () => {
   const networks = useSelector(selectNetworkListData) || [];
   const listLoading = useSelector(selectNetworkListLoading);
   const listError = useSelector(selectNetworkListError);
-
   const statusLoading = useSelector(selectNetworkStatusLoading);
   const statusSuccess = useSelector(selectNetworkStatusSuccess);
   const statusError = useSelector(selectNetworkStatusError);
 
   // ─── Local State ──────────────────────────────────────────────
   const [selectedNetwork, setSelectedNetwork] = useState(null);
-  const [searchColumn, setSearchColumn] = useState("Network Name");
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
   const [filteredNetworks, setFilteredNetworks] = useState([]);
 
-  // ─── Fetch list on mount ──────────────────────────────────────
-  useEffect(() => {
-    dispatch(fetchNetworkList());
-  }, [dispatch]);
+  // ─── Fetch on mount ───────────────────────────────────────────
+  useEffect(() => { dispatch(fetchNetworkList()); }, [dispatch]);
 
-  // ─── Handle list errors ───────────────────────────────────────
-  useEffect(() => {
-    if (listError) showError(listError);
-  }, [listError]);
+  // ─── List error ───────────────────────────────────────────────
+  useEffect(() => { if (listError) showError(listError); }, [listError]);
 
-  // ─── Handle status update result ──────────────────────────────
+  // ─── Status update result ─────────────────────────────────────
   useEffect(() => {
     if (statusLoading) return;
-
     if (statusSuccess) {
       showSuccess(statusSuccess);
-      dispatch(fetchNetworkList()); // refresh list
-      dispatch(clearNetworkStatus()); // clean up
-
+      dispatch(fetchNetworkList());
+      dispatch(clearNetworkStatus());
       if (selectedNetwork) {
         navigate("/admin/network-status-code", {
           state: {
@@ -75,99 +65,54 @@ const NetworkManagementGrid = () => {
         });
       }
     }
-
     if (statusError) {
       showError(statusError);
       dispatch(clearNetworkStatus());
     }
-  }, [
-    statusLoading,
-    statusSuccess,
-    statusError,
-    dispatch,
-    navigate,
-    selectedNetwork,
-  ]);
+  }, [statusLoading, statusSuccess, statusError, dispatch, navigate, selectedNetwork]);
 
-  // ─── Filtering ────────────────────────────────────────────────
+  // ─── Live search across Network Name AND Network Code ─────────
   useEffect(() => {
-    let filtered = networks;
-
-    if (searchTerm.trim()) {
-      filtered = networks.filter((net) => {
-        const fieldMap = {
-          "Network Name": net.networkName || "",
-          "Network Code": net.networkCode || "",
-          "Status Code": net.statusCode || "",
-        };
-        const field = fieldMap[searchColumn] || "";
-        return field.toLowerCase().includes(searchTerm.toLowerCase());
-      });
+    const term = searchTerm.trim().toLowerCase();
+    if (!term) {
+      setFilteredNetworks(networks);
+    } else {
+      setFilteredNetworks(
+        networks.filter(
+          (net) =>
+            (net.networkName || "").toLowerCase().includes(term) ||
+            (net.networkCode || "").toLowerCase().includes(term)
+        )
+      );
     }
-
-    setFilteredNetworks(filtered);
     setCurrentPage(1);
-  }, [networks, searchColumn, searchTerm]);
+  }, [networks, searchTerm]);
 
-  const handleSearch = () => {
-    if (!searchTerm.trim()) {
-      showError("Please enter a search term");
-    }
-  };
-
-  // ─── Action Handlers ──────────────────────────────────────────
-  const handleCreateNetwork = () => {
-    navigate("/admin/networkmanagement");
-  };
-
-  const handleActivateNetwork = () => {
-    if (!selectedNetwork) return showError("Please select a network first");
-    dispatch(
-      updateNetworkStatus({
-        networkId: selectedNetwork.networkId,
-        networkName: selectedNetwork.networkName,
-        statusCode: "AC",
-      }),
-    );
-  };
-
-  const handleDeactivateNetwork = () => {
-    if (!selectedNetwork) return showError("Please select a network first");
-    dispatch(
-      updateNetworkStatus({
-        networkId: selectedNetwork.networkId,
-        networkName: selectedNetwork.networkName,
-        statusCode: "DA",
-      }),
-    );
-  };
+  // ─── Action handlers ──────────────────────────────────────────
+  const handleCreateNetwork = () => navigate("/admin/networkmanagement");
 
   const handleChangePassword = () => {
     if (!selectedNetwork) return showError("Please select a network first");
     navigate(`/admin/networkchangepassword/${selectedNetwork.networkId}`, {
-      state: {
-        networkId: selectedNetwork.networkId,
-        networkName: selectedNetwork.networkName,
-      },
+      state: { networkId: selectedNetwork.networkId, networkName: selectedNetwork.networkName },
     });
   };
 
-  const handleViewNetwork = (network) => {
-    setSelectedNetwork(network);
-    navigate(`/admin/network-view/${network.networkId}`);
+  const handleActivateNetwork = () => {
+    if (!selectedNetwork) return showError("Please select a network first");
+    dispatch(updateNetworkStatus({ networkId: selectedNetwork.networkId, networkName: selectedNetwork.networkName, statusCode: "AC" }));
   };
 
-  const handleModifyNetwork = (network) => {
-    setSelectedNetwork(network);
-    navigate(`/admin/networkmanagementmodify/${network.networkId}`);
+  const handleDeactivateNetwork = () => {
+    if (!selectedNetwork) return showError("Please select a network first");
+    dispatch(updateNetworkStatus({ networkId: selectedNetwork.networkId, networkName: selectedNetwork.networkName, statusCode: "DA" }));
   };
 
-  const handleConfigureNetwork = (network) => {
-    setSelectedNetwork(network);
-    // Important: pass BOTH id and name (name is URL-encoded)
-    navigate(
-      `/admin/network-configure/${network.networkId}/${encodeURIComponent(network.networkName)}`,
-    );
+  const handleViewNetwork = (net) => { setSelectedNetwork(net); navigate(`/admin/network-view/${net.networkId}`); };
+  const handleModifyNetwork = (net) => { setSelectedNetwork(net); navigate(`/admin/networkmanagementmodify/${net.networkId}`); };
+  const handleConfigureNetwork = (net) => {
+    setSelectedNetwork(net);
+    navigate(`/admin/network-configure/${net.networkId}/${encodeURIComponent(net.networkName)}`);
   };
 
   // ─── Pagination ───────────────────────────────────────────────
@@ -175,163 +120,175 @@ const NetworkManagementGrid = () => {
   const startIdx = (currentPage - 1) * perPage;
   const currentNetworks = filteredNetworks.slice(startIdx, startIdx + perPage);
 
+  // ─── Render ───────────────────────────────────────────────────
   return (
-    <div className={styles["screen-layout-user"]}>
-      <div
-        className={styles["container-userManagement-screen"]}
-        style={{ padding: "30px" }}
-      >
-        <h2 className={styles["title"]}>
-          {getLabel("networkmanagementgrid.title") || "Network Management"}
-        </h2>
+    <div className={styles.screenLayoutUser}>
+      <div className={styles.containerScreen}>
 
-        {/* Action Buttons */}
-        <div className={styles["create"]}>
-          <button
-            className={`${styles["create-button"]} action-btn`}
-            onClick={handleCreateNetwork}
-          >
-            <svg
-              width="17"
-              height="17"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#22c55e"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle cx="12" cy="12" r="9" />
-              <line x1="12" y1="8" x2="12" y2="16" />
-              <line x1="8" y1="12" x2="16" y2="12" />
-            </svg>
-            {getLabel("networkmanagementgrid.createNetwork")}
-          </button>
+        {/* ══ FIXED TOP SECTION ══════════════════════════════════ */}
+        <div className={styles.fixedTop}>
 
-          <button
-            className={`${styles["changePassword"]} action-btn`}
-            onClick={handleChangePassword}
-            disabled={!selectedNetwork || statusLoading}
-          >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#8b5cf6"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle cx="9" cy="7" r="3" />
-              <path d="M3 21v-2a5 5 0 0 1 8.1-3.9" />
-              <rect x="13" y="13" width="8" height="6" rx="1.5" />
-              <path d="M15 13v-2a2 2 0 0 1 4 0v2" />
-              <circle cx="17" cy="16" r="0.8" fill="#8b5cf6" />
-            </svg>
-            {getLabel("networkmanagementgrid.changePassword")}
-          </button>
+          {/* Row 1 – Title + Search bar in ONE div */}
+          <div className={styles.titleRow}>
+            <h2 className={styles.title}>
+              {getLabel("networkmanagementgrid.title") || "Network Management"}
+            </h2>
 
-          <button
-            className={`${styles["active"]} action-btn`}
-            onClick={handleActivateNetwork}
-            disabled={
-              !selectedNetwork ||
-              statusLoading ||
-              selectedNetwork?.statusCode === "AC"
-            }
-          >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#22c55e"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle cx="10" cy="7" r="3" />
-              <path d="M4 21v-2a5 5 0 0 1 7.9-4.1" />
-              <circle cx="18" cy="17" r="4" />
-              <polyline points="15.5 17 17 18.5 20.5 15" />
-            </svg>
-            {statusLoading ? "Activating..." : "Activate"}
-          </button>
-
-          <button
-            className={`${styles["deactive"]} action-btn`} // ← you may want different class
-            onClick={handleDeactivateNetwork}
-            disabled={
-              !selectedNetwork ||
-              statusLoading ||
-              selectedNetwork?.statusCode === "DA"
-            }
-          >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#ef4444"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle cx="10" cy="7" r="3" />
-              <path d="M4 21v-2a5 5 0 0 1 7.9-4.1" />
-              <circle cx="18" cy="17" r="4" />
-              <line x1="15.8" y1="14.8" x2="20.2" y2="19.2" />
-              <line x1="20.2" y1="14.8" x2="15.8" y2="19.2" />
-            </svg>
-            {statusLoading ? "Deactivating..." : "Deactivate"}
-          </button>
-        </div>
-
-        {/* Search Section */}
-        {/* Search Section */}
-
-        <div className={styles.search}>
-          <div className={styles.searchLeft}>
-            <div className={styles.searchField}>
-              <span>{getLabel("networkmanagementgrid.search")}</span>
-
-              <select
-                value={searchColumn}
-                onChange={(e) => setSearchColumn(e.target.value)}
-                className={styles.searchSelect}
-              >
-                <option>{getLabel("networkmanagementgrid.networkName")}</option>
-              </select>
+            <div className={styles.searchBox}>
+              {/* Search icon */}
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder={"Search..."}
+                className={styles.searchInput}
+              />
+              {searchTerm && (
+                <button className={styles.clearBtn} onClick={() => setSearchTerm("")} title="Clear">
+                  ✕
+                </button>
+              )}
             </div>
-
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search..."
-              className={styles.searchInput}
-            />
-
-            <button onClick={handleSearch} className={styles.searchButton}>
-              {getLabel("networkmanagementgrid.Go")}
-            </button>
           </div>
 
-          <div className={styles.searchRight}>
-            <span>
-              {getLabel("networkmanagementgrid.viewPerPage") || "View Per Page"}
-            </span>
+          {/* Row 2 – Action Buttons */}
+          <div className={styles.actionRow}>
+            {/* Create Network */}
+            <button className={styles.btnCreate} onClick={handleCreateNetwork}>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="9" /><line x1="12" y1="8" x2="12" y2="16" /><line x1="8" y1="12" x2="16" y2="12" />
+              </svg>
+              {"Create Network"}
+            </button>
 
-            <select
-              value={perPage}
-              onChange={(e) => setPerPage(Number(e.target.value))}
-              className={styles.pageSelect}
-            >
+            {/* Change Password */}
+            <button className={styles.btnPassword} onClick={handleChangePassword}
+              disabled={!selectedNetwork || statusLoading}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="9" cy="7" r="3" /><path d="M3 21v-2a5 5 0 0 1 8.1-3.9" />
+                <rect x="13" y="13" width="8" height="6" rx="1.5" />
+                <path d="M15 13v-2a2 2 0 0 1 4 0v2" />
+              </svg>
+              {"Change Password"}
+            </button>
+
+            {/* Activate */}
+            <button className={styles.btnActivate} onClick={handleActivateNetwork}
+              disabled={!selectedNetwork || statusLoading || selectedNetwork?.statusCode === "AC"}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="10" cy="7" r="3" /><path d="M4 21v-2a5 5 0 0 1 10 0v2" />
+                <polyline points="16 11 18 13 22 9" />
+              </svg>
+              {statusLoading ? "Activating…" : (getLabel("Activate") || "Activate")}
+            </button>
+
+            {/* Deactivate */}
+            <button className={styles.btnDeactivate} onClick={handleDeactivateNetwork}
+              disabled={!selectedNetwork || statusLoading || selectedNetwork?.statusCode === "DA"}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="10" cy="7" r="3" /><path d="M4 21v-2a5 5 0 0 1 7.9-4.1" />
+                <circle cx="18" cy="17" r="4" />
+                <line x1="15.8" y1="14.8" x2="20.2" y2="19.2" /><line x1="20.2" y1="14.8" x2="15.8" y2="19.2" />
+              </svg>
+              {statusLoading ? "Deactivating…" : (getLabel("Deactivate") || "Deactivate")}
+            </button>
+          </div>
+        </div>
+        {/* ══ END FIXED TOP ══════════════════════════════════════ */}
+
+        {/* ══ SCROLLABLE TABLE AREA ══════════════════════════════ */}
+        <div className={styles.tableScrollArea}>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th className={styles.thCheck}></th>
+                <th>{getLabel("networkmanagementgrid.networkName") || "Network Name"}</th>
+                <th>{getLabel("networkmanagementgrid.networkCode") || "Network Code"}</th>
+                <th>{getLabel("networkmanagementgrid.StatusCode") || "Status Code"}</th>
+                <th>{getLabel("networkmanagementgrid.Action") || "Action"}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {listLoading ? (
+                <tr><td colSpan="5" className={styles.stateCell}>
+                  <span className={styles.loadingSpinner} />
+                  {getLabel("networkmanagementgrid.Loading") || "Loading…"}
+                </td></tr>
+              ) : currentNetworks.length === 0 ? (
+                <tr><td colSpan="5" className={styles.stateCell}>No records found.</td></tr>
+              ) : (
+                currentNetworks.map((net) => (
+                  <tr key={net.networkId}
+                    className={selectedNetwork?.networkId === net.networkId ? styles.rowSelected : ""}>
+                    <td>
+                      <input
+                        type="radio"
+                        name="selectNetwork"
+                        checked={selectedNetwork?.networkId === net.networkId}
+                        onChange={() => { }}
+                        onClick={() => setSelectedNetwork(
+                          selectedNetwork?.networkId === net.networkId ? null : net
+                        )}
+                      />
+                    </td>
+                    <td>{net.networkName}</td>
+                    <td>{net.networkCode}</td>
+                    <td>
+                      <span className={net.statusCode === "AC" ? styles.badgeActive : styles.badgeInactive}>
+                        {net.statusCode}
+                      </span>
+                    </td>
+                    <td className={styles.actionCell}>
+                      {/* View */}
+                      <a href="#" onClick={(e) => { e.preventDefault(); handleViewNetwork(net); }} className={styles.actionLink}>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                          strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z" /><circle cx="12" cy="12" r="3" />
+                        </svg>
+                        {getLabel("networkmanagementgrid.viewNetwork") || "View"}
+                      </a>
+                      <span className={styles.sep}>|</span>
+                      {/* Modify */}
+                      <a href="#" onClick={(e) => { e.preventDefault(); handleModifyNetwork(net); }} className={styles.actionLink}>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                          strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                        </svg>
+                        {getLabel("networkmanagementgrid.Modify") || "Modify"}
+                      </a>
+                      <span className={styles.sep}>|</span>
+                      {/* Configure */}
+                      <a href="#" onClick={(e) => { e.preventDefault(); handleConfigureNetwork(net); }} className={styles.actionLink}>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                          strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <circle cx="12" cy="12" r="10" />
+                          <path d="M2 12 Q12 8 22 12 Q12 16 2 12Z" />
+                          <path d="M12 2 Q8 12 12 22 Q16 12 12 2Z" />
+                        </svg>
+                        {getLabel("networkmanagementgrid.Configure") || "Configure"}
+                      </a>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+        {/* ══ END TABLE ══════════════════════════════════════════ */}
+
+        {/* ══ BOTTOM BAR ════════════════════════════════════════ */}
+        <div className={styles.bottomBar}>
+
+          {/* Left – View per page */}
+          <div className={styles.perPageWrapper}>
+            <span>{getLabel("networkmanagementgrid.viewPerPage") || "View Per Page"}</span>
+            <select value={perPage} onChange={(e) => setPerPage(Number(e.target.value))}
+              className={styles.pageSelect}>
               <option>10</option>
               <option>20</option>
               <option>30</option>
@@ -339,155 +296,42 @@ const NetworkManagementGrid = () => {
               <option>100</option>
             </select>
           </div>
-        </div>
 
-        {/* Table */}
-        <table className={styles["tab"]}>
-          <thead style={{ backgroundColor: "#d0d0d0" }}>
-            <tr>
-              <th></th>
-              <th>{getLabel("networkmanagementgrid.networkName")}</th>
-              <th>{getLabel("networkmanagementgrid.networkCode")}</th>
-              <th>{getLabel("networkmanagementgrid.StatusCode")}</th>
-              <th>{getLabel("networkmanagementgrid.Action")}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {listLoading ? (
-              <tr>
-                <td colSpan="5">{getLabel("networkmanagementgrid.Loading")}</td>
-              </tr>
-            ) : (
-              currentNetworks.map((net) => (
-                <tr key={net.networkId}>
-                  <td style={{ textAlign: "center" }}>
-                    <input
-                      type="radio"
-                      name="selectNetwork"
-                      checked={selectedNetwork?.networkId === net.networkId}
-                      onChange={() => { }}
-                      onClick={() => {
-                        if (selectedNetwork?.networkId === net.networkId) {
-                          setSelectedNetwork(null);
-                        } else {
-                          setSelectedNetwork(net);
-                        }
-                      }}
-                    />
-                  </td>
-                  <td>{net.networkName}</td>
-                  <td>{net.networkCode}</td>
-                  <td>{net.statusCode}</td>
-                  <td style={{ textAlign: "center" }}>
-                    <a
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleViewNetwork(net);
-                      }}
-                    >
-                      <svg
-                        width="17"
-                        height="17"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="#f59e0b"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z" />
-                        <circle cx="12" cy="12" r="3" />
-                      </svg>
-                      {getLabel("networkmanagementgrid.viewNetwork")}
-                    </a>
-                    {" | "}
-                    <a
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleModifyNetwork(net);
-                      }}
-                    >
-                      <svg
-                        width="17"
-                        height="17"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="#f59e0b"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-                      </svg>
-                      {getLabel("networkmanagementgrid.Modify")}
-                    </a>
-                    {" | "}
-                    <a
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleConfigureNetwork(net);
-                      }}
-                      style={{ color: "#2563eb", fontWeight: 500 }}
-                    >
-                      <svg
-                        width="17"
-                        height="17"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="#f59e0b"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <circle cx="12" cy="12" r="10" />
-                        <path d="M2 12 Q12 8 22 12 Q12 16 2 12Z" />
-                        <path d="M12 2 Q8 12 12 22 Q16 12 12 2Z" />
-                      </svg>
-                      {getLabel("networkmanagementgrid.Configure")}
-                    </a>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+          {/* Center – Pagination */}
+          <div className={styles.paginationWrapper}>
+            <button className={styles.pageBtn}
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              disabled={currentPage === 1}>‹</button>
 
-        {/* Pagination */}
-        {filteredNetworks.length > 0 && (
-          <div style={{ textAlign: "center", margin: "30px 0" }}>
             {Array.from({ length: totalPages }, (_, i) => (
-              <button
-                key={i + 1}
+              <button key={i + 1}
                 onClick={() => setCurrentPage(i + 1)}
-                className={styles["pagination"]}
-                style={{
-                  backgroundColor:
-                    currentPage === i + 1 ? "#1e40af" : "#f0f0f0",
-                  color: currentPage === i + 1 ? "white" : "#333",
-                }}
-              >
+                className={`${styles.pageBtn} ${currentPage === i + 1 ? styles.pageBtnActive : ""}`}>
                 {i + 1}
               </button>
             ))}
-          </div>
-        )}
 
-        {/* Print */}
-        <div style={{ textAlign: "right", marginTop: "30px" }}>
-          <button
-            onClick={() => window.print()}
-            style={{ padding: "10px 24px" }}
-          >
-            {getLabel("networkmanagementgrid.Print")}
-          </button>
+            <button className={styles.pageBtn}
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages || totalPages === 0}>›</button>
+          </div>
+
+          {/* Right – Print */}
+          <div className={styles.printWrapper}>
+            <button className={styles.printBtn} onClick={() => window.print()}>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="6 9 6 2 18 2 18 9" />
+                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+                <rect x="6" y="14" width="12" height="8" />
+              </svg>
+              {getLabel("networkmanagementgrid.Print") || "Print"}
+            </button>
+          </div>
+
         </div>
+        {/* ══ END BOTTOM BAR ════════════════════════════════════ */}
+
       </div>
     </div>
   );

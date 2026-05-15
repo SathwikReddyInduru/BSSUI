@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { showError, showSuccess } from "../../../utils/toast";
-import styles from '../styles/UserManagementGrid.module.css';
+import styles from '../styles/usermanagementgrid.module.css';
 import { useAppContext } from '../../../contexts/AppContext';
 
 // ─── Slices ────────────────────────────────────────────────
@@ -41,8 +41,6 @@ import {
   selectViewUserInfoError,
   resetViewUserInfo,
 } from '../../../store/slices/userManagementSlices/viewUserInfoSlice';
-
-//import './ScreenStyles.css';
 
 const UserManagementGrid = () => {
   const dispatch = useDispatch();
@@ -124,8 +122,6 @@ const UserManagementGrid = () => {
       filtered = users.filter(user => {
         const fieldMap = {
           'Login Name': user.loginName || '',
-          // 'Name': user.name || '',
-          // 'Status': user.status || '',
         };
         const field = fieldMap[searchColumn] || '';
         return field.toLowerCase().includes(searchTerm.toLowerCase());
@@ -158,7 +154,7 @@ const UserManagementGrid = () => {
       showError('Please select a user');
       return;
     }
-    navigate('/view-user-info', {
+    navigate('/ums/view-user/' + selectedLoginName, {
       state: {
         selectedLoginName: selectedLoginName,
         networkId: NETWORK_ID,
@@ -177,7 +173,7 @@ const UserManagementGrid = () => {
         })
       ).unwrap();
 
-      navigate('/modify-user-info', {
+      navigate(`/ums/modify-user/${selectedLoginName}`, {
         state: { userInfo: result },
       });
     } catch (err) {
@@ -241,11 +237,11 @@ const UserManagementGrid = () => {
     }
   };
 
-  const handleCreateUser = () => navigate('/user-management');
+  const handleCreateUser = () => navigate('/ums/create-user');
 
   const handleChangePassword = () => {
     if (!selectedLoginName) return showError('Please select a user');
-    navigate(`/changepassword/${selectedLoginName}`);
+    navigate(`/ums/changepassword/${selectedLoginName}`);
   };
 
   const handleActivateUser = async () => {
@@ -320,265 +316,270 @@ const UserManagementGrid = () => {
   const startIdx = (currentPage - 1) * perPage;
   const currentUsers = filteredUsers.slice(startIdx, startIdx + perPage);
 
+  // Pagination range (show max 5 pages around current)
+  const getPageNumbers = () => {
+    const pages = [];
+    const delta = 2;
+    const left = Math.max(1, currentPage - delta);
+    const right = Math.min(totalPages, currentPage + delta);
+
+    if (left > 1) pages.push(1);
+    if (left > 2) pages.push('...');
+    for (let i = left; i <= right; i++) pages.push(i);
+    if (right < totalPages - 1) pages.push('...');
+    if (right < totalPages) pages.push(totalPages);
+
+    return pages;
+  };
+
   return (
     <div className={styles['screen-layout-user']}>
-      <div className={styles['container-userManagement-screen']} style={{ padding: '30px' }}>
-        <h2 className={styles['title']}>
-          {getLabel('usermanagementgrid.title')}
-        </h2>
+      <div className={styles['container-userManagement-screen']}>
 
-        {/* Action Buttons */}
-        <div className={styles['create']}>
-          <button className={`${styles['create-button']} action-btn`} onClick={handleCreateUser}>
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="12" cy="12" r="9" />
-              <line x1="12" y1="8" x2="12" y2="16" />
-              <line x1="8" y1="12" x2="16" y2="12" />
-            </svg>
-            {getLabel('usermanagementgrid.createUser')}
-          </button>
+        {/* Fixed Top Section */}
+        <div className={styles.fixedTopSection}>
+          {/* <h2 className={styles['title']}>
+            {getLabel('usermanagementgrid.title')}
+          </h2> */}
 
-          <button className={`${styles['changePassword']} action-btn`} onClick={handleChangePassword} disabled={!selectedLoginName}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="9" cy="7" r="3" />
-              <path d="M3 21v-2a5 5 0 0 1 8.1-3.9" />
-              <rect x="13" y="13" width="8" height="6" rx="1.5" />
-              <path d="M15 13v-2a2 2 0 0 1 4 0v2" />
-              <circle cx="17" cy="16" r="0.8" fill="#8b5cf6" />
-            </svg>
-            {getLabel('usermanagementgrid.changePassword')}
-          </button>
+          <div className={styles.titleRow}>
+            <h2 className={styles.title}>
+              {getLabel("usermanagementgrid.title") || "User Management"}
+            </h2>
 
-          <button className={`${styles['active']} action-btn`} onClick={handleActivateUser} disabled={statusLoading || !selectedLoginName}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="10" cy="7" r="3" />
-              <path d="M4 21v-2a5 5 0 0 1 7.9-4.1" />
-              <circle cx="18" cy="17" r="4" />
-              <polyline points="15.5 17 17 18.5 20.5 15" />
-            </svg>
-            {statusLoading ? 'Activating...' : getLabel('usermanagementgrid.ActivateUser')}
-          </button>
+            <div className={styles.searchBox}>
+              {/* Search icon */}
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder={"Search..."}
+                className={styles.searchInput}
+              />
+              {searchTerm && (
+                <button className={styles.clearBtn} onClick={() => setSearchTerm("")} title="Clear">
+                  ✕
+                </button>
+              )}
+            </div>
+          </div>
 
-          <button className={`${styles['active']} action-btn`} onClick={handleDeactivateUser} disabled={statusLoading || !selectedLoginName}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="10" cy="7" r="3" />
-              <path d="M4 21v-2a5 5 0 0 1 7.9-4.1" />
-              <circle cx="18" cy="17" r="4" />
-              <line x1="15.8" y1="14.8" x2="20.2" y2="19.2" />
-              <line x1="20.2" y1="14.8" x2="15.8" y2="19.2" />
-            </svg>
-            {statusLoading ? 'Deactivating...' : getLabel('usermanagementgrid.DeactivateUser')}
-          </button>
+          {/* Action Buttons */}
+          <div className={styles['create']}>
+            <button className={`${styles['create-button']} action-btn`} onClick={handleCreateUser}>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="9" />
+                <line x1="12" y1="8" x2="12" y2="16" />
+                <line x1="8" y1="12" x2="16" y2="12" />
+              </svg>
+              {getLabel('usermanagementgrid.createUser')}
+            </button>
 
-          <button className={`${styles['active']} action-btn`} onClick={handleViewInfo} disabled={!selectedLoginName}>
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z" />
-              <circle cx="12" cy="12" r="3" />
-            </svg>
-            {getLabel('usermanagementgrid.ViewInfo')}
-          </button>
-        </div>
+            <button
+              className={`${styles['changePassword']} action-btn`}
+              onClick={handleChangePassword}
+              disabled={!selectedLoginName}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="9" cy="7" r="3" />
+                <path d="M3 21v-2a5 5 0 0 1 8.1-3.9" />
+                <rect x="13" y="13" width="8" height="6" rx="1.5" />
+                <path d="M15 13v-2a2 2 0 0 1 4 0v2" />
+                <circle cx="17" cy="16" r="0.8" fill="#7c3aed" />
+              </svg>
+              {getLabel('usermanagementgrid.changePassword')}
+            </button>
 
-        {/* Search Bar */}
-        <div className={styles['search']}>
-          <div className={styles['searchbar']}>
-            <span style={{ fontWeight: '500' }}>{getLabel('usermanagementgrid.Search')}</span>
-            <select value={searchColumn} onChange={e => setSearchColumn(e.target.value)}>
-              <option>{getLabel('usermanagementgrid.LoginName')}</option>
-            </select>
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={e => setSearchTerm(e.target.value)}
-              placeholder="Search..."
-              className={styles['search-button']}
-            />
-            <button onClick={handleSearch} className={styles['searchedge']}>
-              Go
+            <button
+              className={`${styles['active']} action-btn`}
+              onClick={handleActivateUser}
+              disabled={statusLoading || !selectedLoginName}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="10" cy="7" r="3" />
+                <path d="M4 21v-2a5 5 0 0 1 7.9-4.1" />
+                <circle cx="18" cy="17" r="4" />
+                <polyline points="15.5 17 17 18.5 20.5 15" />
+              </svg>
+              {statusLoading ? 'Activating...' : getLabel('usermanagementgrid.ActivateUser')}
+            </button>
+
+            <button
+              className={`${styles['deactive']} action-btn`}
+              onClick={handleDeactivateUser}
+              disabled={statusLoading || !selectedLoginName}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="10" cy="7" r="3" />
+                <path d="M4 21v-2a5 5 0 0 1 7.9-4.1" />
+                <circle cx="18" cy="17" r="4" />
+                <line x1="15.8" y1="14.8" x2="20.2" y2="19.2" />
+                <line x1="20.2" y1="14.8" x2="15.8" y2="19.2" />
+              </svg>
+              {statusLoading ? 'Deactivating...' : getLabel('usermanagementgrid.DeactivateUser')}
+            </button>
+
+            <button
+              className={`${styles['viewInfo']} action-btn`}
+              onClick={handleViewInfo}
+              disabled={!selectedLoginName}
+            >
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#d97706" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+              {getLabel('usermanagementgrid.ViewInfo')}
             </button>
           </div>
-
-          <div className={styles['viewper']}>
-            <span style={{ fontWeight: '500' }}>{getLabel('usermanagementgrid.viewPerPage')}</span>
-            <select value={perPage} onChange={e => setPerPage(Number(e.target.value))} style={{ padding: '8px' }}>
-              <option>10</option>
-              <option>20</option>
-              <option>30</option>
-              <option>40</option>
-              <option>50</option>
-              <option>100</option>
-              <option>1000</option>
-            </select>
-          </div>
         </div>
 
-        {/* Table */}
-        <table className={styles['tab']} >
-          <thead style={{ backgroundColor: '#d0d0d0' }}>
-            <tr>
-              <th className={styles['tableheader']}></th>
-              <th className={styles['tableheader']}>{getLabel('usermanagementgrid.LoginName')}</th>
-              <th className={styles['tableheader']}>{getLabel('usermanagementgrid.Name')}</th>
-              <th className={styles['tableheader']}>{getLabel('usermanagementgrid.Status')}</th>
-              <th className={styles['tableheader']}>{getLabel('usermanagementgrid.Action')}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {listLoading ? (
-              <tr><td colSpan="5" className={styles['loading']}>Loading...</td></tr>
-            ) : filteredUsers.length === 0 && searchTerm.trim() ? (
-              <tr><td colSpan="5" className={styles['usernot']}>
-                <strong>{getLabel('usermanagementgrid.Usernotfound')}</strong><br />
-                <small>{getLabel('usermanagementgrid.Nousermatchesyoursearch')}</small>
-              </td></tr>
-            ) : (
-              currentUsers.map(user => (
-                <tr key={user.loginName}>
-                  <td style={{ textAlign: 'center' }}>
-                    <input
-                      type="radio"
-                      name="selectUser"
-                      checked={selectedLoginName === user.loginName}
-                      onChange={() => setSelectedLoginName(user.loginName)}
-                    />
-                  </td>
-                  <td>{user.loginName}</td>
-                  <td>{user.name}</td>
-                  <td>{user.status === 'AC' ? 'ACTIVE' : 'INACTIVE'}</td>
-                  <td style={{ textAlign: 'center' }}>
-                    <a
-                      href="#"
-                      onClick={e => {
-                        e.preventDefault();
-                        setSelectedLoginName(user.loginName);
-                        handleModifyRoles();
-                      }}
-                    >
-                      <svg
-                        width="17"
-                        height="17"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="#f59e0b"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        xmlns="http://www.w3.org/2000/svg"
+        {/* Scrollable Table Area */}
+        <div className={styles.tableScrollArea}>
+          <table className={styles['tab']}>
+            <thead>
+              <tr>
+                <th></th>
+                <th>{getLabel('usermanagementgrid.LoginName')}</th>
+                <th>{getLabel('usermanagementgrid.Name')}</th>
+                <th>{getLabel('usermanagementgrid.Status')}</th>
+                <th>{getLabel('usermanagementgrid.Action')}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {listLoading ? (
+                <tr><td colSpan="5" className={styles['loading']}>Loading...</td></tr>
+              ) : filteredUsers.length === 0 && searchTerm.trim() ? (
+                <tr><td colSpan="5" className={styles['usernot']}>
+                  <strong>{getLabel('usermanagementgrid.Usernotfound')}</strong><br />
+                  <small>{getLabel('usermanagementgrid.Nousermatchesyoursearch')}</small>
+                </td></tr>
+              ) : (
+                currentUsers.map(user => (
+                  <tr key={user.loginName}>
+                    <td>
+                      <input
+                        type="radio"
+                        name="selectUser"
+                        checked={selectedLoginName === user.loginName}
+                        onChange={() => setSelectedLoginName(user.loginName)}
+                      />
+                    </td>
+                    <td>{user.loginName}</td>
+                    <td>{user.name}</td>
+                    <td>
+                      <span className={`${styles.statusBadge} ${user.status === 'AC' ? styles.statusActive : styles.statusInactive}`}>
+                        {user.status === 'AC' ? 'ACTIVE' : 'INACTIVE'}
+                      </span>
+                    </td>
+                    <td>
+                      <a
+                        href="#"
+                        onClick={e => {
+                          e.preventDefault();
+                          setSelectedLoginName(user.loginName);
+                          setTimeout(() => handleModifyRoles(), 0);
+                        }}
                       >
-                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-                      </svg>
-                      {' '}  {/* ← this is the simplest and cleanest way */}
-                      {getLabel('usermanagementgrid.ModifyRoles')}
-                    </a>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                        </svg>
+                        {getLabel('usermanagementgrid.ModifyRoles')}
+                      </a>
 
-                    {' | '}
+                      {' | '}
 
-                    <a
-                      href="#"
-                      onClick={e => {
-                        e.preventDefault();
-                        setSelectedLoginName(user.loginName);
-                        handleViewRoles();
-                      }}
-                    >
-                      <svg
-                        width="17"
-                        height="17"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="#f59e0b"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        xmlns="http://www.w3.org/2000/svg"
+                      <a
+                        href="#"
+                        onClick={e => {
+                          e.preventDefault();
+                          setSelectedLoginName(user.loginName);
+                          setTimeout(() => handleViewRoles(), 0);
+                        }}
                       >
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z" />
-                        <circle cx="12" cy="12" r="3" />
-                      </svg>
-                      {' '}
-                      {getLabel('usermanagementgrid.ViewRoles')}
-                    </a>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z" />
+                          <circle cx="12" cy="12" r="3" />
+                        </svg>
+                        {getLabel('usermanagementgrid.ViewRoles')}
+                      </a>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
 
         {/* Pagination */}
         {filteredUsers.length > 0 && (
-          <div style={{ textAlign: 'center', margin: '30px 0' }}>
-            {Array.from({ length: totalPages }, (_, i) => (
-              <button
-                key={i + 1}
-                onClick={() => setCurrentPage(i + 1)}
-                className={styles['pagination']}
-                style={{
+          <div className={styles.paginationWrapper}>
+            <button
+              className={styles.pagination}
+              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+            >
+              ‹
+            </button>
 
-                  backgroundColor: currentPage === i + 1 ? '#1e40af' : '#f0f0f0',
-                  color: currentPage === i + 1 ? 'white' : '#333',
+            {getPageNumbers().map((page, idx) =>
+              page === '...' ? (
+                <span key={`ellipsis-${idx}`} className={styles.paginationEllipsis}>…</span>
+              ) : (
+                <button
+                  key={page}
+                  onClick={() => setCurrentPage(page)}
+                  className={styles.pagination}
+                  style={{
+                    backgroundColor: currentPage === page ? '#1e40af' : undefined,
+                    color: currentPage === page ? 'white' : undefined,
+                    borderColor: currentPage === page ? '#1e40af' : undefined,
+                  }}
+                >
+                  {page}
+                </button>
+              )
+            )}
 
-                }}
-              >
-                {i + 1}
-              </button>
-            ))}
+            <button
+              className={styles.pagination}
+              onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
+            >
+              ›
+            </button>
           </div>
         )}
 
         {/* Print */}
-        <div style={{ textAlign: 'right', marginTop: '30px' }}>
-          <button onClick={() => window.print()} className={styles.printButton}>
-            Print
+        <div className={styles.printWrapper}>
+          <button onClick={() => window.print()}>
+            🖨 Print
           </button>
         </div>
+
       </div>
 
       {/* View Roles Modal */}
       {showViewRolesModal && (
-        <div
-          className={styles['viewmodal']}
-          onClick={closeViewRolesModal}
-        >
-          <div
-            className={styles['viewroles-content']}
-            onClick={e => e.stopPropagation()}
-          >
-            <div
-              className={styles['viewheader']}
-            >
+        <div className={styles['viewmodal']} onClick={closeViewRolesModal}>
+          <div className={styles['viewroles-content']} onClick={e => e.stopPropagation()}>
+            <div className={styles['viewheader']}>
               {getLabel('usermanagementgrid.AssignedRolesfor')} {selectedLoginName}
-              <button
-                onClick={closeViewRolesModal}
-                className={styles['viewclose']}
-              >
-                ×
-              </button>
+              <button onClick={closeViewRolesModal} className={styles['viewclose']}>×</button>
             </div>
 
             <div className={styles['rolesloading']}>
               {userRolesLoading ? (
-                <div className={styles['assigned-roles']}>
-                  {getLabel('usermanagementgrid.LoadingAssignedRoles')}
-                </div>
+                <div className={styles['assigned-roles']}>{getLabel('usermanagementgrid.LoadingAssignedRoles')}</div>
               ) : userRolesError ? (
-                <div className={styles['roleerror']}>
-                  {userRolesError}
-                </div>
+                <div className={styles['roleerror']}>{userRolesError}</div>
               ) : !userRolesData?.assignedRoles?.length ? (
-                <div className={styles['roleassign']}>
-                  {getLabel('usermanagementgrid.NoRolesAssigned')}
-                </div>
+                <div className={styles['roleassign']}>{getLabel('usermanagementgrid.NoRolesAssigned')}</div>
               ) : (
                 <ul className={styles['roledata']}>
                   {userRolesData.assignedRoles.map(role => (
-                    <li
-                      key={role.roleId}
-                      className={styles['roleid']}
-                    >
-                      {role.roleName}
-                    </li>
+                    <li key={role.roleId} className={styles['roleid']}>{role.roleName}</li>
                   ))}
                 </ul>
               )}
@@ -589,51 +590,27 @@ const UserManagementGrid = () => {
 
       {/* Modify Roles Modal */}
       {showModifyRolesModal && (
-        <div
-          className={styles['modify-rolemodalstyle']}
-          onClick={closeModifyRolesModal}
-        >
-          <div
-            className={styles['modifyrole']}
-            onClick={e => e.stopPropagation()}
-          >
-            <div
-              className={styles['modal-header']}
-            >
+        <div className={styles['modify-rolemodalstyle']} onClick={closeModifyRolesModal}>
+          <div className={styles['modifyrole']} onClick={e => e.stopPropagation()}>
+            <div className={styles['modal-header']}>
               {getLabel('usermanagementgrid.ModifyRolesfor')} {selectedLoginName}
-              <button
-                onClick={closeModifyRolesModal}
-                className={styles['modifyfor']}
-              >
-                ×
-              </button>
+              <button onClick={closeModifyRolesModal} className={styles['modifyfor']}>×</button>
             </div>
 
             <div className={styles['roleuse']}>
               {userRolesLoading ? (
-                <div className={styles['rload']}>
-                  {getLabel('usermanagementgrid.Loadingroles')}
-                </div>
+                <div className={styles['rload']}>{getLabel('usermanagementgrid.Loadingroles')}</div>
               ) : userRolesError ? (
-                <div className={styles['roleerror']}>
-                  {userRolesError}
-                </div>
+                <div className={styles['roleerror']}>{userRolesError}</div>
               ) : (
-                <div
-                  className={styles['userol']}
-                >
+                <div className={styles['userol']}>
                   {userRolesData?.allRoles?.map(role => {
                     const isChecked = selectedRoles.includes(role.roleId);
-
                     return (
                       <label
                         key={role.roleId}
                         className={styles['all-roles']}
-                        style={{
-
-                          background: isChecked ? '#e3f2fd' : '#ffffff',
-
-                        }}
+                        style={{ background: isChecked ? '#e3f2fd' : '#ffffff' }}
                       >
                         <input
                           type="checkbox"
@@ -642,9 +619,7 @@ const UserManagementGrid = () => {
                           disabled={modifyLoading}
                           className={styles['modifyloading']}
                         />
-                        <span style={{ fontSize: '16px', fontWeight: '500' }}>
-                          {role.roleName}
-                        </span>
+                        <span style={{ fontSize: '16px', fontWeight: '500' }}>{role.roleName}</span>
                       </label>
                     );
                   })}
@@ -652,22 +627,11 @@ const UserManagementGrid = () => {
               )}
             </div>
 
-            <div
-              className={styles['modal-footer']}
-            >
-              <button
-                onClick={closeModifyRolesModal}
-                disabled={modifyLoading}
-                className={styles['modify-button']}
-              >
+            <div className={styles['modal-footer']}>
+              <button onClick={closeModifyRolesModal} disabled={modifyLoading} className={styles['modify-button']}>
                 {getLabel('usermanagementgrid.Cancel')}
               </button>
-
-              <button
-                onClick={handleSubmitRoles}
-                disabled={modifyLoading}
-                className={styles['submit-role']}
-              >
+              <button onClick={handleSubmitRoles} disabled={modifyLoading} className={styles['submit-role']}>
                 {modifyLoading ? 'Saving...' : getLabel('usermanagementgrid.Submit')}
               </button>
             </div>

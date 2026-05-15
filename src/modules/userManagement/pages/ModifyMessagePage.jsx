@@ -1,19 +1,16 @@
-// src/screens/RoleModifyStatus.jsx
+// src/screens/ModifyMessagePage.jsx
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import styles from '../styles/status.module.css'; // create or reuse existing
 
-const RoleModifyStatus = () => {
+const ModifyMessagePage = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { isSuccess, message, roleName } = location.state || {};
+  const { isSuccess, message, username } = location.state || {};
 
-  const displayMessage =
-    message ||
-    (isSuccess
-      ? 'Role created successfully'
-      : 'Failed to create role. Please try again.');
+  const defaultMessage = isSuccess 
+    ? 'Roles modified successfully' 
+    : 'Failed to modify roles';
 
   return (
     <div className="screen-container-mvno-selection-screen">
@@ -28,21 +25,21 @@ const RoleModifyStatus = () => {
             margin: '0 auto'
           }}
         >
-          <h2 style={{
+          <h2 style={{ 
             color: isSuccess ? '#28a745' : '#dc3545',
             marginBottom: '20px'
           }}>
             {isSuccess ? '' : ''}
           </h2>
 
-          {roleName ? (
+          {username ? (
             <p style={{
               fontSize: '17px',
               fontWeight: 'bold',
               marginBottom: '16px',
               color: '#333'
             }}>
-              Role: <span style={{ color: '#0066cc' }}>{roleName}</span>
+              User: <span style={{ color: '#0066cc' }}>{username}</span>
             </p>
           ) : null}
 
@@ -55,12 +52,12 @@ const RoleModifyStatus = () => {
               whiteSpace: 'pre-wrap'
             }}
           >
-            {displayMessage}
+            {message || defaultMessage}
           </p>
 
           <div className="button-group">
             <button
-              onClick={() => navigate('/ums/roles')}
+              onClick={() => navigate('/usermanagementgrid')}
               className="button button-submit"
               style={{ minWidth: '150px' }}
             >
@@ -73,4 +70,4 @@ const RoleModifyStatus = () => {
   );
 };
 
-export default RoleModifyStatus;
+export default ModifyMessagePage;

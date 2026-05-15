@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import FormField from '../components/FormField';
-// import { showError, showSuccess } from '../utils/toast';
+import { showError, showSuccess } from '../utils/toast';
 import { useAppContext } from '../contexts/AppContext';
 import styles from '../CssModules/networkmodify.module.css';
 
@@ -288,7 +288,7 @@ const NetworkManagement = () => {
     if (!check(isPositiveRealValue1(formData.smsThresholdRm), 'Please enter a valid SMS Threshold value')) return false;
     if (Number(formData.smsThresholdRm) > 9999) { showError('Please enter a valid SMS Threshold value'); return false; }
     if (!check(!isEmpty(formData.voucherPrefix), 'Please enter the Voucher Prefix')) return false;
-    if (!check(isPositiveNumber(formData.voucherPrefix), 'Please enter a valid Voucher Prefix.')) return false;
+    // if (!check(isPositiveNumber(formData.voucherPrefix), 'Please enter a valid Voucher Prefix.')) return false;
     const supp1 = trim(formData.supplyChargeTitle1), supp2 = trim(formData.supplyChargeTitle2),
       supp3 = trim(formData.supplyChargeTitle3), supp4 = trim(formData.supplyChargeTitle4);
     if (!check(!isEmpty(supp1), 'Plese enter Supply Charge1 Title')) return false;
@@ -366,7 +366,7 @@ const NetworkManagement = () => {
   };
 
   // Back navigates to the grid
-  const handleBack = () => navigate('/networkmanagementgrid');
+  const handleBack = () => navigate('/admin/networkmanagementgrid');
 
   const stateOptions = [
     { value: '', label: statesLoading ? 'Loading states…' : 'Select State' },

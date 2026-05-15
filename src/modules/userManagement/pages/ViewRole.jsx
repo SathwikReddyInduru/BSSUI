@@ -10,7 +10,7 @@ import {
 } from '../../../store/slices/userManagementSlices/roleDetailsSlice';
 import { showError } from "../../../utils/toast";
 import { useAppContext } from '../../../contexts/AppContext';
-// import styles from '../CssModules/RoleView.module.css';
+import styles from '../styles/viewrole.module.css';
 
 const ViewRole = () => {
   const { roleId } = useParams();
@@ -105,7 +105,7 @@ const ViewRole = () => {
         <div className={styles.buttonContainer}>
           <button
             className={styles.backButton}
-            onClick={() => navigate('/rolemanagement')}
+            onClick={() => navigate('/ums/roles')}
           >
             {getLabel('viewRole.viewHome')}
 

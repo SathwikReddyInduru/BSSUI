@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { showSuccess, showError } from "../../../utils/toast"; // ← you can keep for minor warnings
 
-// import styles from '../CssModules/createrole.module.css';
+import styles from '../styles/createrole.module.css';
 import { useAppContext } from '../../../contexts/AppContext';
 
 // Slices
@@ -82,7 +82,7 @@ const CreateRole = () => {
       }
     }
 
-    navigate('/role-creation-status', {
+    navigate('/ums/role-create-status', {
       state: {
         isSuccess,
         message,
@@ -141,7 +141,7 @@ const CreateRole = () => {
   };
 
   const handleHome = () => {
-    navigate('/rolemanagement');
+    navigate('/ums/roles');
   };
 
   if (privilegesLoading) return <div className={styles['loading-container']}>{getLabel('createRole.loadingPrivileges')}</div>;

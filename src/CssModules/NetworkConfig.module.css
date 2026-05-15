@@ -6,7 +6,6 @@
   width: 100%;
   min-height: 100vh;
   background: #f1f5f9;
-  padding: 18px;
   overflow-y: auto;
 }
 
@@ -94,24 +93,61 @@
 
 .sectionCard {
   background: #ffffff;
-  padding: 24px;
   transition: all .2s ease;
 }
 
-.sectionCard:hover {
-  box-shadow:
-    0 6px 18px rgba(15, 23, 42, 0.06);
+.pageTitleBar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 62px;
+  background:
+    linear-gradient(135deg,
+      #eff6ff,
+      #ffffff);
+  border-bottom: 2px solid #dbeafe;
+  margin-bottom: 22px;
 }
 
-.sectionTitle {
-  font-size: 15px;
+.pageTitle {
+  margin: 0;
+  font-size: 24px;
   font-weight: 700;
-  color: #1e3a5f;
-  margin: 0 0 22px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #e2e8f0;
-  text-transform: uppercase;
-  letter-spacing: .05em;
+  color: #1e40af;
+  letter-spacing: -0.02em;
+}
+
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 10px;
+  background:
+    linear-gradient(135deg,
+      #3b82f6,
+      #1d4ed8);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 0.15s,
+    opacity 0.2s,
+    box-shadow 0.2s;
+  box-shadow:
+    0 4px 14px rgba(37, 99, 235, 0.24);
+}
+
+.backButton:hover {
+  opacity: 0.95;
+}
+
+.backButton:active {
+  transform: scale(0.98);
 }
 
 /* ───────────────── Field Rows ───────────────── */

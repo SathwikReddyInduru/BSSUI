@@ -3,71 +3,73 @@ import { useLocation, useNavigate, NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import styles from "../../styles/ModuleSidebar.module.css";
 
-// ─── MODULE REGISTRY ─────────────────────────────────────────────────────────
+// ─── MODULE REGISTRY ──────────────────────────────────────────────────────────
 export const MODULE_REGISTRY = {
     plmn: {
         label: "PLMN Services",
+        icon: "🌐",
         color: "#2563eb",
         hasTabs: true,
         triggerIds: ["CLC", "CMS", "TSG"],
         subModules: {
-            CLC: { label: "Card Life Cycle Management", desc: "SIM/Voucher/Magnetic card production", route: "/plmn/clc" },
-            CMS: { label: "Customer Management", desc: "Subscriber management system", route: "/plmn/cms" },
-            TSG: { label: "Telecom & Service Gateway", desc: "Telecommunication services gateway", route: "/plmn/tsg" },
+            CLC: { label: "Card Life Cycle Management", route: "/plmn/clc" },
+            CMS: { label: "Customer Management", route: "/plmn/cms" },
+            TSG: { label: "Telecom & Service Gateway", route: "/plmn/tsg" },
         },
     },
     billing: {
         label: "Billing Management",
         icon: "💳",
-        color: "#10b981",
+        color: "#0891b2",
         triggerIds: ["RAT", "SET", "CFG"],
         subModules: {
-            RAT: { label: "Rating & Billing", desc: "Rating and billing management", route: "/billing/rat" },
-            SET: { label: "Settlements", desc: "Report generation", route: "/billing/set" },
-            CFG: { label: "Configuration", desc: "Configuration management", route: "/billing/cfg" },
+            RAT: { label: "Rating & Billing", route: "/billing/rat" },
+            SET: { label: "Settlements", route: "/billing/set" },
+            CFG: { label: "Configuration", route: "/billing/cfg" },
         },
     },
     ums: {
         label: "User Management",
         icon: "👤",
-        color: "#f59e0b",
+        color: "#7c3aed",
         triggerIds: ["UMS"],
         subModules: {
-            UMS: { label: "User Management System", desc: "Workbench for user administration", route: "/ums/main" },
+            UMS: { label: "User Management", route: "/ums/users" },
+            ROLES: { label: "Role Management", route: "/ums/roles" },
         },
     },
     icb: {
         label: "InterConnect Billing",
         icon: "🔁",
-        color: "#8b5cf6",
+        color: "#0369a1",
         triggerIds: ["ICB"],
         subModules: {
-            ICB: { label: "InterConnect Billing", desc: "Inter connect billing system", route: "/icb/main" },
+            ICB: { label: "InterConnect Billing", route: "/icb/main" },
         },
     },
     tms: {
         label: "Trouble Tickets",
         icon: "🎫",
-        color: "#ef4444",
+        color: "#b45309",
         triggerIds: ["TMS"],
         subModules: {
-            TMS: { label: "Trouble Ticket Management", desc: "Trouble ticket system", route: "/tms/main" },
+            TMS: { label: "Trouble Ticket Management", route: "/tms/main" },
         },
     },
     rms: {
         label: "Roaming Management",
         icon: "🌍",
-        color: "#16a34a",
+        color: "#047857",
         triggerIds: ["RMS", "MNP", "WNF"],
         subModules: {
-            RMS: { label: "Roaming Management Server", desc: "Roaming management server", route: "/rms/main" },
-            MNP: { label: "Mobile Number Portability", desc: "Mobile number portability", route: "/rms/mnp" },
-            WNF: { label: "Welcome Notification", desc: "Welcome notification for roamers", route: "/rms/wnf" },
+            RMS: { label: "Roaming Management Server", route: "/rms/main" },
+            MNP: { label: "Mobile Number Portability", route: "/rms/mnp" },
+            WNF: { label: "Welcome Notification", route: "/rms/wnf" },
         },
     },
 };
 
-// ─── PLMN TAB DATA (corrected per screenshots) ───────────────────────────────
+// ─── PLMN TAB DATA ────────────────────────────────────────────────────────────
 export const PLMN_TABS = [
     {
         id: "CLC",
@@ -182,52 +184,40 @@ export const PLMN_TABS = [
     },
 ];
 
-// ─── Icons ────────────────────────────────────────────────────────────────────
-function IconPerson() {
+// ─── SVG Icons ────────────────────────────────────────────────────────────────
+function ChevronDown({ open }) {
     return (
-        <svg viewBox="0 0 20 20" fill="white" width="18" height="18">
-            <path d="M10 10a4 4 0 100-8 4 4 0 000 8zm-7 8a7 7 0 1114 0H3z" />
-        </svg>
-    );
-}
-
-function IconCard() {
-    return (
-        <svg viewBox="0 0 20 20" fill="none" width="16" height="16">
-            <rect x="2" y="5" width="16" height="11" rx="2" stroke="currentColor" strokeWidth="1.4" />
-            <path d="M2 9h16" stroke="currentColor" strokeWidth="1.4" />
-            <rect x="5" y="12" width="4" height="1.5" rx="0.5" fill="currentColor" />
-        </svg>
-    );
-}
-
-function IconTag() {
-    return (
-        <svg viewBox="0 0 20 20" fill="none" width="16" height="16">
-            <path d="M3 3h6.5l7 7-6.5 6.5-7-7V3z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
-            <circle cx="7" cy="7" r="1.2" fill="currentColor" />
+        <svg viewBox="0 0 16 16" fill="none" width="14" height="14"
+            style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s ease", flexShrink: 0 }}>
+            <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
     );
 }
 
 function ChevronRight({ open }) {
     return (
-        <svg
-            viewBox="0 0 16 16" fill="none" width="13" height="13"
-            style={{ transform: open ? "rotate(90deg)" : "rotate(0deg)", transition: "transform 0.18s ease", flexShrink: 0 }}
-        >
-            <path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <svg viewBox="0 0 16 16" fill="none" width="13" height="13"
+            style={{ transform: open ? "rotate(90deg)" : "rotate(0deg)", transition: "transform 0.2s ease", flexShrink: 0 }}>
+            <path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
     );
 }
 
-function ChevronDown({ open }) {
+function IconCard() {
     return (
-        <svg
-            viewBox="0 0 16 16" fill="none" width="13" height="13"
-            style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.18s ease", flexShrink: 0 }}
-        >
-            <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <svg viewBox="0 0 16 16" fill="none" width="14" height="14">
+            <rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" strokeWidth="1.3" />
+            <path d="M1 7h14" stroke="currentColor" strokeWidth="1.3" />
+            <rect x="3" y="9.5" width="4" height="1.5" rx="0.5" fill="currentColor" />
+        </svg>
+    );
+}
+
+function IconTag() {
+    return (
+        <svg viewBox="0 0 16 16" fill="none" width="14" height="14">
+            <path d="M2 2h5.5l6 6-5.5 5.5-6-6V2z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
+            <circle cx="5.5" cy="5.5" r="1" fill="currentColor" />
         </svg>
     );
 }
@@ -238,27 +228,24 @@ function getNavIcon(icon) {
     return null;
 }
 
-// ─── Accordion item (leaf with expandable children) ──────────────────────────
+// ─── Accordion item (expandable children — sub-sub items) ─────────────────────
 function AccordionItem({ item, color, depth = 0 }) {
     const location = useLocation();
     const navigate = useNavigate();
     const isChildActive = item.children?.some((c) => location.pathname.startsWith(c.route));
     const [open, setOpen] = useState(isChildActive);
 
-    const isDeep = depth > 0;
-
     return (
         <li>
             <button
-                className={`${styles.navRow} ${isDeep ? styles.navRowDeep : ""} ${isChildActive ? styles.navRowActive : ""}`}
+                className={`${styles.navRow} ${depth > 0 ? styles.navRowDeep : ""} ${isChildActive ? styles.navRowActive : ""}`}
                 style={isChildActive ? { color } : {}}
                 onClick={() => { setOpen((o) => !o); navigate(item.route); }}
             >
-                {item.icon ? (
-                    <span className={styles.navIcon}>{getNavIcon(item.icon)}</span>
-                ) : (
-                    <span className={styles.navDot} style={isChildActive ? { background: color } : {}} />
-                )}
+                {item.icon
+                    ? <span className={styles.navIcon}>{getNavIcon(item.icon)}</span>
+                    : <span className={styles.navDot} style={isChildActive ? { background: color } : {}} />
+                }
                 <span className={styles.navLabel}>{item.label}</span>
                 <ChevronRight open={open} />
             </button>
@@ -273,7 +260,7 @@ function AccordionItem({ item, color, depth = 0 }) {
                                 }
                                 style={({ isActive }) => isActive ? { color } : {}}
                             >
-                                <span className={styles.subLine} style={{ borderColor: color + "44" }} />
+                                <span className={styles.subLine} style={{ borderColor: color + "33" }} />
                                 <span className={styles.navLabel}>{child.label}</span>
                             </NavLink>
                         </li>
@@ -302,7 +289,7 @@ function LeafItem({ item, color, depth = 0 }) {
     );
 }
 
-// ─── Render sidebar item list ─────────────────────────────────────────────────
+// ─── Sidebar item list renderer ───────────────────────────────────────────────
 function SidebarItemList({ items, color }) {
     return (
         <ul className={styles.navList}>
@@ -321,20 +308,126 @@ function SidebarItemList({ items, color }) {
                         </li>
                     );
                 }
-                if (item.children) {
-                    return <AccordionItem key={item.route} item={item} color={color} />;
-                }
+                if (item.children) return <AccordionItem key={item.route} item={item} color={color} />;
                 return <LeafItem key={item.route} item={item} color={color} />;
             })}
         </ul>
     );
 }
 
-// ─── Main Sidebar ─────────────────────────────────────────────────────────────
-function ModuleSidebar() {
+// ─── PLMN Sidebar (has collapsible tab switcher for CLC / CMS / TSG) ──────────
+function PlmnSidebar({ moduleMeta, grantedIds }) {
     const location = useLocation();
     const navigate = useNavigate();
-    const [collapsed, setCollapsed] = useState(false);
+
+    // tabsOpen controls only the CLC/CMS/TSG tab list — NOT the sub-items
+    const [tabsOpen, setTabsOpen] = useState(true);
+
+    const grantedTabs = PLMN_TABS.filter((t) => grantedIds.has(t.id));
+    const activeTab =
+        grantedTabs.find((t) => location.pathname.startsWith(t.route)) ||
+        grantedTabs[0];
+
+    if (!activeTab) return null;
+
+    return (
+        <aside className={styles.sidebar}>
+            {/* ── Header: module name + tabs toggle ── */}
+            <div className={styles.moduleHeader}>
+                <div className={styles.moduleIconBox} style={{ background: moduleMeta.color }}>
+                    <span className={styles.moduleEmoji}>{moduleMeta.icon}</span>
+                </div>
+                <div className={styles.moduleTitleBlock}>
+                    <span className={styles.moduleTitle}>{moduleMeta.label}</span>
+                    <span className={styles.moduleSubtitle}>{activeTab.label}</span>
+                </div>
+                {/* Chevron toggles ONLY the tab list (CLC/CMS/TSG switcher) */}
+                <button
+                    className={styles.collapseBtn}
+                    onClick={() => setTabsOpen((o) => !o)}
+                    title={tabsOpen ? "Hide sub-modules" : "Show sub-modules"}
+                >
+                    <ChevronDown open={tabsOpen} />
+                </button>
+            </div>
+
+            {/* ── Tab switcher: CLC / CMS / TSG — collapsible ── */}
+            {tabsOpen && (
+                <nav className={styles.tabNav}>
+                    <div className={styles.tabNavLabel}>Sub-modules</div>
+                    {grantedTabs.map((tab) => {
+                        const isActive = location.pathname.startsWith(tab.route);
+                        return (
+                            <button
+                                key={tab.id}
+                                className={`${styles.tabRow} ${isActive ? styles.tabRowActive : ""}`}
+                                style={isActive ? { color: moduleMeta.color } : {}}
+                                onClick={() => navigate(tab.route)}
+                            >
+                                <span
+                                    className={styles.tabIndicator}
+                                    style={{ background: isActive ? moduleMeta.color : "transparent", borderColor: isActive ? moduleMeta.color : "#d1d5db" }}
+                                />
+                                <span className={styles.tabLabel}>{tab.label}</span>
+                                {isActive && <span className={styles.tabActivePill} style={{ background: moduleMeta.color + "18", color: moduleMeta.color }}>{tab.id}</span>}
+                            </button>
+                        );
+                    })}
+                </nav>
+            )}
+
+            <div className={styles.divider} />
+
+            {/* ── Sub-items for the active tab — always visible, never collapse ── */}
+            <nav className={styles.itemNav}>
+                <SidebarItemList items={activeTab.sidebarItems} color={moduleMeta.color} />
+            </nav>
+        </aside>
+    );
+}
+
+// ─── Generic Sidebar (all other modules — no collapsible, no dropdown) ────────
+function GenericSidebar({ moduleMeta, visibleSubModules }) {
+    return (
+        <aside className={styles.sidebar}>
+            {/* ── Header: no collapse button ── */}
+            <div className={styles.moduleHeader}>
+                <div className={styles.moduleIconBox} style={{ background: moduleMeta.color }}>
+                    <span className={styles.moduleEmoji}>{moduleMeta.icon}</span>
+                </div>
+                <div className={styles.moduleTitleBlock}>
+                    <span className={styles.moduleTitle}>{moduleMeta.label}</span>
+                    <span className={styles.moduleSubtitle}>{visibleSubModules.length} section{visibleSubModules.length !== 1 ? "s" : ""}</span>
+                </div>
+            </div>
+
+            <div className={styles.divider} />
+
+            <nav className={styles.itemNav}>
+                <ul className={styles.navList}>
+                    {visibleSubModules.map(([id, sub]) => (
+                        <li key={id}>
+                            <NavLink
+                                to={sub.route}
+                                className={({ isActive }) =>
+                                    `${styles.navRow} ${isActive ? styles.navRowActive : ""}`
+                                }
+                                style={({ isActive }) => isActive ? { color: moduleMeta.color } : {}}
+                            >
+                                <span className={styles.navDot} />
+                                <span className={styles.navLabel}>{sub.label}</span>
+                            </NavLink>
+                        </li>
+                    ))}
+                </ul>
+            </nav>
+        </aside>
+    );
+}
+
+// ─── Main export ──────────────────────────────────────────────────────────────
+function ModuleSidebar() {
+    const location = useLocation();
 
     const user = useSelector((state) => state.auth.user);
     const privileges = user?.privileges || [];
@@ -346,105 +439,18 @@ function ModuleSidebar() {
     const moduleMeta = currentModuleKey ? MODULE_REGISTRY[currentModuleKey] : null;
     if (!moduleMeta) return null;
 
-    // ── PLMN ─────────────────────────────────────────────────────────────────
+    // PLMN gets its own sidebar with tab-switching dropdown
     if (moduleMeta.hasTabs) {
-        const grantedTabs = PLMN_TABS.filter((t) => grantedIds.has(t.id));
-        const activeTab =
-            grantedTabs.find((t) => location.pathname.startsWith(t.route)) ||
-            grantedTabs[0];
-        if (!activeTab) return null;
-
-        return (
-            <aside className={styles.sidebar}>
-                {/* ── Module header ── */}
-                <div className={styles.moduleHeader}>
-                    <div className={styles.moduleIconBox} style={{ background: moduleMeta.color }}>
-                        <IconPerson />
-                    </div>
-                    <span className={styles.moduleTitle}>{moduleMeta.label}</span>
-                    <button className={styles.collapseBtn} onClick={() => setCollapsed((c) => !c)}>
-                        <ChevronDown open={!collapsed} />
-                    </button>
-                </div>
-
-                {!collapsed && (
-                    <>
-                        {/* ── Sub-module tabs (CLC / CMS / TSG as nav items) ── */}
-                        <nav className={styles.tabNav}>
-                            {grantedTabs.map((tab) => {
-                                const isActive = location.pathname.startsWith(tab.route);
-                                return (
-                                    <button
-                                        key={tab.id}
-                                        className={`${styles.tabRow} ${isActive ? styles.tabRowActive : ""}`}
-                                        style={isActive ? { color: moduleMeta.color, background: moduleMeta.color + "12" } : {}}
-                                        onClick={() => navigate(tab.route)}
-                                    >
-                                        <span
-                                            className={styles.tabBullet}
-                                            style={{ background: isActive ? moduleMeta.color : "#d1d5db" }}
-                                        />
-                                        <span className={styles.tabLabel}>{tab.label}</span>
-                                    </button>
-                                );
-                            })}
-                        </nav>
-
-                        {/* ── Divider ── */}
-                        <div className={styles.divider} />
-
-                        {/* ── Sub-items for active tab ── */}
-                        <nav className={styles.itemNav}>
-                            <SidebarItemList items={activeTab.sidebarItems} color={moduleMeta.color} />
-                        </nav>
-                    </>
-                )}
-            </aside>
-        );
+        return <PlmnSidebar moduleMeta={moduleMeta} grantedIds={grantedIds} />;
     }
 
-    // ── Other modules ─────────────────────────────────────────────────────────
-    const visibleSubModules = Object.entries(moduleMeta.subModules).filter(
-        ([id]) => grantedIds.has(id)
-    );
+    // All other modules: show all sub-items when user has any triggerId access
+    const hasModuleAccess = moduleMeta.triggerIds.some((id) => grantedIds.has(id));
+    const visibleSubModules = hasModuleAccess
+        ? Object.entries(moduleMeta.subModules)
+        : Object.entries(moduleMeta.subModules).filter(([id]) => grantedIds.has(id));
 
-    return (
-        <aside className={styles.sidebar}>
-            <div className={styles.moduleHeader}>
-                <div className={styles.moduleIconBox} style={{ background: moduleMeta.color }}>
-                    <span style={{ fontSize: 16, lineHeight: 1 }}>{moduleMeta.icon}</span>
-                </div>
-                <span className={styles.moduleTitle}>{moduleMeta.label}</span>
-                <button className={styles.collapseBtn} onClick={() => setCollapsed((c) => !c)}>
-                    <ChevronDown open={!collapsed} />
-                </button>
-            </div>
-
-            {!collapsed && (
-                <>
-                    <div className={styles.divider} />
-                    <nav className={styles.itemNav}>
-                        <ul className={styles.navList}>
-                            {visibleSubModules.map(([id, sub]) => (
-                                <li key={id}>
-                                    <NavLink
-                                        to={sub.route}
-                                        className={({ isActive }) =>
-                                            `${styles.navRow} ${isActive ? styles.navRowActive : ""}`
-                                        }
-                                        style={({ isActive }) => isActive ? { color: moduleMeta.color } : {}}
-                                    >
-                                        <span className={styles.navDot} />
-                                        <span className={styles.navLabel}>{sub.label}</span>
-                                    </NavLink>
-                                </li>
-                            ))}
-                        </ul>
-                    </nav>
-                </>
-            )}
-        </aside>
-    );
+    return <GenericSidebar moduleMeta={moduleMeta} visibleSubModules={visibleSubModules} />;
 }
 
 export default ModuleSidebar;

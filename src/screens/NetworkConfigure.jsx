@@ -17,6 +17,52 @@ import {
 } from '../store/slices/networkConfigSubmitSlice';
 import styles from '../CssModules/NetworkConfig.module.css';
 
+// ─── Sub-components defined OUTSIDE the main component ───
+// This prevents React from unmounting/remounting them on every
+// state change, which was causing input fields to lose focus.
+
+const YesNo = ({ name, value, onRadioChange }) => (
+  <div className={styles.radioGroup}>
+    <label>
+      <input type="radio" checked={value === 'Yes'} onChange={() => onRadioChange(name, 'Yes')} />
+      Yes
+    </label>
+    <label>
+      <input type="radio" checked={value === 'No'} onChange={() => onRadioChange(name, 'No')} />
+      No
+    </label>
+  </div>
+);
+
+const YesNoService = ({ name, value, onRadioChange }) => (
+  <div className={styles.radioGroup}>
+    {['Yes', 'No', 'Service Numbers'].map(opt => (
+      <label key={opt}>
+        <input type="radio" checked={value === opt} onChange={() => onRadioChange(name, opt)} />
+        {opt}
+      </label>
+    ))}
+  </div>
+);
+
+const CalendarSelect = ({ name, value, airtimeCalendars, onChange }) => (
+  <select name={name} value={value} onChange={onChange} className={styles.selectField}>
+    <option value="">Select</option>
+    {airtimeCalendars?.map(cal => (
+      <option key={cal.calendar_id} value={cal.calendar_id}>
+        {cal.calendar_name}
+      </option>
+    ))}
+  </select>
+);
+
+const Row = ({ label, children, className = '' }) => (
+  <div className={`${styles.fieldRow} ${className}`}>
+    <span className={styles.fieldLabel}>{label}</span>
+    <div>{children}</div>
+  </div>
+);
+
 const NetworkConfigure = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -546,48 +592,6 @@ const NetworkConfigure = () => {
   if (status === 'loading') return <div className={styles.loading}>Loading network configuration...</div>;
   if (status === 'failed') return <div className={styles.errorMsg}>Error loading data: {error}</div>;
 
-  const YesNo = ({ name, value }) => (
-    <div className={styles.radioGroup}>
-      <label>
-        <input type="radio" checked={value === 'Yes'} onChange={() => handleRadio(name, 'Yes')} />
-        Yes
-      </label>
-      <label>
-        <input type="radio" checked={value === 'No'} onChange={() => handleRadio(name, 'No')} />
-        No
-      </label>
-    </div>
-  );
-
-  const YesNoService = ({ name, value }) => (
-    <div className={styles.radioGroup}>
-      {['Yes', 'No', 'Service Numbers'].map(opt => (
-        <label key={opt}>
-          <input type="radio" checked={value === opt} onChange={() => handleRadio(name, opt)} />
-          {opt}
-        </label>
-      ))}
-    </div>
-  );
-
-  const CalendarSelect = ({ name, value }) => (
-    <select name={name} value={value} onChange={handleChange} className={styles.selectField}>
-      <option value="">Select</option>
-      {airtimeCalendars?.map(cal => (
-        <option key={cal.calendar_id} value={cal.calendar_id}>
-          {cal.calendar_name}
-        </option>
-      ))}
-    </select>
-  );
-
-  const Row = ({ label, children, className = '' }) => (
-    <div className={`${styles.fieldRow} ${className}`}>
-      <span className={styles.fieldLabel}>{label}</span>
-      <div>{children}</div>
-    </div>
-  );
-
   return (
     <div className={styles.screenLayoutUser}>
       <div className={styles.screenContainerUserManagement}>
@@ -608,7 +612,19 @@ const NetworkConfigure = () => {
           <div className={styles.formBody}>
             {/* SECTION 1 */}
             <div className={styles.sectionCard}>
-              <h2 className={styles.sectionTitle}>{getLabel('NetworkConfiguration.title')}</h2>
+              <div className={styles.pageTitleBar}>
+                <h2 className={styles.pageTitle}>
+                  {getLabel("NetworkConfiguration.title")}
+                </h2>
+
+                <button
+                  type="button"
+                  className={styles.backButton}
+                  onClick={() => navigate(-1)}
+                >
+                  ← Back
+                </button>
+              </div>
 
               {/* Network Info Header - clean side-by-side layout */}
               <div className={styles.metaGrid}>
@@ -632,10 +648,10 @@ const NetworkConfigure = () => {
               </div>
 
               <Row label={getLabel('NetworkConfiguration.AccountDeActivation')}>
-                <YesNo name="accountDeActivation" value={formData.accountDeActivation} />
+                <YesNo name="accountDeActivation" value={formData.accountDeActivation} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.HLRIntegration')}>
-                <YesNo name="hlrIntegration" value={formData.hlrIntegration} />
+                <YesNo name="hlrIntegration" value={formData.hlrIntegration} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.Hlr_Hss_Flag')}>
                 <select name="hlrHssFlag" value={formData.hlrHssFlag} onChange={handleChange} className={styles.selectField}>
@@ -645,28 +661,28 @@ const NetworkConfigure = () => {
                 </select>
               </Row>
               <Row label={getLabel('NetworkConfiguration.MSISDNActivation')}>
-                <YesNo name="msisdnActivation" value={formData.msisdnActivation} />
+                <YesNo name="msisdnActivation" value={formData.msisdnActivation} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.RMSIntegration')}>
-                <YesNo name="rmsIntegration" value={formData.rmsIntegration} />
+                <YesNo name="rmsIntegration" value={formData.rmsIntegration} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.OptionalServiceChargeFlag')}>
-                <YesNo name="optionalServiceChargeFlag" value={formData.optionalServiceChargeFlag} />
+                <YesNo name="optionalServiceChargeFlag" value={formData.optionalServiceChargeFlag} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.NPDBCheckFlag')}>
-                <YesNo name="npdbCheckFlag" value={formData.npdbCheckFlag} />
+                <YesNo name="npdbCheckFlag" value={formData.npdbCheckFlag} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.LRNPrefixFlag')}>
-                <YesNo name="lrnPrefixFlag" value={formData.lrnPrefixFlag} />
+                <YesNo name="lrnPrefixFlag" value={formData.lrnPrefixFlag} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.CallTypeFreeSMSFlag')}>
-                <YesNo name="callTypeFreeSmsFlag" value={formData.callTypeFreeSmsFlag} />
+                <YesNo name="callTypeFreeSmsFlag" value={formData.callTypeFreeSmsFlag} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.CreditLimitFlag')}>
-                <YesNo name="creditLimitFlag" value={formData.creditLimitFlag} />
+                <YesNo name="creditLimitFlag" value={formData.creditLimitFlag} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.VolumeBasedDataCallFlag')}>
-                <YesNo name="volumeBasedDataCallFlag" value={formData.volumeBasedDataCallFlag} />
+                <YesNo name="volumeBasedDataCallFlag" value={formData.volumeBasedDataCallFlag} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.ESMEFlatCharge(RM)')}>
                 <input
@@ -725,7 +741,7 @@ const NetworkConfigure = () => {
               <h2 className={styles.sectionTitle}></h2>
 
               <Row label={getLabel('NetworkConfiguration.PseudoMSISDNFlag')}>
-                <YesNo name="pseudoMsisdnFlag" value={formData.pseudoMsisdnFlag} />
+                <YesNo name="pseudoMsisdnFlag" value={formData.pseudoMsisdnFlag} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.PseudoMSISDNSeries')}>
                 <input type="text" name="pseudoMsisdnSeries" value={formData.pseudoMsisdnSeries} onChange={handleChange} className={styles.inputField} />
@@ -790,7 +806,7 @@ const NetworkConfigure = () => {
                 <input type="number" name="msisdnAllocationAllowedMaxHours" value={formData.msisdnAllocationAllowedMaxHours} onChange={handleChange} className={styles.inputField} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.IVR/VMSPinResetFlag')}>
-                <YesNo name="ivrVmsPinResetFlag" value={formData.ivrVmsPinResetFlag} />
+                <YesNo name="ivrVmsPinResetFlag" value={formData.ivrVmsPinResetFlag} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.SubscriberExpiryNotification')}>
                 <select name="subscriberExpiryNotification" value={formData.subscriberExpiryNotification} onChange={handleChange} className={styles.selectField}>
@@ -809,13 +825,13 @@ const NetworkConfigure = () => {
                 <input type="number" name="maximumTroubleTicketsForSubscriberPerDay" value={formData.maximumTroubleTicketsForSubscriberPerDay} onChange={handleChange} className={styles.inputField} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.FNFTerminatingRateFlag')}>
-                <YesNo name="fnfTerminatingRateFlag" value={formData.fnfTerminatingRateFlag} />
+                <YesNo name="fnfTerminatingRateFlag" value={formData.fnfTerminatingRateFlag} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.RatingBasedOnLRNFlag')}>
-                <YesNo name="ratingBasedOnLrnFlag" value={formData.ratingBasedOnLrnFlag} />
+                <YesNo name="ratingBasedOnLrnFlag" value={formData.ratingBasedOnLrnFlag} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.AAARadiusIntegrationFlag')}>
-                <YesNo name="aaaRadiusIntegrationFlag" value={formData.aaaRadiusIntegrationFlag} />
+                <YesNo name="aaaRadiusIntegrationFlag" value={formData.aaaRadiusIntegrationFlag} onRadioChange={handleRadio} />
               </Row>
             </div>
 
@@ -833,39 +849,39 @@ const NetworkConfigure = () => {
                 <input type="number" name="maxDaysProcessPortInTerminate" value={formData.maxDaysProcessPortInTerminate} onChange={handleChange} className={styles.inputField} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.RetainAccountInCustomerGroupFlag')}>
-                <YesNo name="retainAccountInCustomerGroupFlag" value={formData.retainAccountInCustomerGroupFlag} />
+                <YesNo name="retainAccountInCustomerGroupFlag" value={formData.retainAccountInCustomerGroupFlag} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.PortOutStatusFlagForTransitStatus')}>
-                <YesNo name="portOutStatusFlagTransit" value={formData.portOutStatusFlagTransit} />
+                <YesNo name="portOutStatusFlagTransit" value={formData.portOutStatusFlagTransit} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.PortOutStatusFlagForActiveStatus')}>
-                <YesNo name="portOutStatusFlagActive" value={formData.portOutStatusFlagActive} />
+                <YesNo name="portOutStatusFlagActive" value={formData.portOutStatusFlagActive} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.PortOutStatusFlagForGracePeriodIStatus')}>
-                <YesNo name="portOutStatusFlagGraceI" value={formData.portOutStatusFlagGraceI} />
+                <YesNo name="portOutStatusFlagGraceI" value={formData.portOutStatusFlagGraceI} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.PortOutStatusFlagForGracePeriodIIStatus')}>
-                <YesNo name="portOutStatusFlagGraceII" value={formData.portOutStatusFlagGraceII} />
+                <YesNo name="portOutStatusFlagGraceII" value={formData.portOutStatusFlagGraceII} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.TenurePlanProcessFlag')}>
-                <YesNo name="tenurePlanProcessFlag" value={formData.tenurePlanProcessFlag} />
+                <YesNo name="tenurePlanProcessFlag" value={formData.tenurePlanProcessFlag} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.VipMSISDNVsVipOrderRetainStatus')}>
-                <YesNo name="vipMsisdnVsVipOrderRetainStatus" value={formData.vipMsisdnVsVipOrderRetainStatus} />
+                <YesNo name="vipMsisdnVsVipOrderRetainStatus" value={formData.vipMsisdnVsVipOrderRetainStatus} onRadioChange={handleRadio} />
               </Row>
 
               <div className={styles.calendarGrid}>
                 <div className={styles.calendarItem}>
                   <span className={styles.calendarLabel}>{getLabel('NetworkConfiguration.CUGDefaultVOICECalendar')}</span>
-                  <CalendarSelect name="cugDefaultVoiceCalendar" value={formData.cugDefaultVoiceCalendar} />
+                  <CalendarSelect name="cugDefaultVoiceCalendar" value={formData.cugDefaultVoiceCalendar} airtimeCalendars={airtimeCalendars} onChange={handleChange} />
                 </div>
                 <div className={styles.calendarItem}>
                   <span className={styles.calendarLabel}>{getLabel('NetworkConfiguration.CUGDefaultSMSCalendar')}</span>
-                  <CalendarSelect name="cugDefaultSmsCalendar" value={formData.cugDefaultSmsCalendar} />
+                  <CalendarSelect name="cugDefaultSmsCalendar" value={formData.cugDefaultSmsCalendar} airtimeCalendars={airtimeCalendars} onChange={handleChange} />
                 </div>
                 <div className={styles.calendarItem}>
                   <span className={styles.calendarLabel}>{getLabel('NetworkConfiguration.CUGDefaultDATACalendar')}</span>
-                  <CalendarSelect name="cugDefaultDataCalendar" value={formData.cugDefaultDataCalendar} />
+                  <CalendarSelect name="cugDefaultDataCalendar" value={formData.cugDefaultDataCalendar} airtimeCalendars={airtimeCalendars} onChange={handleChange} />
                 </div>
               </div>
 
@@ -876,7 +892,7 @@ const NetworkConfigure = () => {
                 <input type="number" name="maxLinesPerCorpCaPackage" value={formData.maxLinesPerCorpCaPackage} onChange={handleChange} className={styles.inputField} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.OffnetNumbersAllowedFlag')}>
-                <YesNo name="offnetNumbersAllowedFlag" value={formData.offnetNumbersAllowedFlag} />
+                <YesNo name="offnetNumbersAllowedFlag" value={formData.offnetNumbersAllowedFlag} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.MaxFNFOffnetNumbersAllowed')}>
                 <input type="number" name="maxFnfOffnetAllowed" value={formData.maxFnfOffnetAllowed} onChange={handleChange} className={styles.inputField} />
@@ -885,7 +901,7 @@ const NetworkConfigure = () => {
                 <input type="number" name="maxSmsOffnetAllowed" value={formData.maxSmsOffnetAllowed} onChange={handleChange} className={styles.inputField} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.FNFAllowSMSFlag')}>
-                <YesNo name="fnfAllowSmsFlag" value={formData.fnfAllowSmsFlag} />
+                <YesNo name="fnfAllowSmsFlag" value={formData.fnfAllowSmsFlag} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.Currency')}>
                 <input type="text" name="currency" value={formData.currency} onChange={handleChange} className={styles.inputField} />
@@ -900,10 +916,10 @@ const NetworkConfigure = () => {
               <h2 className={styles.sectionTitle}></h2>
 
               <Row label={getLabel('NetworkConfiguration.AllowNegativeBalancefordebitrequest')}>
-                <YesNo name="allowNegativeBalanceDebit" value={formData.allowNegativeBalanceDebit} />
+                <YesNo name="allowNegativeBalanceDebit" value={formData.allowNegativeBalanceDebit} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.PostPaidHybridAllowed')}>
-                <YesNo name="postPaidHybridAllowed" value={formData.postPaidHybridAllowed} />
+                <YesNo name="postPaidHybridAllowed" value={formData.postPaidHybridAllowed} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.Bucketbenefittosubscribernotification')}>
                 <select name="bucketBenefitSubscriberNotification" value={formData.bucketBenefitSubscriberNotification} onChange={handleChange} className={styles.selectField}>
@@ -926,48 +942,48 @@ const NetworkConfigure = () => {
                 <input type="number" step="0.01" name="gstPercentage" value={formData.gstPercentage} onChange={handleChange} className={styles.inputField} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.TopupAmountTaxInclusiveY/N')}>
-                <YesNo name="topupAmountTaxInclusive" value={formData.topupAmountTaxInclusive} />
+                <YesNo name="topupAmountTaxInclusive" value={formData.topupAmountTaxInclusive} onRadioChange={handleRadio} />
               </Row>
 
               <Row label={getLabel('NetworkConfiguration.AllowCallsinUnknownVLR')}>
-                <YesNo name="allowCallsUnknownVlr" value={formData.allowCallsUnknownVlr} />
+                <YesNo name="allowCallsUnknownVlr" value={formData.allowCallsUnknownVlr} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.AllowCallsinG2G3G4')}>
-                <YesNoService name="allowCallsG2G3G4" value={formData.allowCallsG2G3G4} />
+                <YesNoService name="allowCallsG2G3G4" value={formData.allowCallsG2G3G4} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.AllowRoamingCallsinG2G3G4')}>
-                <YesNoService name="allowRoamingCallsG2G3G4" value={formData.allowRoamingCallsG2G3G4} />
+                <YesNoService name="allowRoamingCallsG2G3G4" value={formData.allowRoamingCallsG2G3G4} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.AllowCallsinG1Status')}>
-                <YesNoService name="allowCallsG1Status" value={formData.allowCallsG1Status} />
+                <YesNoService name="allowCallsG1Status" value={formData.allowCallsG1Status} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.AllowRoamingCallsinG1Status')}>
-                <YesNoService name="allowRoamingCallsG1Status" value={formData.allowRoamingCallsG1Status} />
+                <YesNoService name="allowRoamingCallsG1Status" value={formData.allowRoamingCallsG1Status} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.AllowCallsInTRStatus')}>
-                <YesNoService name="allowCallsTrStatus" value={formData.allowCallsTrStatus} />
+                <YesNoService name="allowCallsTrStatus" value={formData.allowCallsTrStatus} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.AllowLocalMTCallsInG1Status')}>
-                <YesNo name="allowLocalMtG1Status" value={formData.allowLocalMtG1Status} />
+                <YesNo name="allowLocalMtG1Status" value={formData.allowLocalMtG1Status} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.AllowLocalMOCallsInG1Status')}>
-                <YesNo name="allowLocalMoG1Status" value={formData.allowLocalMoG1Status} />
+                <YesNo name="allowLocalMoG1Status" value={formData.allowLocalMoG1Status} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.AllowCallsInDAStatus')}>
-                <YesNo name="allowCallsDaStatus" value={formData.allowCallsDaStatus} />
+                <YesNo name="allowCallsDaStatus" value={formData.allowCallsDaStatus} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.AllowCallsInD1Status')}>
-                <YesNo name="allowCallsD1Status" value={formData.allowCallsD1Status} />
+                <YesNo name="allowCallsD1Status" value={formData.allowCallsD1Status} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.AllowCallsInD2Status')}>
-                <YesNo name="allowCallsD2Status" value={formData.allowCallsD2Status} />
+                <YesNo name="allowCallsD2Status" value={formData.allowCallsD2Status} onRadioChange={handleRadio} />
               </Row>
 
               <Row label={getLabel('NetworkConfiguration.MaxMainAccountBalanceLimit')}>
                 <input type="number" name="maxMainAccountBalanceLimit" value={formData.maxMainAccountBalanceLimit} onChange={handleChange} className={styles.inputField} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.UseBucketLevelPriority')}>
-                <YesNo name="useBucketLevelPriority" value={formData.useBucketLevelPriority} />
+                <YesNo name="useBucketLevelPriority" value={formData.useBucketLevelPriority} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.UnlimitedValidityDate')}>
                 <input type="date" name="unlimitedValidityDate" value={formData.unlimitedValidityDate} onChange={handleChange} className={styles.inputField} />
@@ -982,7 +998,7 @@ const NetworkConfigure = () => {
               <h2 className={styles.sectionTitle}></h2>
 
               <Row label={getLabel('NetworkConfiguration.AllowPortedInNumberCheck')}>
-                <YesNo name="allowPortedInNumberCheck" value={formData.allowPortedInNumberCheck} />
+                <YesNo name="allowPortedInNumberCheck" value={formData.allowPortedInNumberCheck} onRadioChange={handleRadio} />
               </Row>
               <Row label={getLabel('NetworkConfiguration.NumberPoolThreshold(%)')}>
                 <input type="number" step="0.01" name="numberPoolThreshold" value={formData.numberPoolThreshold} onChange={handleChange} className={styles.inputField} />

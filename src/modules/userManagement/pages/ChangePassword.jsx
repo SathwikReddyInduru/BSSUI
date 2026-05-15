@@ -1,11 +1,10 @@
-// src/screens/NetworkChangePassword.jsx
+// src/screens/ChangePassword.jsx
 
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useAppContext } from '../contexts/AppContext';
-import { showError, showSuccess } from "../utils/toast";
-
+import { useNavigate, useParams } from 'react-router-dom';
+import { useAppContext } from '../../../contexts/AppContext';
+import { showError, showSuccess } from "../../../utils/toast";
 import {
   updatePassword,
   selectChangePasswordLoading,
@@ -13,23 +12,18 @@ import {
   selectChangePasswordError,
   selectChangePasswordMessage,
   resetChangePasswordState,
-} from '../store/slices/updatePassword';
+} from '../../../store/slices/updatePassword';
+import '../../../screens/ScreenStyles.css';
 
-import './ScreenStyles.css';
-import styles from '../CssModules/changepassword.module.css';
+import styles from '../styles/changepassword.module.css';
 
-const NetworkChangePassword = () => {
-
+const ChangePassword = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
   const { getLabel } = useAppContext();
+  const { loginName } = useParams(); // From URL: /changepassword/:loginName
 
-  // Receive data from previous screen
-  const { networkId, networkName } = location.state || {
-    networkId: '',
-    networkName: ''
-  };
+  const NETWORK_ID = useSelector(state => state.auth?.user?.networkId || '17');
 
   const loading = useSelector(selectChangePasswordLoading);
   const success = useSelector(selectChangePasswordSuccess);
@@ -42,116 +36,86 @@ const NetworkChangePassword = () => {
   });
 
   useEffect(() => {
-
     if (error) {
       showError(error || 'Failed to update password');
       dispatch(resetChangePasswordState());
     }
-
     if (success) {
       showSuccess(message || 'Password updated successfully!');
       dispatch(resetChangePasswordState());
-
-      setTimeout(() => {
-        navigate('/networkmanagementgrid');
-      }, 2000);
+      setTimeout(() => navigate('/usermanagementgrid'), 2000);
     }
-
   }, [error, success, message, dispatch, navigate]);
 
   const handleInputChange = (e) => {
-
     const { name, value } = e.target;
-
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const validateForm = () => {
-
-    if (!formData.password.trim()) {
-      showError('Password is required');
-      return false;
-    }
-
-    if (!formData.confirmPassword.trim()) {
-      showError('Confirm Password is required');
-      return false;
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      showError('Passwords do not match');
-      return false;
-    }
-
+    if (!formData.password.trim()) return showError('Password is required'), false;
+    if (!formData.confirmPassword.trim()) return showError('Confirm Password is required'), false;
+    if (formData.password !== formData.confirmPassword)
+      return showError('Passwords do not match'), false;
     return true;
   };
 
   const handleSubmit = (e) => {
-
     e.preventDefault();
-
     if (!validateForm()) return;
 
     const payload = {
-      networkId: networkId,
-      loginId: 'chief',
-      newPassword: formData.password
+      networkId: NETWORK_ID,
+      loginId: loginName,
+      newPassword: formData.password,
     };
 
     dispatch(updatePassword(payload));
   };
 
   const handleCancel = () => {
-
-    setFormData({
-      password: '',
-      confirmPassword: ''
-    });
-
-    navigate('/networkmanagementgrid');
+    setFormData({ password: '', confirmPassword: '' });
+    navigate('/usermanagementgrid');
   };
 
   return (
-
     <div className="screen-layout-user">
-
       <div className={styles.changepasswordContainer}>
-
         {/* Title */}
         <h2 className={styles.titleText}>
           Change Password
         </h2>
 
-        <form onSubmit={handleSubmit}>
 
+        {/* <div style={{
+          textAlign: 'right',
+          marginBottom: '30px',
+          color: '#666',
+          fontSize: '14px',
+          fontStyle: 'italic'
+        }}>
+          <span style={{ color: 'red' }}>*</span> Indicates Mandatory
+        </div> */}
+
+        <form onSubmit={handleSubmit}>
           {/* User Field */}
           <div className={styles.userField}>
-
             <label className={styles.userLabel}>
-              {getLabel('ChangePassword.UserLabel') || "User"}
+              {getLabel('ChangePassword.UserLabel')}
             </label>
-
             <input
               type="text"
-              value={networkName || ''}
+              value={loginName || ''}
               disabled
               className={styles.inputType}
             />
-
           </div>
 
           {/* Password Field */}
           <div className={styles.userField}>
-
             <label className={styles.userLabel}>
-              <span style={{ color: 'red' }}>*</span>
-              {getLabel('ChangePassword.PasswordLabel') || "Password"}
+              <span style={{ color: 'red' }}>*</span> {getLabel('ChangePassword.PasswordLabel')}
             </label>
-
             <input
               name="password"
               type="password"
@@ -160,17 +124,13 @@ const NetworkChangePassword = () => {
               placeholder="Enter new password"
               className={styles.inputType}
             />
-
           </div>
 
           {/* Confirm Password Field */}
           <div className={styles.userField}>
-
             <label className={styles.userLabel}>
-              <span style={{ color: 'red' }}>*</span>
-              {getLabel('ChangePassword.confirmPasswordLabel') || "Confirm Password"}
+              <span style={{ color: 'red' }}>*</span> {getLabel('ChangePassword.confirmPasswordLabel')}
             </label>
-
             <input
               name="confirmPassword"
               type="password"
@@ -179,18 +139,16 @@ const NetworkChangePassword = () => {
               placeholder="Confirm new password"
               className={styles.inputType}
             />
-
           </div>
 
           {/* Buttons */}
           <div style={{ textAlign: 'center' }}>
-
             <button
               type="button"
               onClick={handleCancel}
               className={styles.cancelButton}
             >
-              {getLabel('ChangePassword.Cancel') || "Cancel"}
+              {getLabel('ChangePassword.Cancel')}
             </button>
 
             <button
@@ -200,15 +158,11 @@ const NetworkChangePassword = () => {
             >
               {loading ? 'Submitting...' : 'Submit'}
             </button>
-
           </div>
-
         </form>
-
       </div>
-
     </div>
   );
 };
 
-export default NetworkChangePassword;
+export default ChangePassword;

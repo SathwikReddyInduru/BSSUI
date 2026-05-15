@@ -24,7 +24,7 @@ import {
 } from '../../../store/slices/userManagementSlices/roleDeleteSlice';
 
 import { showError, showSuccess } from "../../../utils/toast";
-// import styles from '../CssModules/RoleManagementgrid.module.css';
+import styles from '../styles/rolemanagementgrid.module.css';
 
 const RoleManagement = () => {
   const dispatch = useDispatch();
@@ -135,14 +135,14 @@ const RoleManagement = () => {
         {/* Action Buttons */}
         <div style={{ display: 'flex', gap: '16px', marginBottom: '24px' }}>
           <button
-            onClick={() => navigate('/create-role')}
+            onClick={() => navigate('/ums/create-role')}
             className={styles['action-btn']}
             // style={{ background: '#2563eb', color: 'white' }}
             style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
           >
             {/* Create Role */}
 
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" /><line x1="12" y1="8" x2="12" y2="16" /><line x1="8" y1="12" x2="16" y2="12" /></svg>{getLabel('rolegrid.CreateRole')}
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" /><line x1="12" y1="8" x2="12" y2="16" /><line x1="8" y1="12" x2="16" y2="12" /></svg>{getLabel('rolegrid.CreateRole')}
           </button>
 
           <button
@@ -151,7 +151,7 @@ const RoleManagement = () => {
             className={styles['action-btn']}
           // style={{ background: '#dc2626', color: 'white' }}
           >
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polyline points="3 6 5 6 21 6" /><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" /><line x1="10" y1="11" x2="10" y2="17" /><line x1="14" y1="11" x2="14" y2="17" /><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" /></svg> {deleteLoading ? 'Deleting...' : 'Delete Role'}
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg"><polyline points="3 6 5 6 21 6" /><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" /><line x1="10" y1="11" x2="10" y2="17" /><line x1="14" y1="11" x2="14" y2="17" /><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" /></svg> {deleteLoading ? 'Deleting...' : 'Delete Role'}
           </button>
         </div>
 
@@ -287,19 +287,19 @@ const RoleManagement = () => {
                     <td>{role.roleDesc || '—'}</td>
                     <td className={styles['role-action-column']}>
                       <button
-                        onClick={() => navigate(`/view-role/${roleId}`)}
+                        onClick={() => navigate(`/ums/view-role/${roleId}`)}
                         className={styles['view-button']}
                         disabled={!roleId}
                       >
-                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z" /><circle cx="12" cy="12" r="3" /></svg> {getLabel('rolegrid.View')}
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z" /><circle cx="12" cy="12" r="3" /></svg> {getLabel('rolegrid.View')}
                       </button>
                       {' | '}
                       <button
-                        onClick={() => navigate(`/modify-role/${roleId}`)}
+                        onClick={() => navigate(`/ums/modify-role/${roleId}`)}
                         className={styles['modify-button']}
                         disabled={!roleId}
                       >
-                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" /></svg>{getLabel('rolegrid.Modify')}
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" /></svg>{getLabel('rolegrid.Modify')}
                       </button>
                     </td>
                   </tr>

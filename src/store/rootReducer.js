@@ -27,6 +27,7 @@ import roleDeleteReducer from "./slices/userManagementSlices/roleDeleteSlice";
 import rolePrivilegesReducer from "./slices/userManagementSlices/rolePrivileges";
 import userRolesReducer from "./slices/userManagementSlices/userRolesSlice";
 import workgroupReducer from "./slices/userManagementSlices/workgroupSlice";
+import viewUserInfoReducer from './slices/userManagementSlices/viewUserInfoSlice';
 
 const rootReducer = combineReducers({
     // AUTH
@@ -56,6 +57,7 @@ const rootReducer = combineReducers({
     rolePrivileges: rolePrivilegesReducer,
     userRoles: userRolesReducer,
     workgroup: workgroupReducer,
+    viewUserInfo: viewUserInfoReducer
 });
 
 export default rootReducer;

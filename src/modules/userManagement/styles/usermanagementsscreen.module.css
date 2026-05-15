@@ -1,0 +1,218 @@
+/* ─────────────────────────────────────────────────────────────
+   GLOBAL CLASSES  (used as plain className strings in the JSX)
+   ──────────────────────────────────────────────────────────── */
+
+:global(.screen-layout-user) {
+  width: 100%;
+  height: 100%;
+  padding: 22px;
+  box-sizing: border-box;
+}
+
+:global(.screen-container-userManagement) {
+  width: 100%;
+  background: transparent;
+}
+
+:global(.screen-title) {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 28px;
+}
+
+:global(.form-row) {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+
+:global(.form-row.three-column) {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+:global(.form-group) {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 180px;
+}
+
+:global(.form-group.full-width) {
+  width: 100%;
+}
+
+:global(.form-label) {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+:global(.form-input),
+:global(.form-select) {
+  /* height: 44px; */
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  padding: 11px 13px;
+  font-size: 14px;
+  color: #111827;
+  background: white;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+:global(.form-input:focus),
+:global(.form-select:focus) {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
+}
+
+:global(.form-textarea) {
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 14px;
+  color: #111827;
+  background: white;
+  outline: none;
+  resize: vertical;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+:global(.form-textarea:focus) {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
+}
+
+:global(.button-group) {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  margin-top: 36px;
+  flex-wrap: wrap;
+}
+
+:global(.button) {
+  padding: 12px 28px;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+:global(.button-submit) {
+  background: #1e40af;
+  color: white;
+}
+
+:global(.button-submit:hover) {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(30, 64, 175, 0.25);
+}
+
+:global(.button-submit:disabled) {
+  background: #94a3b8;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+:global(.button-cancel) {
+  background: white;
+  color: #374151;
+  border: 1px solid #d1d5db;
+}
+
+:global(.button-cancel:hover) {
+  background: #f3f4f6;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   MODULE-SCOPED CLASSES (used as styles.xxx in JSX)
+   ──────────────────────────────────────────────────────────── */
+
+/* Step 2 – role selector */
+
+.selectRole {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 14px;
+}
+
+.roleheader {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.rolesLoader {
+  padding: 20px 0;
+}
+
+.loadingRole {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* Step 3 – success screen */
+
+.userCreationForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.createRight {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #dcfce7;
+  color: #16a34a;
+  font-size: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  border: 3px solid #bbf7d0;
+}
+
+.userSuccessText {
+  font-size: 22px;
+  font-weight: 700;
+  color: #15803d;
+  margin-bottom: 10px;
+}
+
+.successUser {
+  font-size: 15px;
+  color: #6b7280;
+  margin-bottom: 0;
+}
+
+/* ─── MOBILE ─────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  :global(.form-row.three-column) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  :global(.form-row.three-column) {
+    grid-template-columns: 1fr;
+  }
+}

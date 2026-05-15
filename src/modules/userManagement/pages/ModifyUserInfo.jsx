@@ -12,7 +12,7 @@ const ModifyUserInfo = () => {
   useEffect(() => {
     if (!passedUserInfo) {
       alert('No user data found. Redirecting to user list...');
-      navigate('/usermanagementgrid'); // or wherever your grid is
+      navigate('/ums/users'); // or wherever your grid is
     }
   }, [passedUserInfo, navigate]);
 
@@ -51,7 +51,7 @@ const ModifyUserInfo = () => {
     alert('User updated!\n(Check console for the data)');
 
     // After successful update → go back to list
-    navigate('/usermanagementgrid');
+    navigate('/ums/users');
   };
 
   return (
@@ -356,7 +356,7 @@ const ModifyUserInfo = () => {
           >
             <button
               type="button"
-              onClick={() => navigate('/usermanagementgrid')}
+              onClick={() => navigate('/ums/users')}
               style={{
                 padding: '12px 50px',
                 background: '#6b7280',

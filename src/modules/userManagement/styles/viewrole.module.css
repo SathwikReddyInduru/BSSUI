@@ -1,37 +1,279 @@
-/* ─── LAYOUT ─────────────────────────────────────────────── */
-
-.container {
-  width: 100%;
-  padding: 22px;
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
+/* ─────────────────────────────────────────
+   PAGE LAYOUT
+───────────────────────────────────────── */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #f8fafc;
+}
+
+/* ─────────────────────────────────────────
+   MAIN CARD
+───────────────────────────────────────── */
+
 .card {
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 20px;
-  padding: 32px;
-  max-width: 860px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow:
+    0 4px 20px rgba(37, 99, 235, 0.08);
+}
+
+/* ─────────────────────────────────────────
+   FIXED HEADER
+───────────────────────────────────────── */
+
+.headerBar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  height: 62px;
+  background:
+    linear-gradient(135deg,
+      #eff6ff,
+      #ffffff);
+  border-bottom: 2px solid #dbeafe;
 }
 
 .title {
-  font-size: 22px;
+  margin: 0;
+  font-size: 24px;
   font-weight: 700;
-  color: #1f2937;
-  margin: 0 0 24px;
+  color: #1e40af;
 }
 
-/* ─── LOADING / ERROR ────────────────────────────────────── */
+/* ─────────────────────────────────────────
+   BACK BUTTON
+───────────────────────────────────────── */
+
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 10px;
+  background:
+    linear-gradient(135deg,
+      #3b82f6,
+      #1d4ed8);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 0.15s,
+    opacity 0.2s;
+  box-shadow:
+    0 4px 14px rgba(37, 99, 235, 0.24);
+}
+
+.backButton:hover {
+  opacity: 0.95;
+}
+
+.backButton:active {
+  transform: scale(0.98);
+}
+
+/* ─────────────────────────────────────────
+   SCROLL BODY
+───────────────────────────────────────── */
+
+.viewRoleBody {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 28px;
+  background: #f8fafc;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+.viewRoleBody::-webkit-scrollbar {
+  width: 8px;
+}
+
+.viewRoleBody::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
+}
+
+/* ─────────────────────────────────────────
+   INFO CARD
+───────────────────────────────────────── */
+
+.infoSection {
+  background: #ffffff;
+  border: 1px solid #dbeafe;
+  border-radius: 18px;
+  overflow: hidden;
+  margin-bottom: 28px;
+  box-shadow:
+    0 2px 10px rgba(37, 99, 235, 0.05);
+}
+
+/* ─────────────────────────────────────────
+   FIELD ROW
+───────────────────────────────────────── */
+
+.fieldRow {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 18px 22px;
+  border-bottom: 1px solid #eff6ff;
+}
+
+.fieldRow:last-child {
+  border-bottom: none;
+}
+
+/* ─────────────────────────────────────────
+   LABEL
+───────────────────────────────────────── */
+
+.fieldLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ─────────────────────────────────────────
+   VALUE
+───────────────────────────────────────── */
+
+.fieldValuePlain {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+  text-align: right;
+}
+
+/* ─────────────────────────────────────────
+   MODULE SECTION
+───────────────────────────────────────── */
+
+.privilegesSection {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* ─────────────────────────────────────────
+   MODULE CARD
+───────────────────────────────────────── */
+
+.moduleContainer {
+  background: #ffffff;
+  border: 1px solid #dbeafe;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow:
+    0 2px 10px rgba(37, 99, 235, 0.05);
+}
+
+/* ─────────────────────────────────────────
+   MODULE HEADER
+───────────────────────────────────────── */
+
+.moduleHeader {
+  padding: 16px 22px;
+  background:
+    linear-gradient(135deg,
+      #eff6ff,
+      #ffffff);
+  border-bottom: 1px solid #dbeafe;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1d4ed8;
+}
+
+/* ─────────────────────────────────────────
+   PRIVILEGE WRAPPER
+───────────────────────────────────────── */
+
+.privilegesContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 22px;
+}
+
+/* ─────────────────────────────────────────
+   PRIVILEGE CHIP
+───────────────────────────────────────── */
+
+.privilegeItem {
+  display: inline-flex;
+  align-items: center;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+  padding: 10px 16px;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: all 0.18s ease;
+}
+
+.privilegeItem:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+/* ─────────────────────────────────────────
+   EMPTY STATES
+───────────────────────────────────────── */
+
+.noData,
+.noPrivileges {
+  padding: 22px;
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+/* ─────────────────────────────────────────
+   LOADING
+───────────────────────────────────────── */
 
 .loading {
-  padding: 60px;
-  text-align: center;
-  color: #6b7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
   font-size: 15px;
+  color: #64748b;
 }
 
+/* ─────────────────────────────────────────
+   ERROR
+───────────────────────────────────────── */
+
 .error-message {
+  margin: 24px;
   padding: 16px 20px;
   background: #fef2f2;
   border: 1px solid #fecaca;
@@ -40,124 +282,31 @@
   font-size: 14px;
 }
 
-/* ─── INFO FIELDS ────────────────────────────────────────── */
+/* ─────────────────────────────────────────
+   MOBILE
+───────────────────────────────────────── */
 
-.infoSection {
-  margin-bottom: 28px;
-  padding-bottom: 24px;
-  border-bottom: 1px solid #f3f4f6;
-}
+@media (max-width: 768px) {
 
-.fieldRow {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  margin-bottom: 16px;
-}
+  .headerBar {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 12px;
+    height: auto;
+    padding: 18px;
+  }
 
-.fieldLabel {
-  min-width: 160px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #6b7280;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  padding-top: 2px;
-}
+  .viewRoleBody {
+    padding: 18px;
+  }
 
-.fieldValuePlain {
-  font-size: 15px;
-  color: #111827;
-  font-weight: 500;
-}
+  .fieldRow {
+    flex-direction: column;
+    gap: 10px;
+  }
 
-/* ─── PRIVILEGES ─────────────────────────────────────────── */
-
-.privilegesSection {
-  margin-bottom: 28px;
-}
-
-.noData {
-  padding: 32px;
-  text-align: center;
-  color: #9ca3af;
-  font-size: 14px;
-  border: 1px dashed #e5e7eb;
-  border-radius: 12px;
-}
-
-.moduleContainer {
-  margin-bottom: 20px;
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
-  overflow: hidden;
-}
-
-.moduleHeader {
-  background: #eff6ff;
-  border-bottom: 1px solid #bfdbfe;
-  padding: 12px 18px;
-  font-size: 14px;
-  font-weight: 700;
-  color: #1e40af;
-}
-
-.privilegesContainer {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 14px 18px;
-}
-
-.privilegeItem {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: #f0fdf4;
-  border: 1px solid #bbf7d0;
-  color: #166534;
-  border-radius: 20px;
-  padding: 5px 13px;
-  font-size: 13px;
-  font-weight: 500;
-}
-
-.privilegeItem::before {
-  content: '✓';
-  font-size: 11px;
-  font-weight: 700;
-}
-
-.noPrivileges {
-  font-size: 13px;
-  color: #9ca3af;
-  padding: 4px 0;
-}
-
-/* ─── BACK BUTTON ────────────────────────────────────────── */
-
-.buttonContainer {
-  display: flex;
-  justify-content: flex-start;
-  margin-top: 8px;
-}
-
-.backButton {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 11px 24px;
-  border: 1px solid #d1d5db;
-  border-radius: 12px;
-  background: white;
-  color: #374151;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.backButton:hover {
-  background: #f3f4f6;
-  border-color: #9ca3af;
+  .fieldValuePlain {
+    text-align: left;
+  }
 }

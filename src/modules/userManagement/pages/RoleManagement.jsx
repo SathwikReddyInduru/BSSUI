@@ -1,8 +1,10 @@
-// src/screens/RoleManagement.jsx
+// src/modules/userManagement/pages/RoleManagement.jsx
+
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../../../contexts/AppContext';
+import { PlusCircle, Trash2, Eye, Pencil, ChevronLeft, ChevronRight, Printer, X } from 'lucide-react';
 
 import {
   fetchRoles,
@@ -23,7 +25,7 @@ import {
   selectRoleDeleteSuccess,
 } from '../../../store/slices/userManagementSlices/roleDeleteSlice';
 
-import { showError, showSuccess } from "../../../utils/toast";
+import { showError, showSuccess } from '../../../utils/toast';
 import styles from '../styles/rolemanagementgrid.module.css';
 
 const RoleManagement = () => {
@@ -46,7 +48,6 @@ const RoleManagement = () => {
   const NETWORK_ID = useSelector((state) => state.auth?.user?.networkId);
 
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchColumn, setSearchColumn] = useState('Role Name');
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
   const [filteredRoles, setFilteredRoles] = useState([]);
@@ -58,17 +59,15 @@ const RoleManagement = () => {
 
   useEffect(() => {
     dispatch(fetchRoles(NETWORK_ID));
-    console.log('[RoleManagement] Dispatched fetchRoles for Network ID:', NETWORK_ID);
   }, [dispatch, NETWORK_ID]);
 
   useEffect(() => {
     if (deleteSuccess) {
-      showSuccess("Role deleted successfully");
+      showSuccess('Role deleted successfully');
       dispatch(fetchRoles(NETWORK_ID));
       setSelectedRoleId(null);
       setSelectedRoleName('');
       dispatch(clearDeleteState());
-      console.log('[RoleManagement] delete fetchRoles for Network ID:', NETWORK_ID);
       setShowConfirmDelete(false);
     }
   }, [deleteSuccess, dispatch, NETWORK_ID]);
@@ -86,20 +85,22 @@ const RoleManagement = () => {
       result = roles.filter((role) => {
         const name = (role.roleName || '').toLowerCase();
         const desc = (role.roleDesc || '').toLowerCase();
-        if (searchColumn === 'Role Name') return name.includes(term);
-        if (searchColumn === 'Description') return desc.includes(term);
-        return false;
+        return name.includes(term) || desc.includes(term);
       });
     }
     setFilteredRoles(result);
     setCurrentPage(1);
-  }, [roles, searchTerm, searchColumn]);
+  }, [roles, searchTerm]);
 
   const getRoleId = (role) => role?.roleId || role?.id || role?.role_id || null;
 
   const handleSelectRole = (role) => {
     const roleId = getRoleId(role);
-    if (roleId) {
+    if (roleId === selectedRoleId) {
+      // deselect on second click
+      setSelectedRoleId(null);
+      setSelectedRoleName('');
+    } else if (roleId) {
       setSelectedRoleId(roleId);
       setSelectedRoleName(role.roleName || 'Unknown');
     }
@@ -107,7 +108,7 @@ const RoleManagement = () => {
 
   const handleDeleteClick = () => {
     if (!selectedRoleId) {
-      showError("Please select any one role to delete");
+      showError('Please select a role to delete');
       return;
     }
     dispatch(checkRoleUsage({ networkId: NETWORK_ID, roleId: selectedRoleId }));
@@ -127,207 +128,279 @@ const RoleManagement = () => {
   const startIndex = (currentPage - 1) * perPage;
   const currentRoles = filteredRoles.slice(startIndex, startIndex + perPage);
 
+  const getPageNumbers = () => {
+    const pages = [];
+    const delta = 2;
+    const left = Math.max(1, currentPage - delta);
+    const right = Math.min(totalPages, currentPage + delta);
+    if (left > 1) pages.push(1);
+    if (left > 2) pages.push('...');
+    for (let i = left; i <= right; i++) pages.push(i);
+    if (right < totalPages - 1) pages.push('...');
+    if (right < totalPages) pages.push(totalPages);
+    return pages;
+  };
+
   return (
-    <div className={styles['screen-layout-role']}>
-      <div className={styles['container-role-screen']} style={{ padding: '30px' }}>
-        <h2 className={styles['status-title']}>{getLabel('rolegrid.RoleManagement')}</h2>
+    <div className={styles.screenLayout}>
+      <div className={styles.card}>
 
-        {/* Action Buttons */}
-        <div style={{ display: 'flex', gap: '16px', marginBottom: '24px' }}>
-          <button
-            onClick={() => navigate('/ums/create-role')}
-            className={styles['action-btn']}
-            // style={{ background: '#2563eb', color: 'white' }}
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
-          >
-            {/* Create Role */}
-
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" /><line x1="12" y1="8" x2="12" y2="16" /><line x1="8" y1="12" x2="16" y2="12" /></svg>{getLabel('rolegrid.CreateRole')}
-          </button>
-
-          <button
-            onClick={handleDeleteClick}
-            disabled={deleteLoading || usageLoading}
-            className={styles['action-btn']}
-          // style={{ background: '#dc2626', color: 'white' }}
-          >
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg"><polyline points="3 6 5 6 21 6" /><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" /><line x1="10" y1="11" x2="10" y2="17" /><line x1="14" y1="11" x2="14" y2="17" /><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" /></svg> {deleteLoading ? 'Deleting...' : 'Delete Role'}
-          </button>
-        </div>
-
-        {/* Search & Pagination Controls */}
-        <div className={styles['search-container']}>
-          <div className={styles['searchby-container']}>
-            <span> {getLabel('rolegrid.Searchby')}</span>
-            <select value={searchColumn} onChange={(e) => setSearchColumn(e.target.value)}>
-              <option>{getLabel('rolegrid.RoleName')}</option>
-              <option>{getLabel('rolegrid.RoleDescription')}</option>
-            </select>
-            <input
-              type="text"
-              placeholder="Search..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              style={{ padding: '8px', width: '240px' }}
-            />
-          </div>
-
-          <div className={styles['searchby-container']}>
-            <span>{getLabel('rolegrid.ViewPerPage')}</span>
-
-            <select value={perPage} onChange={(e) => setPerPage(Number(e.target.value))}>
-              <option>10</option>
-              <option>20</option>
-              <option>30</option>
-              <option>50</option>
-              <option>100</option>
-              <option>1000</option>
-            </select>
-          </div>
-        </div>
-
-        {/* Delete Confirmation Modal */}
-        {showConfirmDelete && (
-          <div className={styles.modalOverlay}>
-            <div className={styles.deleteModalContainer}>
-              <div className={styles.modalHeader}>
-                <div className={styles.warningIcon}>!</div>
-                <h3>{getLabel('rolegrid.DeleteRole')}</h3>
-              </div>
-
-              <div className={styles.warningBanner}>
-                <strong>{getLabel('rolegrid.Warning')}</strong> {getLabel('rolegrid.undone')}
-              </div>
-
-              <div className={styles.modalBody}>
-                {usageLoading ? (
-                  <div className={styles.loadingText}>{getLabel('rolegrid.Checkingrole')}</div>
-                ) : usageError ? (
-                  <div className={styles.errorText}>{usageError}</div>
-                ) : usageData ? (
-                  <>
-                    <div className={styles.roleNameContainer}>
-                      <div className={styles.roleNameTag}>{selectedRoleName}</div>
-                    </div>
-
-                    <div className={styles.assignedInfo}>
-                      {getLabel('rolegrid.Currentlyassigned')} <strong>{usageData.loginIds?.length || 0}</strong> {getLabel('rolegrid.Users')}
-                    </div>
-
-                    <div className={styles.affectedUsersTitle}>
-                      {getLabel('rolegrid.AFFECTEDUSERS')}
-                    </div>
-
-                    <div className={styles.usersGrid}>
-                      {usageData.loginIds?.map((user, index) => (
-                        <div key={index} className={styles.userItem}>
-                          {user}
-                        </div>
-                      ))}
-                    </div>
-                  </>
-                ) : null}
-              </div>
-
-              <div className={styles.modalFooter}>
+        {/* ── Fixed Top ─────────────────────────────────── */}
+        <div className={styles.fixedTop}>
+          <div className={styles.titleRow}>
+            <h2 className={styles.title}>
+              {getLabel('rolegrid.RoleManagement') || 'Role Management'}
+            </h2>
+            <div className={styles.searchBox}>
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Search roles..."
+                className={styles.searchInput}
+              />
+              {searchTerm && (
                 <button
-                  className={styles.btnCancel}
-                  onClick={cancelDelete}
-                  disabled={deleteLoading}
+                  className={styles.clearBtn}
+                  onClick={() => setSearchTerm('')}
+                  title="Clear"
                 >
-
-                  {getLabel('rolegrid.Cancel')}
+                  <X size={16} strokeWidth={2} />
                 </button>
-
-                <button
-                  className={styles.btnDelete}
-                  onClick={confirmDelete}
-                  disabled={deleteLoading || usageLoading}
-                >
-                  {deleteLoading ? 'Deleting...' : 'Delete Role'}
-                </button>
-              </div>
+              )}
             </div>
           </div>
-        )}
 
-        {/* Main Table */}
-        <table className={styles['role-details-table']}>
-          <thead>
-            <tr style={{ background: '#e0e0e0' }}>
-              <th className={styles['select-column']}>{getLabel('rolegrid.Select')}</th>
-              <th className={styles['role-description-column']}>{getLabel('rolegrid.RoleName')}</th>
-              <th className={styles['role-description-column']}>{getLabel('rolegrid.RoleDescription')}</th>
-              <th className={styles['role-action-column']}>{getLabel('rolegrid.Actions')}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rolesLoading ? (
-              <tr><td colSpan={4}> {getLabel('rolegrid.Loading')}</td></tr>
-            ) : rolesError ? (
-              <tr><td colSpan={4} style={{ color: 'red' }}>{rolesError}</td></tr>
-            ) : currentRoles.length === 0 ? (
-              <tr><td colSpan={4}>{getLabel('rolegrid.Norolesfound')}</td></tr>
-            ) : (
-              currentRoles.map((role) => {
-                const roleId = getRoleId(role);
-                const isSelected = selectedRoleId === roleId;
+          {/* Action Buttons */}
+          <div className={styles.actions}>
+            <button
+              className={styles.createBtn}
+              onClick={() => navigate('/ums/create-role')}
+            >
+              <PlusCircle size={16} strokeWidth={2.2} />
+              {getLabel('rolegrid.CreateRole') || 'Create Role'}
+            </button>
 
-                return (
-                  <tr key={roleId || Math.random()}>
-                    <td className={styles['radio-button']}>
-                      <input
-                        type="radio"
-                        name="roleSelect"
-                        checked={isSelected}
-                        onChange={() => handleSelectRole(role)}
-                      />
-                    </td>
-                    <td>{role.roleName || '—'}</td>
-                    <td>{role.roleDesc || '—'}</td>
-                    <td className={styles['role-action-column']}>
-                      <button
-                        onClick={() => navigate(`/ums/view-role/${roleId}`)}
-                        className={styles['view-button']}
-                        disabled={!roleId}
-                      >
-                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z" /><circle cx="12" cy="12" r="3" /></svg> {getLabel('rolegrid.View')}
-                      </button>
-                      {' | '}
-                      <button
-                        onClick={() => navigate(`/ums/modify-role/${roleId}`)}
-                        className={styles['modify-button']}
-                        disabled={!roleId}
-                      >
-                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" /></svg>{getLabel('rolegrid.Modify')}
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })
-            )}
-          </tbody>
-        </table>
-
-        {/* Pagination */}
-        {totalPages > 1 && (
-          <div className={styles['total-roles']}>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <button
-                key={page}
-                onClick={() => setCurrentPage(page)}
-                style={{
-                  background: currentPage === page ? '#1e40af' : '#f0f0f0',
-                  color: currentPage === page ? 'white' : '#333',
-                }}
-                className={styles['pagination']}
-              >
-                {page}
-              </button>
-            ))}
+            <button
+              className={styles.deleteBtn}
+              onClick={handleDeleteClick}
+              disabled={deleteLoading || usageLoading || !selectedRoleId}
+            >
+              <Trash2 size={16} strokeWidth={2} />
+              {deleteLoading ? 'Deleting...' : getLabel('rolegrid.DeleteRole') || 'Delete Role'}
+            </button>
           </div>
-        )}
+        </div>
+
+        {/* ── Table scroll area ─────────────────────────── */}
+        <div className={styles.tableScrollArea}>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th className={styles.thCheck}></th>
+                <th>{getLabel('rolegrid.RoleName') || 'Role Name'}</th>
+                <th>{getLabel('rolegrid.RoleDescription') || 'Description'}</th>
+                <th>{getLabel('rolegrid.Actions') || 'Actions'}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rolesLoading ? (
+                <tr>
+                  <td colSpan={4} className={styles.loadingCell}>
+                    <span className={styles.loadingSpinner} />
+                    {getLabel('rolegrid.Loading') || 'Loading...'}
+                  </td>
+                </tr>
+              ) : rolesError ? (
+                <tr>
+                  <td colSpan={4} className={styles.errorCell}>{rolesError}</td>
+                </tr>
+              ) : currentRoles.length === 0 ? (
+                <tr>
+                  <td colSpan={4} className={styles.emptyCell}>
+                    <strong>{getLabel('rolegrid.Norolesfound') || 'No roles found'}</strong>
+                  </td>
+                </tr>
+              ) : (
+                currentRoles.map((role) => {
+                  const roleId = getRoleId(role);
+                  const isSelected = selectedRoleId === roleId;
+                  return (
+                    <tr
+                      key={roleId || Math.random()}
+                      className={isSelected ? styles.rowSelected : ''}
+                      onClick={() => handleSelectRole(role)}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <td className={styles.tdCheck}>
+                        <input
+                          type="radio"
+                          name="roleSelect"
+                          checked={isSelected}
+                          onChange={() => { }}
+                          onClick={(e) => { e.stopPropagation(); handleSelectRole(role); }}
+                        />
+                      </td>
+                      <td className={styles.roleNameCell}>{role.roleName || '—'}</td>
+                      <td className={styles.roleDescCell}>{role.roleDesc || '—'}</td>
+                      <td onClick={(e) => e.stopPropagation()}>
+                        <div className={styles.actionCell}>
+                          <a
+                            href="#"
+                            className={styles.actionLink}
+                            onClick={(e) => { e.preventDefault(); if (roleId) navigate(`/ums/view-role/${roleId}`); }}
+                          >
+                            <Eye size={13} strokeWidth={2} />
+                            {getLabel('rolegrid.View') || 'View'}
+                          </a>
+                          <span className={styles.sep}>|</span>
+                          <a
+                            href="#"
+                            className={styles.actionLink}
+                            onClick={(e) => { e.preventDefault(); if (roleId) navigate(`/ums/modify-role/${roleId}`); }}
+                          >
+                            <Pencil size={13} strokeWidth={2} />
+                            {getLabel('rolegrid.Modify') || 'Modify'}
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        {/* ── Bottom Bar ────────────────────────────────── */}
+        <div className={styles.bottomBar}>
+          <div className={styles.perPageWrapper}>
+            <span>View Per Page</span>
+            <select
+              className={styles.pageSelect}
+              value={perPage}
+              onChange={(e) => { setPerPage(Number(e.target.value)); setCurrentPage(1); }}
+            >
+              {[5, 10, 25, 50, 100].map((n) => (
+                <option key={n} value={n}>{n}</option>
+              ))}
+            </select>
+          </div>
+
+          {filteredRoles.length > 0 && (
+            <div className={styles.paginationWrapper}>
+              <button
+                className={styles.pageBtn}
+                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                disabled={currentPage === 1}
+              >
+                <ChevronLeft size={16} strokeWidth={2} />
+              </button>
+              {getPageNumbers().map((page, idx) =>
+                page === '...'
+                  ? <span key={`e-${idx}`} className={styles.paginationEllipsis}>…</span>
+                  : (
+                    <button
+                      key={page}
+                      onClick={() => setCurrentPage(page)}
+                      className={`${styles.pageBtn} ${currentPage === page ? styles.pageBtnActive : ''}`}
+                    >
+                      {page}
+                    </button>
+                  )
+              )}
+              <button
+                className={styles.pageBtn}
+                onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                disabled={currentPage === totalPages || totalPages === 0}
+              >
+                <ChevronRight size={16} strokeWidth={2} />
+              </button>
+            </div>
+          )}
+
+          <div className={styles.printWrapper}>
+            <button className={styles.printBtn} onClick={() => window.print()}>
+              <Printer size={15} strokeWidth={2} />
+              Print
+            </button>
+          </div>
+        </div>
       </div>
+
+      {/* ── Delete Confirmation Modal ──────────────────── */}
+      {showConfirmDelete && (
+        <div className={styles.modalOverlay} onClick={cancelDelete}>
+          <div className={styles.deleteModal} onClick={(e) => e.stopPropagation()}>
+            {/* Header */}
+            <div className={styles.modalHeader}>
+              <div className={styles.modalTitleRow}>
+                <div className={styles.warningIcon}>!</div>
+                <h3 className={styles.modalTitle}>{getLabel('rolegrid.DeleteRole') || 'Delete Role'}</h3>
+              </div>
+              <button className={styles.modalCloseBtn} onClick={cancelDelete}>
+                <X size={16} strokeWidth={2} />
+              </button>
+            </div>
+
+            {/* Warning banner */}
+            <div className={styles.warningBanner}>
+              <strong>{getLabel('rolegrid.Warning') || 'Warning:'}</strong>{' '}
+              {getLabel('rolegrid.undone') || 'This action cannot be undone.'}
+            </div>
+
+            {/* Body */}
+            <div className={styles.modalBody}>
+              {usageLoading ? (
+                <div className={styles.loadingText}>{getLabel('rolegrid.Checkingrole') || 'Checking role usage...'}</div>
+              ) : usageError ? (
+                <div className={styles.errorText}>{usageError}</div>
+              ) : usageData ? (
+                <>
+                  <div className={styles.roleNameContainer}>
+                    <span className={styles.roleNameTag}>{selectedRoleName}</span>
+                  </div>
+                  <div className={styles.assignedInfo}>
+                    {getLabel('rolegrid.Currentlyassigned') || 'Currently assigned to'}{' '}
+                    <strong>{usageData.loginIds?.length || 0}</strong>{' '}
+                    {getLabel('rolegrid.Users') || 'user(s)'}
+                  </div>
+                  {usageData.loginIds?.length > 0 && (
+                    <>
+                      <div className={styles.affectedUsersTitle}>
+                        {getLabel('rolegrid.AFFECTEDUSERS') || 'AFFECTED USERS'}
+                      </div>
+                      <div className={styles.usersGrid}>
+                        {usageData.loginIds.map((user, index) => (
+                          <div key={index} className={styles.userItem}>{user}</div>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </>
+              ) : null}
+            </div>
+
+            {/* Footer */}
+            <div className={styles.modalFooter}>
+              <button
+                className={styles.btnCancel}
+                onClick={cancelDelete}
+                disabled={deleteLoading}
+              >
+                {getLabel('rolegrid.Cancel') || 'Cancel'}
+              </button>
+              <button
+                className={styles.btnDelete}
+                onClick={confirmDelete}
+                disabled={deleteLoading || usageLoading}
+              >
+                {deleteLoading ? 'Deleting...' : getLabel('rolegrid.DeleteRole') || 'Delete Role'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -75,7 +75,6 @@ const ChangePassword = () => {
 
   const handleCancel = () => {
     setFormData({ password: '', confirmPassword: '' });
-    navigate('/usermanagementgrid');
   };
 
   return (

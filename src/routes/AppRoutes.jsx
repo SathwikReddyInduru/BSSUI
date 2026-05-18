@@ -486,8 +486,8 @@ function AppRoutes() {
                     <Route path="/ums/view-user/:id" element={<ViewUserInfoPage />} />
                     <Route path="/ums/roles" element={<RoleManagement />} />
                     <Route path="/ums/create-role" element={<CreateRole />} />
-                    <Route path="/ums/modify-role/:id" element={<ModifyRole />} />
-                    <Route path="/ums/view-role/:id" element={<ViewRole />} />
+                    <Route path="/ums/modify-role/:roleId" element={<ModifyRole />} />
+                    <Route path="/ums/view-role/:roleId" element={<ViewRole />} />
                     <Route path="/ums/role-create-status" element={<RoleCreationStatus />} />
                     <Route path="/ums/role-modify-status" element={<RoleModifyStatus />} />
                     <Route path="/ums/changepassword/:loginName" element={<ChangePassword />} />

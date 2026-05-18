@@ -1,126 +1,274 @@
-/* ─── PAGE WRAPPER ───────────────────────────────────────── */
-
-.ViewUserInfoPage {
-  width: 100%;
-  padding: 22px;
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
-/* ─── HEADING ────────────────────────────────────────────── */
+/* ─────────────────────────────────────────
+   MAIN SCREEN
+───────────────────────────────────────── */
 
-.Heading {
-  font-size: 22px;
-  font-weight: 700;
-  color: #1f2937;
-  margin-bottom: 28px;
-}
-
-/* ─── TWO-COLUMN INFO LAYOUT ─────────────────────────────── */
-
-.ViewHeading {
+.screenLayoutUser {
   display: flex;
-  gap: 32px;
-  flex-wrap: wrap;
-  margin-bottom: 32px;
-}
-
-/* ─── LEFT TABLE ─────────────────────────────────────────── */
-
-.TableHeading {
-  border-collapse: collapse;
-  flex: 1;
-  min-width: 280px;
-}
-
-.TableHeading tr + tr td {
-  padding-top: 14px;
-}
-
-.labelCell {
-  font-size: 13px;
-  font-weight: 600;
-  color: #6b7280;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  padding-right: 24px;
-  white-space: nowrap;
-  vertical-align: top;
-  padding-bottom: 14px;
-}
-
-.dataCell {
-  font-size: 15px;
-  color: #111827;
-  font-weight: 500;
-  vertical-align: top;
-  padding-bottom: 14px;
-}
-
-/* ─── RIGHT TABLE ────────────────────────────────────────── */
-
-.Righttable {
-  border-collapse: collapse;
-  flex: 1;
-  min-width: 280px;
-  background: #f8fafc;
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
-  align-self: flex-start;
+  background: #f8fafc;
 }
 
-.Righttable tr + tr td {
-  border-top: 1px solid #edf1f5;
+/* ─────────────────────────────────────────
+   MAIN CONTAINER
+───────────────────────────────────────── */
+
+.screenContainerUserManagement {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow:
+    0 4px 20px rgba(37, 99, 235, 0.08);
+  overflow: hidden;
 }
 
-.viewlabelCell {
-  font-size: 13px;
-  font-weight: 600;
-  color: #6b7280;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  padding: 12px 18px;
-  white-space: nowrap;
-  width: 140px;
+/* ─────────────────────────────────────────
+   HEADER
+───────────────────────────────────────── */
+
+.pageTitleBar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  height: 62px;
+  background:
+    linear-gradient(135deg,
+      #eff6ff,
+      #ffffff);
+  border-bottom: 2px solid #dbeafe;
 }
 
-.viewdataCell {
-  font-size: 14px;
-  color: #111827;
-  font-weight: 500;
-  padding: 12px 18px;
+.pageTitle {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e40af;
+  letter-spacing: -0.02em;
 }
 
-/* ─── BACK BUTTON ────────────────────────────────────────── */
+/* ─────────────────────────────────────────
+   BACK BUTTON
+───────────────────────────────────────── */
 
-.ViewUserInfoHomeButton {
+.backButton {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 11px 24px;
-  border: 1px solid #d1d5db;
-  border-radius: 12px;
-  background: white;
-  color: #374151;
-  font-size: 14px;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 10px;
+  background:
+    linear-gradient(135deg,
+      #3b82f6,
+      #1d4ed8);
+  color: #ffffff;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.2s;
+  transition:
+    transform 0.15s,
+    opacity 0.2s,
+    box-shadow 0.2s;
+  box-shadow:
+    0 4px 14px rgba(37, 99, 235, 0.24);
 }
 
-.ViewUserInfoHomeButton:hover {
-  background: #f3f4f6;
-  border-color: #9ca3af;
+.backButton:hover {
+  opacity: 0.95;
 }
 
-/* ─── MOBILE ─────────────────────────────────────────────── */
+.backButton:active {
+  transform: scale(0.98);
+}
 
-@media (max-width: 768px) {
-  .ViewHeading {
-    flex-direction: column;
+/* ─────────────────────────────────────────
+   BODY
+───────────────────────────────────────── */
+
+.viewBody {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 28px;
+  background:
+    linear-gradient(to bottom,
+      #f8fbff,
+      #f1f5f9);
+
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+.viewBody::-webkit-scrollbar {
+  width: 8px;
+}
+
+.viewBody::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.viewBody::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
+}
+
+.viewBody::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* ─────────────────────────────────────────
+   GRID
+───────────────────────────────────────── */
+
+.infoGrid {
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+  gap: 28px;
+  align-items: start;
+}
+
+/* ─────────────────────────────────────────
+   CARD
+───────────────────────────────────────── */
+
+.infoCard {
+  background: #ffffff;
+
+  border: 1px solid #c7dcff;
+
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 2px 10px rgba(37, 99, 235, 0.06);
+}
+
+/* ─────────────────────────────────────────
+   ROW
+───────────────────────────────────────── */
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+
+  padding: 16px 20px;
+
+  border-bottom: 1px solid #eff6ff;
+}
+
+.infoRow:last-child {
+  border-bottom: none;
+}
+
+/* ─────────────────────────────────────────
+   LABEL
+───────────────────────────────────────── */
+
+.label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ─────────────────────────────────────────
+   VALUE
+───────────────────────────────────────── */
+
+.value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+  text-align: right;
+  word-break: break-word;
+}
+
+/* ─────────────────────────────────────────
+   STATUS
+───────────────────────────────────────── */
+
+.activeStatus {
+  color: #16a34a;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.inactiveStatus {
+  color: #dc2626;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* ─────────────────────────────────────────
+   STATES
+───────────────────────────────────────── */
+
+.loadingState,
+.errorState {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 16px;
+
+  padding: 40px;
+
+  text-align: center;
+}
+
+.errorState h2 {
+  margin: 0;
+  color: #dc2626;
+}
+
+/* ─────────────────────────────────────────
+   MOBILE
+───────────────────────────────────────── */
+
+@media (max-width: 900px) {
+
+  .viewBody {
+    padding: 18px;
   }
 
-  .Righttable {
-    width: 100%;
+  .infoGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .pageTitleBar {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+
+    gap: 12px;
+
+    height: auto;
+    padding: 18px;
   }
 }

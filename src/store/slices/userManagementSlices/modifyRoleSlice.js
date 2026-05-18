@@ -26,13 +26,19 @@ export const modifyRole = createAsyncThunk(
       console.log('[modifyRole] Sending to:', fullUrl);
       console.log('[modifyRole] Payload:', payload);
 
+      // FIX: Deduplicate privileges at the slice level as a final safety guard
+      const deduplicatedPayload = {
+        ...payload,
+        privileges: [...new Set(payload.privileges)],
+      };
+
       const response = await fetch(fullUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           // 'Authorization': `Bearer ${token}`   ← uncomment + provide token if needed
         },
-        body: JSON.stringify(payload), // { networkId, roleId, roleName, roleDescription, privileges: [...] }
+        body: JSON.stringify(deduplicatedPayload),
       });
 
       let data;
@@ -101,11 +107,14 @@ const modifyRoleSlice = createSlice({
         state.loading = false;
         state.success = true;
         state.data = action.payload;
+        // FIX: Replaced short-circuit boolean expression with explicit conditional
+        // to avoid storing `false` as the message when status !== 'success'
         state.message =
           action.payload?.message ||
           action.payload?.successMessage ||
-          action.payload?.status === 'success' && 'Role modified successfully' ||
-          'Role updated';
+          (action.payload?.status === 'success'
+            ? 'Role modified successfully'
+            : 'Role updated');
         state.error = null;
       })
       .addCase(modifyRole.rejected, (state, action) => {
@@ -120,7 +129,7 @@ const modifyRoleSlice = createSlice({
 export const { resetModifyRole, clearModifyRoleError } = modifyRoleSlice.actions;
 export default modifyRoleSlice.reducer;
 
-// Selectors (unchanged)
+// Selectors
 export const selectModifyRoleLoading = (state) => state.modifyRole.loading;
 export const selectModifyRoleSuccess = (state) => state.modifyRole.success;
 export const selectModifyRoleError = (state) => state.modifyRole.error;

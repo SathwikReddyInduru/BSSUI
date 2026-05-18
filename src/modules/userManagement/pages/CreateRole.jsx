@@ -52,47 +52,50 @@ const CreateRole = () => {
   // Navigate to status page when operation finishes
   // ────────────────────────────────────────────────
   useEffect(() => {
-    if (!createSuccess && !createError) return;
-
-    const trimmedRoleName = roleName.trim();
-
-    let isSuccess = false;
-    let message = '';
 
     if (createSuccess) {
-      isSuccess = true;
-      message = createMessage || 'Role created successfully!';
-    } else if (createError) {
-      isSuccess = false;
-      // Extract the message from the error object
-      message =
-        createError?.message ||                  // Primary field from API
-        createError?.error ||                    // Fallback if API uses 'error'
-        (typeof createError === 'string' ? createError : '') ||
-        'Failed to create role. Please try again.';
 
-      // Optional: User-friendly messages for known errors
-      const lowerMessage = message.toLowerCase();
+      showSuccess(
+        createMessage || 'Role created successfully!'
+      );
+
+      dispatch(resetCreateRole());
+      navigate('/ums/roles');
+    }
+
+    if (createError) {
+
+      let message =
+        createError?.message ||
+        createError?.error ||
+        (typeof createError === 'string'
+          ? createError
+          : '') ||
+        'Failed to create role';
+
+      const lowerMessage =
+        message.toLowerCase();
+
       if (
         lowerMessage.includes('already exists') ||
         lowerMessage.includes('duplicate') ||
         createError?.errorCode === '50006'
       ) {
-        message = 'A role with this name already exists. Please choose a different name.';
+        message =
+          'A role with this name already exists.';
       }
+
+      showError(message);
+      dispatch(resetCreateRole());
     }
 
-    navigate('/ums/role-create-status', {
-      state: {
-        isSuccess,
-        message,
-        roleName: trimmedRoleName,
-      },
-    });
-
-    dispatch(resetCreateRole());
-
-  }, [createSuccess, createError, createMessage, roleName, navigate, dispatch]);
+  }, [
+    createSuccess,
+    createError,
+    createMessage,
+    navigate,
+    dispatch
+  ]);
 
   const togglePrivilege = (privId) => {
     setSelectedPrivileges((prev) =>
@@ -149,94 +152,138 @@ const CreateRole = () => {
 
   return (
     <div className={styles['screen-layout-role']}>
-      <div className={styles['container-role-screen']} style={{ padding: '30px' }}>
-        <h2 className={styles['status-title']}>
-          {getLabel('createRole.title')}
-        </h2>
+      <div className={styles['container-role-screen']}>
 
-        {/* Role Name */}
-        <div style={{ marginBottom: '30px' }}>
-          <label className={styles['labelstyle']}>
-            {getLabel('createRole.RoleName')} <span style={{ color: 'red' }}>*</span>
-          </label>
-          <input
-            type="text"
-            value={roleName}
-            onChange={(e) => setRoleName(e.target.value)}
-            placeholder="Enter role name"
-            className={styles['labelInput']}
-          />
-        </div>
+        {/* HEADER */}
+        <div className={styles['pageTitleBar']}>
 
-        {/* Description */}
-        <div style={{ marginBottom: '40px' }}>
-          <label className={styles['labelstyle']}>
-            {getLabel('createRole.RoleDescription')} <span style={{ color: 'red' }}>*</span>
-          </label>
-          <textarea
-            value={roleDescription}
-            onChange={(e) => setRoleDescription(e.target.value)}
-            placeholder="Enter role description..."
-            rows={5}
-            className={styles['labelInput']}
-          />
-        </div>
+          <h2 className={styles['status-title']}>
+            {getLabel('createRole.title')}
+          </h2>
 
-        {/* Privileges */}
-        {privilegesData.map((module, index) => (
-          <div key={index} style={{ marginBottom: '40px' }}>
-            <div className={styles['module-header']}>
-              {module.moduleName}
-            </div>
-
-            <div style={{ textAlign: 'right', margin: '10px 0' }}>
-              <button onClick={() => selectAllInModule(module.privileges)} className={styles['selectPrivilege']}>
-                {getLabel('createRole.SelectAll')}
-              </button>
-              <button onClick={() => deselectAllInModule(module.privileges)} style={{ padding: '6px 14px' }}>
-                {getLabel('createRole.DeselectAll')}
-              </button>
-            </div>
-
-            <div className={styles['module-privileges']}>
-              {module.privileges.map((priv) => (
-                <label key={priv.privilegeId} className={styles['privilegeId']}>
-                  <input
-                    type="checkbox"
-                    checked={selectedPrivileges.includes(priv.privilegeId)}
-                    onChange={() => togglePrivilege(priv.privilegeId)}
-                    style={{ width: '18px', height: '18px' }}
-                  />
-                  <span>{priv.privilegeName}</span>
-                </label>
-              ))}
-            </div>
-          </div>
-        ))}
-
-        {/* Buttons */}
-        <div style={{ textAlign: 'center', marginTop: '60px' }}>
           <button
-            onClick={handleSubmit}
-            disabled={createLoading}
-            style={{
-
-              background: createLoading ? '#94a3b8' : '#1e40af',
-
-              cursor: createLoading ? 'not-allowed' : 'pointer',
-            }}
-            className={styles['createuser-button']}
+            onClick={handleHome}
+            className={styles['home-button']}
           >
-            {createLoading ? 'Creating Role...' : 'Create Role'}
+            ← Back
           </button>
 
-          <button onClick={handleReset} className={styles['reset-button']}>
-            {getLabel('createRole.Reset')}
-          </button>
+        </div>
 
-          <button onClick={handleHome} className={styles['home-button']}>
-            {getLabel('createRole.Back')}
-          </button>
+        {/* SCROLLABLE BODY */}
+        <div className={styles.roleBody}>
+
+          {/* Role Name */}
+          <div className={styles.formSection}>
+            <label className={styles['labelstyle']}>
+              {getLabel('createRole.RoleName')}
+              <span style={{ color: 'red' }}> *</span>
+            </label>
+
+            <input
+              type="text"
+              value={roleName}
+              onChange={(e) => setRoleName(e.target.value)}
+              placeholder="Enter role name"
+              className={styles['labelInput']}
+            />
+          </div>
+
+          {/* Description */}
+          <div className={styles.formSection}>
+            <label className={styles['labelstyle']}>
+              {getLabel('createRole.RoleDescription')}
+              <span style={{ color: 'red' }}> *</span>
+            </label>
+
+            <textarea
+              value={roleDescription}
+              onChange={(e) => setRoleDescription(e.target.value)}
+              placeholder="Enter role description..."
+              rows={5}
+              className={styles['labelInput']}
+            />
+          </div>
+
+          {/* Privileges */}
+          {privilegesData.map((module, index) => (
+            <div
+              key={index}
+              className={styles.moduleCard}
+            >
+
+              <div className={styles['module-header']}>
+
+                <span>{module.moduleName}</span>
+
+                <div className={styles.moduleActions}>
+
+                  <button
+                    onClick={() => selectAllInModule(module.privileges)}
+                    className={styles['selectPrivilege']}
+                  >
+                    {getLabel('createRole.SelectAll')}
+                  </button>
+
+                  <button
+                    onClick={() => deselectAllInModule(module.privileges)}
+                    className={styles['deselectPrivilege']}
+                  >
+                    {getLabel('createRole.DeselectAll')}
+                  </button>
+
+                </div>
+
+              </div>
+
+              <div className={styles['module-privileges']}>
+
+                {module.privileges.map((priv) => (
+
+                  <label
+                    key={priv.privilegeId}
+                    className={styles['privilegeId']}
+                  >
+
+                    <input
+                      type="checkbox"
+                      checked={selectedPrivileges.includes(priv.privilegeId)}
+                      onChange={() => togglePrivilege(priv.privilegeId)}
+                    />
+
+                    <span>{priv.privilegeName}</span>
+
+                  </label>
+
+                ))}
+
+              </div>
+
+            </div>
+          ))}
+
+          {/* BUTTONS */}
+          <div className={styles.buttonGroup}>
+
+            <button
+              onClick={handleSubmit}
+              disabled={createLoading}
+              className={styles['createuser-button']}
+            >
+              {createLoading
+                ? 'Creating Role...'
+                : 'Create Role'}
+            </button>
+
+            <button
+              onClick={handleReset}
+              className={styles['reset-button']}
+            >
+              {getLabel('createRole.Reset')}
+            </button>
+
+          </div>
+
         </div>
       </div>
     </div>

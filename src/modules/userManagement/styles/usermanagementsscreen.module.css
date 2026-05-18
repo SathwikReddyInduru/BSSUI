@@ -1,25 +1,124 @@
-/* ─────────────────────────────────────────────────────────────
-   GLOBAL CLASSES  (used as plain className strings in the JSX)
-   ──────────────────────────────────────────────────────────── */
+/* ============================================================
+   usermanagementsscreen.module.css
+   Matches NetworkManagement UI: fixed header, scrollable form
+   ============================================================ */
 
-:global(.screen-layout-user) {
-  width: 100%;
-  height: 100%;
-  padding: 22px;
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
-:global(.screen-container-userManagement) {
+/* ── Outer shell ────────────────────────────────────────────── */
+.screenLayout {
+  display: flex;
+  flex-direction: column;
   width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #f8fafc;
+}
+
+/* ── Card ───────────────────────────────────────────────────── */
+.screenContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.08);
+  overflow: hidden;
+}
+
+/* ── Fixed Header ───────────────────────────────────────────── */
+.pageTitleBar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  height: 62px;
+  background: linear-gradient(135deg, #eff6ff, #ffffff);
+  border-bottom: 2px solid #dbeafe;
+}
+
+.pageTitle {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #1e40af;
+  letter-spacing: -0.02em;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ── Back Button ────────────────────────────────────────────── */
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s, opacity 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.24);
+}
+
+.backButton:hover {
+  opacity: 0.92;
+}
+
+.backButton:active {
+  transform: scale(0.98);
+}
+
+/* ── Scrollable Form Body ───────────────────────────────────── */
+.formBody {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 24px 30px 30px;
+  background: #f8fafc;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+.formBody::-webkit-scrollbar {
+  width: 8px;
+}
+
+.formBody::-webkit-scrollbar-track {
   background: transparent;
 }
 
-:global(.screen-title) {
-  font-size: 22px;
-  font-weight: 700;
-  color: #1f2937;
-  margin-bottom: 28px;
+.formBody::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
 }
+
+.formBody::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.formInner {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ── Global form classes (used as plain className) ──────────── */
 
 :global(.form-row) {
   display: flex;
@@ -54,7 +153,6 @@
 
 :global(.form-input),
 :global(.form-select) {
-  /* height: 44px; */
   border: 1px solid #d1d5db;
   border-radius: 12px;
   padding: 11px 13px;
@@ -90,93 +188,126 @@
   box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
 }
 
-:global(.button-group) {
+/* ── Footer button group ────────────────────────────────────── */
+.footerButtonGroup {
   display: flex;
-  gap: 14px;
-  justify-content: center;
-  margin-top: 36px;
-  flex-wrap: wrap;
+  justify-content: flex-end;
+  padding-top: 18px;
+  border-top: 1px solid #e5e7eb;
 }
 
-:global(.button) {
-  padding: 12px 28px;
-  border-radius: 14px;
-  font-size: 15px;
+/* ── Submit Button ──────────────────────────────────────────── */
+.submitBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 11px 28px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: #ffffff;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
-  border: none;
+  transition: transform 0.15s, opacity 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.24);
 }
 
-:global(.button-submit) {
-  background: #1e40af;
-  color: white;
+.submitBtn:hover {
+  opacity: 0.92;
 }
 
-:global(.button-submit:hover) {
-  background: #1d4ed8;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(30, 64, 175, 0.25);
+.submitBtn:active {
+  transform: scale(0.98);
 }
 
-:global(.button-submit:disabled) {
+.submitBtn:disabled {
   background: #94a3b8;
   cursor: not-allowed;
-  transform: none;
   box-shadow: none;
+  transform: none;
 }
 
-:global(.button-cancel) {
-  background: white;
-  color: #374151;
-  border: 1px solid #d1d5db;
-}
-
-:global(.button-cancel:hover) {
-  background: #f3f4f6;
-}
-
-/* ─────────────────────────────────────────────────────────────
-   MODULE-SCOPED CLASSES (used as styles.xxx in JSX)
-   ──────────────────────────────────────────────────────────── */
-
-/* Step 2 – role selector */
-
-.selectRole {
-  font-size: 16px;
-  font-weight: 700;
-  color: #1f2937;
-  margin-bottom: 14px;
-}
-
-.roleheader {
+/* ── Role Selection (Step 2) ────────────────────────────────── */
+.roleHeader {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 10px;
-  margin-bottom: 16px;
+  grid-template-columns: 60px 220px 1fr;
+  padding: 12px 16px;
+  background: #e8edf5;
+  border-radius: 10px 10px 0 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: #334155;
+  letter-spacing: 0.01em;
+  border: 1px solid #e2e8f0;
+  border-bottom: none;
 }
 
-.rolesLoader {
-  padding: 20px 0;
+.rolesBody {
+  border: 1px solid #e2e8f0;
+  border-radius: 0 0 10px 10px;
+  overflow: hidden;
+  margin-bottom: 8px;
 }
 
-.loadingRole {
+.roleRow {
+  display: grid;
+  grid-template-columns: 60px 220px 1fr;
+  padding: 13px 16px;
+  border-bottom: 1px solid #f1f5f9;
+  transition: background 0.15s;
+  align-items: center;
+}
+
+.roleRow:last-child {
+  border-bottom: none;
+}
+
+.roleRow:hover {
+  background: #f0f5ff;
+}
+
+.roleRowSelected {
+  background: #ebf3ff;
+}
+
+.roleCheckbox {
+  width: 16px;
+  height: 16px;
+  accent-color: #2563eb;
+  cursor: pointer;
+}
+
+.roleName {
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 14px;
+}
+
+.roleDesc {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.roleMessage {
+  padding: 24px;
+  text-align: center;
   color: #6b7280;
   font-size: 14px;
 }
 
-/* Step 3 – success screen */
-
-.userCreationForm {
+/* ── Success (Step 3) ───────────────────────────────────────── */
+.successContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 60px 20px;
   text-align: center;
+  gap: 16px;
 }
 
-.createRight {
+.successIcon {
   width: 72px;
   height: 72px;
   border-radius: 50%;
@@ -186,25 +317,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
   border: 3px solid #bbf7d0;
 }
 
-.userSuccessText {
+.successTitle {
+  margin: 0;
   font-size: 22px;
   font-weight: 700;
   color: #15803d;
-  margin-bottom: 10px;
 }
 
-.successUser {
+.successMsg {
+  margin: 0;
   font-size: 15px;
   color: #6b7280;
-  margin-bottom: 0;
 }
 
-/* ─── MOBILE ─────────────────────────────────────────────── */
-
+/* ── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 900px) {
   :global(.form-row.three-column) {
     grid-template-columns: 1fr 1fr;
@@ -214,5 +343,18 @@
 @media (max-width: 600px) {
   :global(.form-row.three-column) {
     grid-template-columns: 1fr;
+  }
+
+  .pageTitleBar {
+    padding: 0 16px;
+  }
+
+  .formBody {
+    padding: 16px;
+  }
+
+  .roleHeader,
+  .roleRow {
+    grid-template-columns: 50px 1fr 1fr;
   }
 }

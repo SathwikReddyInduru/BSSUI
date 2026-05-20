@@ -1,6 +1,6 @@
 // src/ReduxStore/slices/roleDeleteSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import axiosService from '../../../services/AxiosService';
 import { loadConfig } from '../../../services/configService';
 
 let cachedConfigPromise = null;
@@ -28,7 +28,7 @@ export const checkRoleUsage = createAsyncThunk(
       console.log('[checkRoleUsage] →', url);
       console.log('[checkRoleUsage] payload →', { networkId, roleId });
 
-      const response = await axios.post(url, { networkId, roleId }, {
+      const response = await axiosService.post(url, { networkId, roleId }, {
         headers: { 'Content-Type': 'application/json' },
         // timeout: 10000,              // optional
         // withCredentials: true,       // if cookies/auth needed
@@ -72,7 +72,7 @@ export const deleteRole = createAsyncThunk(
       console.log('[deleteRole] →', url);
       console.log('[deleteRole] payload →', { networkId, roleId });
 
-      const response = await axios.post(url, { networkId, roleId }, {
+      const response = await axiosService.post(url, { networkId, roleId }, {
         headers: { 'Content-Type': 'application/json' },
       });
 
@@ -144,7 +144,7 @@ const roleDeleteSlice = createSlice({
         state.deleteError = null;
         state.deleteSuccess = false;
       })
-      .addCase(deleteRole.fulfilled, (state, action) => {
+      .addCase(deleteRole.fulfilled, (state) => {
         state.deleteLoading = false;
         state.deleteSuccess = true;
         // Optional: store response data/message if backend returns something useful

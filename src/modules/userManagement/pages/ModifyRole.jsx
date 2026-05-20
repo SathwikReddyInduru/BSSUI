@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { showSuccess, showError } from "../../../utils/toast";
+import { showSuccess, showError } from "@/utils/toast.js";
 import styles from '../styles/createrole.module.css';
-import { useAppContext } from '../../../contexts/AppContext';
+import { useAppContext } from '@/contexts/AppContext.jsx';
 
 import {
   fetchRolePrivileges,
   selectRolePrivilegesLoading,
   selectRolePrivilegesData,
   selectRolePrivilegesError
-} from '../../../store/slices/userManagementSlices/rolePrivileges';
+} from '@/store/slices/userManagementSlices/rolePrivileges.js';
 
 import {
   modifyRole,
@@ -19,7 +19,7 @@ import {
   selectModifyRoleError,
   selectModifyRoleMessage,
   resetModifyRole
-} from '../../../store/slices/userManagementSlices/modifyRoleSlice';
+} from '@/store/slices/userManagementSlices/modifyRoleSlice.js';
 
 const ModifyRole = () => {
   const dispatch = useDispatch();

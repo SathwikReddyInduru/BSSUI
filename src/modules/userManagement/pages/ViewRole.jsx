@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -8,10 +8,10 @@ import {
   selectRoleDetailsLoading,
   selectRoleDetailsError,
   clearRoleDetails,
-} from '../../../store/slices/userManagementSlices/roleDetailsSlice';
+} from '@/store/slices/userManagementSlices/roleDetailsSlice.js';
 
-import { showError } from "../../../utils/toast";
-import { useAppContext } from '../../../contexts/AppContext';
+import { showError } from "@/utils/toast.js";
+import { useAppContext } from '@/contexts/AppContext.jsx';
 
 import styles from '../styles/viewrole.module.css';
 

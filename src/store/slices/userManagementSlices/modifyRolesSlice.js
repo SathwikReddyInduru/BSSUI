@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { loadConfig } from '../../../services/configService'; // adjust path if needed
-import axios from 'axios'; // make sure axios is imported if you use it
 
 let cachedConfigPromise = null;
 

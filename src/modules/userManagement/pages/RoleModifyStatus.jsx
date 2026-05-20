@@ -1,5 +1,4 @@
 // src/screens/RoleModifyStatus.jsx
-import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from '../styles/status.module.css'; // create or reuse existing
 

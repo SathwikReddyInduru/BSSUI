@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 
-import { loadConfig } from "../../../services/configService";
+import { loadConfig } from "@/services/configService";
+import axiosService from "@/services/AxiosService";
 
 // Cache config after first load
 let cachedConfigPromise = null;
@@ -27,17 +27,18 @@ export const loginUser = createAsyncThunk(
         },
         { rejectWithValue }
     ) => {
-
+        const requestBody = {
+            networkName: networkName ?? null,
+            userName: username,
+            password,
+        };
         try {
-            const apiConfig = await getApiConfig();
-
-            const response = await axios.post(
-                `http://${apiConfig.api.server}:${apiConfig.api.port.port_1}/api/admin`,
-                {
-                    networkName: networkName ?? null,
-                    userName: username,
-                    password,
-                }
+            const apiConfig = await getApiConfig(); // cached, no extra fetch
+            // const url = `http://${apiConfig.api.server}:${apiConfig.api.port.port_1}/api/admin`;
+            const endpoint = apiConfig.api.endpoints.login_API; // "/api/admin"
+            const response = await axiosService.post(
+                endpoint,
+                requestBody
             );
 
             console.log(response.data);
@@ -45,7 +46,6 @@ export const loginUser = createAsyncThunk(
             return response.data;
 
         } catch (err) {
-
             return rejectWithValue(
                 err.response?.data || {
                     errorCode: 500,
@@ -68,6 +68,7 @@ const authSlice = createSlice({
         username: "",
         password: "",
         modules: [],
+        privileges: [],
     },
 
     reducers: {
@@ -93,6 +94,7 @@ const authSlice = createSlice({
             state.user = null;
             state.loading = false;
             state.modules = [];
+            state.privileges = [];
         },
 
         clearError: (state) => {
@@ -108,6 +110,7 @@ const authSlice = createSlice({
             state.username = "";
             state.password = "";
             state.modules = [];
+            state.privileges = [];
         },
     },
 
@@ -120,6 +123,7 @@ const authSlice = createSlice({
                 state.isAuthenticated = false;
                 state.user = null;
                 state.modules = [];
+                state.privileges = [];
             })
 
             .addCase(loginUser.fulfilled, (state, action) => {
@@ -127,13 +131,16 @@ const authSlice = createSlice({
                 state.isAuthenticated = true;
                 state.user = action.payload;
                 state.error = null;
-                state.modules =
-                    action.payload?.modules || [];
+                state.modules = action.payload?.modules || [];
+                state.privileges = action.payload?.privileges || [];
             })
 
             .addCase(loginUser.rejected, (state, action) => {
                 state.loading = false;
                 state.isAuthenticated = false;
+                state.user = null;
+                state.modules = [];
+                state.privileges = [];
                 state.error = action.payload;
             });
     },

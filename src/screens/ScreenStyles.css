@@ -1110,14 +1110,14 @@ margin: 5%;
 
 .screen-layout-user {
   width: 100%;
-  /* margin: 5%; */
+  /*margin: 5%;*/
 }
 
 .screen-container-userManagement {
   background: white;
   flex: 1;
   border-radius: 12px;
-  /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); */
+  /*box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);*/
   padding: 20px;
   transition: margin-left 0.9s ease;
   /* height: 100vh; */

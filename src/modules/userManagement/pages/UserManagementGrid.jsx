@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { showError, showSuccess } from "../../../utils/toast";
+import { showError, showSuccess } from "@/utils/toast.js";
 import styles from '../styles/usermanagementgrid.module.css';
-import { useAppContext } from '../../../contexts/AppContext';
+import { useAppContext } from '@/contexts/AppContext.jsx';
 import {
   PlusCircle,
   KeyRound,
@@ -25,19 +25,19 @@ import {
   selectUserListData,
   selectUserListLoading,
   selectUserListError,
-} from '../../../store/slices/userManagementSlices/userListSlice';
+} from '@/store/slices/userManagementSlices/userListSlice.js';
 
 import {
   updateUserStatus,
   selectUserStatusLoading,
-} from '../../../store/slices/userManagementSlices/userStatusSlice';
+} from '@/store/slices/userManagementSlices/userStatusSlice.js';
 
 import {
   fetchUserRoles,
   selectUserRolesLoading,
   selectUserRolesData,
   selectUserRolesError,
-} from '../../../store/slices/userManagementSlices/userRolesSlice';
+} from '@/store/slices/userManagementSlices/userRolesSlice.js';
 
 import {
   modifyUserRoles,
@@ -46,7 +46,7 @@ import {
   selectModifyRolesMessage,
   selectModifyRolesError,
   resetModifyRoles,
-} from '../../../store/slices/userManagementSlices/modifyRolesSlice';
+} from '@/store/slices/userManagementSlices/modifyRolesSlice.js';
 
 import {
   fetchUserInfo,
@@ -54,7 +54,7 @@ import {
   selectViewUserInfoData,
   selectViewUserInfoError,
   resetViewUserInfo,
-} from '../../../store/slices/userManagementSlices/viewUserInfoSlice';
+} from '@/store/slices/userManagementSlices/viewUserInfoSlice.js';
 
 import {
   updatePassword,
@@ -63,7 +63,7 @@ import {
   selectChangePasswordError,
   selectChangePasswordMessage,
   resetChangePasswordState,
-} from '../../../store/slices/updatePassword';
+} from '@/store/slices/updatePassword.js';
 
 const UserManagementGrid = () => {
   const dispatch = useDispatch();

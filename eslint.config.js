@@ -15,7 +15,15 @@ export default defineConfig([
     ],
     languageOptions: {
       globals: globals.browser,
-      parserOptions: { ecmaFeatures: { jsx: true } },
+      parserOptions: {ecmaFeatures: {jsx: true}},
+    },
+  },
+
+  // ✅ Node.js files (Vite config + plugin)
+  {
+    files: ['vite.config.js', 'src/vite-log-plugin.js'],
+    languageOptions: {
+      globals: globals.node,
     },
   },
 ])

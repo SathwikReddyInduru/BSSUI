@@ -1,0 +1,91 @@
+.wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #f8fafc;
+    overflow: hidden;
+}
+
+.topNav {
+    height: 56px;
+    background: #ffffff;
+    border-bottom: 1px solid #dbeafe;
+    display: flex;
+    align-items: center;
+    padding: 0 16px 0 14px;
+    gap: 2px;
+    flex-shrink: 0;
+}
+
+/* ← BACK ARROW in topNav */
+
+.backBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: 1.5px solid #bfdbfe;
+    border-radius: 7px;
+    background: #fff;
+    color: #2563eb;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-right: 6px;
+    transition: background 0.18s, border-color 0.18s;
+}
+
+.backBtn:hover {
+    background: #eff6ff;
+    border-color: #3b82f6;
+}
+
+.navLinks {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.navLink {
+    border: none;
+    background: transparent;
+    padding: 16px 18px;
+    font-size: 14px;
+    color: #64748b;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color 0.18s;
+    white-space: nowrap;
+}
+
+.navLink:hover {
+    color: #2563eb;
+}
+
+.navLinkActive {
+    border: none;
+    background: transparent;
+    padding: 16px 18px;
+    font-size: 14px;
+    color: #2563eb;
+    font-weight: 700;
+    cursor: pointer;
+    border-bottom: 2px solid #2563eb;
+    white-space: nowrap;
+}
+
+.body {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.centerBox {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    color: #64748b;
+}

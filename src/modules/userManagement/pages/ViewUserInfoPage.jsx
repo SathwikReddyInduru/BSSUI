@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styles from '../styles/viewuserinfo.module.css';
-import { useAppContext } from '../../../contexts/AppContext';
+import { useAppContext } from '@/contexts/AppContext.jsx';
 
 import {
   fetchUserInfo,
@@ -10,7 +10,7 @@ import {
   selectViewUserInfoData,
   selectViewUserInfoError,
   resetViewUserInfo
-} from '../../../store/slices/userManagementSlices/viewUserInfoSlice';
+} from '@/store/slices/userManagementSlices/viewUserInfoSlice.js';
 
 const ViewUserInfoPreview = () => {
   const dispatch = useDispatch();

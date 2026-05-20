@@ -1,8 +1,16 @@
 {
     "api": {
-        "server": "10.10.21.49",
+        "http_or_https": "http",
+        "server": "10.10.22.70",
         "port": {
-            "port_1": 8092
+            "port_1": 8080
+        },
+        "base_name": "/xom",
+        "endpoints": {
+            "login_API": "api/admin",
+            "cardProfiles_API": "api/card-profile/cardProfiles",
+            "cardProfileDetails_API": "card-profile/details",
+            "Card_Profile_DropDown_API" : "api/card-profile/getAllData"
         }
     }
 }

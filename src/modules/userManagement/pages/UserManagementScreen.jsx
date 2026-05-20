@@ -1,11 +1,11 @@
 // src/modules/userManagement/pages/UserManagementScreen.jsx
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import FormField from '../../../components/FormField';
-import { useAppContext } from '../../../contexts/AppContext';
-import { showError, showSuccess } from "../../../utils/toast";
+import { useAppContext } from '@/contexts/AppContext.jsx';
+import { showError, showSuccess } from "@/utils/toast.js";
 
 import styles from '../styles/usermanagementsscreen.module.css';
 
@@ -15,7 +15,7 @@ import {
   selectCountryOptions,
   selectCountriesLoading,
   selectCountriesError,
-} from '../../../store/slices/countriesSlice';
+} from '@/store/slices/countriesSlice.js';
 
 // States
 import {
@@ -24,7 +24,7 @@ import {
   selectStatesLoading,
   selectStatesError,
   clearStates,
-} from '../../../store/slices/statesSlice';
+} from '@/store/slices/statesSlice.js';
 
 // Workgroups
 import {
@@ -32,7 +32,7 @@ import {
   selectWorkgroupsData,
   selectWorkgroupsLoading,
   selectWorkgroupsError,
-} from '../../../store/slices/userManagementSlices/workgroupSlice';
+} from '@/store/slices/userManagementSlices/workgroupSlice.js';
 
 // Roles
 import {
@@ -40,7 +40,7 @@ import {
   selectRolesData,
   selectRolesLoading,
   selectRolesError,
-} from '../../../store/slices/userManagementSlices/rolesSlice';
+} from '@/store/slices/userManagementSlices/rolesSlice.js';
 
 // User Creation
 import {
@@ -49,7 +49,7 @@ import {
   selectUserCreationSuccess,
   selectUserCreationError,
   resetUserCreationState,
-} from '../../../store/slices/userManagementSlices/userCreationSlice';
+} from '@/store/slices/userManagementSlices/userCreationSlice.js';
 
 const UserManagement = () => {
   const dispatch = useDispatch();

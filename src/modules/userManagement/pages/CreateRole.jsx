@@ -1,11 +1,11 @@
 // src/screens/CreateRole.jsx
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { showSuccess, showError } from "../../../utils/toast"; // ← you can keep for minor warnings
+import { showSuccess, showError } from "@/utils/toast.js"; // ← you can keep for minor warnings
 
 import styles from '../styles/createrole.module.css';
-import { useAppContext } from '../../../contexts/AppContext';
+import { useAppContext } from '@/contexts/AppContext.jsx';
 
 // Slices
 import {
@@ -13,7 +13,7 @@ import {
   selectPrivilegesLoading,
   selectPrivilegesData,
   selectPrivilegesError
-} from '../../../store/slices/userManagementSlices/privilegesSlice';
+} from '@/store/slices/userManagementSlices/privilegesSlice.js';
 
 import {
   createRole,
@@ -22,7 +22,7 @@ import {
   selectCreateRoleError,
   selectCreateRoleMessage,
   resetCreateRole
-} from '../../../store/slices/userManagementSlices/createRoleSlice';
+} from '@/store/slices/userManagementSlices/createRoleSlice.js';
 
 const CreateRole = () => {
   const dispatch = useDispatch();

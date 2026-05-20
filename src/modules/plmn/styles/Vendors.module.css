@@ -1,0 +1,1405 @@
+/* ═══════════════════════════════════════════════════════════════
+   Vendors.module.css  —  mirrors VoucherProfile.module.css exactly
+═══════════════════════════════════════════════════════════════ */
+
+/* ─── Shimmer animation ─────────────────────────────────────── */
+@keyframes vpShimmer {
+    0% {
+        background-position: -600px 0;
+    }
+
+    100% {
+        background-position: 600px 0;
+    }
+}
+
+/* ─── Page Shell ─────────────────────────────────────────────── */
+.page {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #1e293b;
+    overflow: hidden;
+    box-sizing: border-box;
+    background: #f8fafc;
+}
+
+.scrollBody {
+    flex: 1;
+    
+    overflow-x: hidden;
+    padding: 24px 28px 32px;
+    box-sizing: border-box;
+}
+
+/* ─── Top Bar ────────────────────────────────────────────────── */
+.topBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 6px;
+}
+
+.titleAndTabs {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1e40af;
+    margin: 0;
+    white-space: nowrap;
+}
+
+/* ── Sub-tab pills beside title ── */
+.subTabBar {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.subTab {
+    padding: 5px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #64748b;
+    background: #fff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+    font-family: inherit;
+    white-space: nowrap;
+    line-height: 1.5;
+}
+
+.subTab:hover {
+    color: #2563eb;
+    border-color: #bfdbfe;
+    background: #eff6ff;
+}
+
+.subTabActive {
+    padding: 5px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    border: 1.5px solid transparent;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: inherit;
+    white-space: nowrap;
+    line-height: 1.5;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.28);
+}
+
+.tabDivider {
+    height: 1px;
+    background: #dbeafe;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0 0 14px 0;
+}
+
+.rightBar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* ─── Search ─────────────────────────────────────────────────── */
+.searchWrap {
+    position: relative;
+    width: 280px;
+}
+
+.searchIcon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    font-size: 14px;
+    pointer-events: none;
+}
+
+.searchInput {
+    width: 100%;
+    padding: 9px 30px 9px 34px;
+    border: 1.5px solid #bfdbfe;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #1e293b;
+    background: #fff;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    font-family: inherit;
+}
+
+.searchInput:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.clearBtn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    font-size: 13px;
+    line-height: 1;
+    padding: 0;
+}
+
+/* ─── Create Button ──────────────────────────────────────────── */
+.createBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 20px;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 2px 10px rgba(37, 99, 235, 0.3);
+    letter-spacing: 0.3px;
+    transition: opacity 0.2s;
+    font-family: inherit;
+}
+
+.createBtn:hover {
+    opacity: 0.9;
+}
+
+/* ─── Table Card ─────────────────────────────────────────────── */
+.tableCard {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #dbeafe;
+    box-shadow: 0 2px 12px rgba(37, 99, 235, 0.08);
+    overflow: hidden;
+    width: 100%;
+    margin-bottom: 14px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    
+}
+
+.thead {
+    background: #f8faff;
+}
+
+.th {
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: #000;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    border-bottom: 2px solid #bfdbfe;
+    white-space: nowrap;
+}
+
+.thCenter {
+    text-align: center;
+}
+
+.thNoWrap {
+    white-space: nowrap;
+}
+
+.clickableRow {
+    cursor: pointer;
+    transition: background 0.1s;
+}
+
+.tdBase {
+    padding: 12px 20px;
+    font-size: 13px;
+    border-bottom: 1px solid #f1f5f9;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.tdBold {
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.tdNormal {
+    color: #475569;
+}
+
+.tdMuted {
+    color: #64748b;
+    font-weight: 500;
+}
+
+.tdCenter {
+    text-align: center;
+}
+
+.tdNoWrap {
+    white-space: nowrap;
+}
+
+.actionsCell {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+
+.modifyActionBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 16px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #fff;
+    white-space: nowrap;
+    box-shadow: 0 2px 6px rgba(22, 163, 74, 0.25);
+    transition: opacity 0.2s;
+    font-family: inherit;
+}
+
+.modifyActionBtn:hover {
+    opacity: 0.88;
+}
+
+.emptyCell {
+    padding: 56px;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+.errorCell {
+    padding: 56px;
+    text-align: center;
+    color: #dc2626;
+    font-size: 14px;
+}
+
+/* ─── Status Pills ───────────────────────────────────────────── */
+.pillActive {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11.5px;
+    font-weight: 600;
+    background: #dcfce7;
+    color: #16a34a;
+    border: 1px solid #bbf7d0;
+    white-space: nowrap;
+}
+
+.pillDeactive {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11.5px;
+    font-weight: 600;
+    background: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fca5a5;
+    white-space: nowrap;
+}
+
+.pillSuspended {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11.5px;
+    font-weight: 600;
+    background: #fef9c3;
+    color: #b45309;
+    border: 1px solid #fde68a;
+    white-space: nowrap;
+}
+
+.pillInterested {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11.5px;
+    font-weight: 600;
+    background: #ede9fe;
+    color: #7c3aed;
+    border: 1px solid #c4b5fd;
+    white-space: nowrap;
+}
+
+/* ─── Skeleton ───────────────────────────────────────────────── */
+.skelRow {
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.skelTd {
+    padding: 14px 20px;
+}
+
+.skelBar {
+    height: 13px;
+    border-radius: 5px;
+    background: linear-gradient(90deg, #dbeafe 25%, #eff6ff 50%, #dbeafe 75%);
+    background-size: 600px 100%;
+    animation: vpShimmer 1.4s infinite;
+}
+
+/* ─── Pagination ─────────────────────────────────────────────── */
+.paginationBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.perPageRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #64748b;
+}
+
+.perPageSelect {
+    padding: 5px 10px;
+    border: 1px solid #bfdbfe;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #1e293b;
+    background: #fff;
+    cursor: pointer;
+    outline: none;
+    font-family: inherit;
+}
+
+.pageNumbers {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.pageBtn {
+    min-width: 34px;
+    height: 34px;
+    padding: 0 8px;
+    border: 1px solid #bfdbfe;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 400;
+    background: #fff;
+    color: #374151;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    font-family: inherit;
+}
+
+.pageBtn:hover:not(:disabled) {
+    background: #eff6ff;
+    border-color: #3b82f6;
+    color: #1d4ed8;
+}
+
+.pageBtnActive {
+    min-width: 34px;
+    height: 34px;
+    padding: 0 8px;
+    border: none;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+    font-family: inherit;
+}
+
+.pageBtnDisabled {
+    min-width: 34px;
+    height: 34px;
+    padding: 0 8px;
+    border: 1px solid #e2e8f0;
+    border-radius: 7px;
+    font-size: 13px;
+    background: #fff;
+    color: #cbd5e1;
+    cursor: not-allowed;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: inherit;
+}
+
+.resultInfo {
+    font-size: 13px;
+    color: #64748b;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FORM VIEWS
+═══════════════════════════════════════════════════════════════ */
+
+.formPage {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+    background: #f8fafc;
+}
+
+/* ─── Form Top Bar ───────────────────────────────────────────── */
+.formTopBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    padding: 20px 32px 0;
+    flex-shrink: 0;
+}
+
+.formHeaderTextBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.formHeaderTitle {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1e40af;
+    margin: 0;
+}
+
+.formHeaderSubtitle {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0;
+}
+
+.backBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+    transition: opacity 0.2s;
+    flex-shrink: 0;
+    font-family: inherit;
+}
+
+.backBtn:hover {
+    opacity: 0.88;
+}
+
+/* ─── Banners ────────────────────────────────────────────────── */
+.bannerWrap {
+    padding: 14px 32px 0;
+    flex-shrink: 0;
+}
+
+.successBanner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
+    background: #f0fdf4;
+    border: 1px solid #86efac;
+    border-radius: 8px;
+    color: #15803d;
+    font-size: 13.5px;
+}
+
+.errorBanner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    border-radius: 8px;
+    color: #dc2626;
+    font-size: 13.5px;
+}
+
+/* ─── Form Body ──────────────────────────────────────────────── */
+.formBody {
+    flex: 1;
+   /* padding: 10px 32px 36px;*/
+    box-sizing: border-box;
+     flex: 1;
+    min-height: 0;
+   
+}
+
+.formCard {
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid #dbeafe;
+    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.08);
+    overflow: hidden;
+    width: 100%;
+}
+
+.formCardHeader {
+    padding: 14px 24px;
+    border-bottom: 2px solid #dbeafe;
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    font-size: 14px;
+    font-weight: 700;
+    color: #1d4ed8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.formCardHeaderDot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #3b82f6;
+    flex-shrink: 0;
+}
+
+.formCardBody {
+    padding: 28px 28px 8px;
+}
+
+/* ─── Section Labels ─────────────────────────────────────────── */
+.sectionLabel {
+    font-size: 11px;
+    font-weight: 700;
+    color: #3b82f6;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sectionLine {
+    flex: 1;
+    height: 1.5px;
+    background: linear-gradient(to right, #bfdbfe, transparent);
+}
+
+/* ─── Form Grid ──────────────────────────────────────────────── */
+.formGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px 24px;
+    margin-bottom: 24px;
+}
+
+@media (max-width: 900px) {
+    .formGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 560px) {
+    .formGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ─── Field ──────────────────────────────────────────────────── */
+.fieldGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.label {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.required {
+    color: #e74c3c;
+}
+
+.textInputRequired,
+.selectInputRequired {
+    border-left: 3px solid #e74c3c !important;
+}
+
+.textInput {
+    width: 100%;
+    padding: 9px 13px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #1e293b;
+    background: #fff;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    font-family: inherit;
+}
+
+.textInput:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.textInputReadOnly {
+    background-color: #f1f5f9;
+    color: #64748b;
+    cursor: not-allowed;
+    border-color: #cbd5e1;
+}
+
+.textareaInput {
+    width: 100%;
+    padding: 9px 13px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #1e293b;
+    background: #fff;
+    outline: none;
+    box-sizing: border-box;
+    resize: vertical;
+    min-height: 38px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    font-family: inherit;
+    line-height: 1.5;
+}
+
+.textareaInput:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.selectInput {
+    width: 100%;
+    padding: 9px 13px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #1e293b;
+    background: #fff;
+    outline: none;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    font-family: inherit;
+}
+
+.selectInput:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* Radio */
+.radioGroup {
+    display: flex;
+    gap: 12px;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 0;
+    overflow: visible;
+    min-height: 38px;
+}
+
+.radioLabel {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    color: #374151;
+    cursor: pointer;
+}
+
+.radioLabel input[type='radio'] {
+    accent-color: #2563eb;
+    cursor: pointer;
+}
+
+/* ─── Form Buttons ───────────────────────────────────────────── */
+.formBtns {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    align-items: center;
+    padding: 22px 24px;
+    border-top: 1px solid #dbeafe;
+    background: #f8faff;
+}
+
+.submitBtn {
+    padding: 12px 48px;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(37, 99, 235, 0.3);
+    letter-spacing: 0.3px;
+    transition: opacity 0.2s;
+    font-family: inherit;
+}
+
+.submitBtn:hover:not(:disabled) {
+    opacity: 0.9;
+}
+
+.submitBtnDisabled {
+    padding: 12px 48px;
+    background: #93c5fd;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: not-allowed;
+    opacity: 0.75;
+    letter-spacing: 0.3px;
+    font-family: inherit;
+}
+
+.cancelBtn {
+    padding: 12px 36px;
+    background: #fff;
+    color: #374151;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    font-family: inherit;
+}
+
+.cancelBtn:hover {
+    background: #f1f5f9;
+    border-color: #94a3b8;
+}
+
+/* ─── View-Only Grid ─────────────────────────────────────────── */
+.viewGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.viewLabel {
+    padding: 11px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+    border-bottom: 1px solid #f0f4ff;
+    background: #f8faff;
+}
+
+.viewValue {
+    padding: 11px 20px;
+    font-size: 13px;
+    color: #1e293b;
+    border-bottom: 1px solid #f0f4ff;
+    background: #fff;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   STOCK HINT  —  Full / Partial instruction line
+═══════════════════════════════════════════════════════════════ */
+
+.stockHint {
+    margin-bottom: 18px;
+    margin-top: -8px;
+}
+
+.stockHintFull {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12.5px;
+    color: #15803d;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 6px;
+    padding: 7px 13px;
+}
+
+.stockHintPartial {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12.5px;
+    color: #1d4ed8;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 6px;
+    padding: 7px 13px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PARTIAL STOCK — field-level feedback
+═══════════════════════════════════════════════════════════════ */
+
+.fieldError {
+    font-size: 11.5px;
+    color: #dc2626;
+    margin-top: 3px;
+    display: block;
+}
+
+.fieldSuccess {
+    font-size: 11.5px;
+    color: #16a34a;
+    font-weight: 600;
+    margin-top: 3px;
+    display: block;
+}
+
+.inputError {
+    border-color: #f87171 !important;
+    box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.12) !important;
+}
+
+/* ── Arrow row between From → To range fields ── */
+.rangeArrowRow {
+    display: flex;
+    align-items: center;
+    margin-top: -16px;
+    margin-bottom: 20px;
+    padding-left: 2px;
+}
+
+.rangeArrow {
+    font-size: 11.5px;
+    color: #93c5fd;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* ── File picker — looks like a proper file input ── */
+.filePickerWrap {
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+}
+
+.filePickerLabel {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    min-width: 0;
+}
+
+.filePickerLabel:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+.filePickerNative {
+    display: none;
+}
+
+.filePickerIcon {
+    padding: 9px 10px;
+    font-size: 15px;
+    line-height: 1;
+    flex-shrink: 0;
+    border-right: 1.5px solid #e5e7eb;
+    background: #f8fafc;
+}
+
+.filePickerText {
+    flex: 1;
+    padding: 9px 10px;
+    font-size: 13px;
+    color: #374151;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: inherit;
+}
+
+.filePickerBrowse {
+    flex-shrink: 0;
+    padding: 9px 14px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #1d4ed8;
+    background: #eff6ff;
+    border-left: 1.5px solid #e5e7eb;
+    white-space: nowrap;
+    font-family: inherit;
+}
+
+.fileClearBtn {
+    flex-shrink: 0;
+    padding: 0 12px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #dc2626;
+    background: #fef2f2;
+    border: 1.5px solid #fca5a5;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.15s;
+    line-height: 1;
+}
+
+.fileClearBtn:hover {
+    background: #fee2e2;
+}
+
+.fileHint {
+    font-size: 11px;
+    color: #94a3b8;
+    margin-top: 5px;
+    display: block;
+}
+
+/* ── File validation error list ── */
+.fileErrorBox {
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin-top: 6px;
+}
+
+.fileErrorTitle {
+    font-size: 12px;
+    font-weight: 700;
+    color: #dc2626;
+    margin-bottom: 4px;
+}
+
+.fileErrorList {
+    margin: 0;
+    padding-left: 16px;
+    font-size: 11.5px;
+    color: #b91c1c;
+    line-height: 1.9;
+}
+
+/* ─── Stock Received centered row ───────────────────────────── */
+.stockReceivedRow {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.stockReceivedRow .fieldGroup {
+    align-items: center;
+    min-width: 340px;
+}
+
+/* ─── Thin divider (replaces SectionLabel for partial) ──────── */
+.sectionDivider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #bfdbfe 20%, #bfdbfe 80%, transparent);
+    margin: 4px 0 20px;
+}
+
+/* ─── Disabled radio label ───────────────────────────────────── */
+.radioLabelDisabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* ─── Bulk decision row (Accept All / Reject All) ────────────── */
+.bulkDecisionRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.bulkDecisionLabel {
+    font-size: 13px;
+    color: #374151;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.decisionBtnAccept {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 20px;
+    background: #fff;
+    color: #15803d;
+    border: 1.5px solid #86efac;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    font-family: inherit;
+}
+
+.decisionBtnAccept:hover {
+    background: #f0fdf4;
+    border-color: #22c55e;
+}
+
+.decisionBtnAcceptActive {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 20px;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #fff;
+    border: 1.5px solid transparent;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(22, 163, 74, 0.28);
+    font-family: inherit;
+}
+
+.decisionBtnReject {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 20px;
+    background: #fff;
+    color: #dc2626;
+    border: 1.5px solid #fca5a5;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    font-family: inherit;
+}
+
+.decisionBtnReject:hover {
+    background: #fef2f2;
+    border-color: #f87171;
+}
+
+.decisionBtnRejectActive {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 20px;
+    background: linear-gradient(135deg, #f87171, #dc2626);
+    color: #fff;
+    border: 1.5px solid transparent;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.25);
+    font-family: inherit;
+}
+
+/* ─── Voucher search bar ─────────────────────────────────────── */
+.voucherSearchBar {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin-bottom: 14px;
+}
+
+.voucherSearchBtn {
+    padding: 9px 24px;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+    transition: opacity 0.2s;
+    font-family: inherit;
+    flex-shrink: 0;
+}
+
+.voucherSearchBtn:hover:not(:disabled) {
+    opacity: 0.9;
+}
+
+.voucherSearchBtn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/* ─── Voucher checkbox ───────────────────────────────────────── */
+.voucherCheckbox {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+/* ─── Voucher count badge ────────────────────────────────────── */
+.voucherCount {
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 500;
+    margin-left: auto;
+    white-space: nowrap;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   INPUT METHOD PILL + CENTERED FIELDS
+═══════════════════════════════════════════════════════════════ */
+
+/* Centered wrapper for the pill row */
+.inputMethodPillRow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+
+.inputMethodPillLabel {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #374151;
+}
+
+/* The pill container */
+.inputMethodPill {
+    display: inline-flex;
+    background: #f1f5f9;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 999px;
+    padding: 4px;
+    gap: 2px;
+}
+
+.pillOption {
+    padding: 7px 22px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #64748b;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color 0.15s, background 0.15s;
+    font-family: inherit;
+    white-space: nowrap;
+}
+
+.pillOption:hover {
+    color: #1d4ed8;
+    background: #dbeafe;
+}
+
+.pillOptionActive {
+    padding: 7px 22px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.28);
+}
+
+/* Centered fields area shown below the pill */
+.inputMethodFieldsCenter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 10px;
+}
+
+/* Two-column row for From/To range fields */
+.rangeFieldsRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 24px;
+    width: 100%;
+    max-width: 560px;
+}
+
+/* Single column wrapper for file upload */
+.fileFieldWrap {
+    width: 100%;
+    max-width: 420px;
+}
+
+/* Centered bulk decision row */
+.bulkDecisionRowCentered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+}
+
+
+/*scroll*/
+.page {
+    height: calc(100vh - 120px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.scrollBody {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* fixed top content */
+.topBar,
+.tabDivider,
+.formTopBar,
+.bannerWrap {
+    flex-shrink: 0;
+}
+
+/* only form scrolls */
+.formBody {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px 32px 36px;
+}
+
+.formBody::-webkit-scrollbar {
+    width: 6px;
+}
+
+.formBody::-webkit-scrollbar-thumb {
+    background: #94a3b8;
+    border-radius: 10px;
+}
+
+.formBody::-webkit-scrollbar-track {
+    background: #f8fafc;
+}
+.formPage {
+    flex: 1;
+    min-height: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.formCard {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.formCardBody {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 28px 28px 8px;
+}
+
+.formBtns {
+    flex-shrink: 0;
+}
+.paginationBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: nowrap;
+}
+
+.perPageRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    min-width: max-content;
+}
+
+.perPageSelect {
+    min-width: 64px;
+}
+
+.resultInfo {
+    white-space: nowrap;
+}

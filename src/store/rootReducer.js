@@ -29,6 +29,26 @@ import userRolesReducer from "./slices/userManagementSlices/userRolesSlice";
 import workgroupReducer from "./slices/userManagementSlices/workgroupSlice";
 import viewUserInfoReducer from './slices/userManagementSlices/viewUserInfoSlice';
 
+import voucherProfileReducer from "./slices/plmnSlices/voucherProfileSlice";
+
+import voucherReducer from './slices/plmnSlices/voucherSlice';
+import voucherCategoryReducer from './slices/plmnSlices/voucherCategorySlice';
+
+
+import purchaseOrderReducer from './slices/plmnSlices/purchaseOrderSlice';
+import voucherSearchReducer from "./slices/plmnSlices/voucherSearchSlice";
+
+import vendorReducer from './slices/plmnSlices/vendorSlice';
+
+import msisdnUploadReducer from './slices/plmnSlices/msisdnUploadSlice';
+
+import voucherActivationReducer from './slices/plmnSlices/voucherActDeactSlice';
+import {cardProfilesReducer} from "@/store/slices/plmnSlices/CardProfilesSlice.js";
+import cardProfileDetailsReducer from "@/store/slices/plmnSlices/CardProfileDetailsSlice.js";
+import {cardProfileDropDownReducer} from "@/store/slices/plmnSlices/CardProfileDropDownSlice.js";
+// import countriesReducer from "./slices/plmnSlices/countriesSlice";
+
+
 const rootReducer = combineReducers({
     // AUTH
     auth: authReducer,
@@ -57,7 +77,22 @@ const rootReducer = combineReducers({
     rolePrivileges: rolePrivilegesReducer,
     userRoles: userRolesReducer,
     workgroup: workgroupReducer,
-    viewUserInfo: viewUserInfoReducer
+    viewUserInfo: viewUserInfoReducer,
+    //plmn services
+    voucherProfile: voucherProfileReducer,
+    voucher: voucherReducer,
+    voucherCategory: voucherCategoryReducer,
+    purchaseOrder: purchaseOrderReducer,
+    voucherSearch: voucherSearchReducer,
+
+    vendor: vendorReducer,
+
+    msisdnUpload: msisdnUploadReducer,
+
+    cardProfileDropDown:cardProfileDropDownReducer,
+    voucherActDeact: voucherActivationReducer,
+    cardProfiles: cardProfilesReducer,
+    cardProfileDetails: cardProfileDetailsReducer,
 });
 
 export default rootReducer;

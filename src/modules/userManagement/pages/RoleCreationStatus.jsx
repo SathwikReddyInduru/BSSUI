@@ -1,4 +1,4 @@
-import React from 'react';
+import 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from '../styles/status.module.css';
 

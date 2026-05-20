@@ -1,7 +1,7 @@
 // src/store/slices/networkModificationSlice.js
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import axiosService from '../../services/AxiosService';
 import { loadConfig } from './configService';
 
 let cachedConfigPromise = null;
@@ -23,7 +23,7 @@ export const modifyNetwork = createAsyncThunk(
       // URL now read from config (only change)
       const url = `http://${apiConfig.api.server}:${apiConfig.api.port.port_1}/network/modify`;
 
-      const response = await axios.put(
+      const response = await axiosService.put(
         url,
         payload,
         {

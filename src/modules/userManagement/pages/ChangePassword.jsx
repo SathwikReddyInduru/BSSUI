@@ -1,10 +1,10 @@
 // src/screens/ChangePassword.jsx
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAppContext } from '../../../contexts/AppContext';
-import { showError, showSuccess } from "../../../utils/toast";
+import { useAppContext } from '@/contexts/AppContext.jsx';
+import { showError, showSuccess } from "@/utils/toast.js";
 import {
   updatePassword,
   selectChangePasswordLoading,
@@ -12,7 +12,7 @@ import {
   selectChangePasswordError,
   selectChangePasswordMessage,
   resetChangePasswordState,
-} from '../../../store/slices/updatePassword';
+} from '@/store/slices/updatePassword.js';
 import '../../../screens/ScreenStyles.css';
 
 import styles from '../styles/changepassword.module.css';

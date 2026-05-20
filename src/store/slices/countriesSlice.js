@@ -1,7 +1,7 @@
 // src/store/slices/countriesSlice.js
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import axiosService from '../../services/AxiosService';
 import { loadConfig } from './configService'; // Keep for production
 
 
@@ -27,7 +27,7 @@ export const fetchCountries = createAsyncThunk(
 
       console.log('Fetching countries from:', url); // Visible in browser console
 
-      const response = await axios.get(url);
+      const response = await axiosService.get(url);
 
       console.log('Countries API Response:', response.data); // You should see your full list here
 

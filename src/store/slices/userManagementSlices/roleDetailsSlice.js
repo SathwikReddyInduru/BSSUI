@@ -1,6 +1,6 @@
 // src/ReduxStore/slices/roleDetailsSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import axiosService from '../../../services/AxiosService';
 import { loadConfig } from '../../../services/configService';
 let cachedConfigPromise = null;
 
@@ -16,7 +16,7 @@ export const fetchRoleDetails = createAsyncThunk(
   async ({ roleId, networkId }, { rejectWithValue }) => {
     try {
       const apiConfig = await getApiConfig();
-      const response = await axios.post(`http://${apiConfig.api.server}:${apiConfig.api.port.port_1}/api/viewRole`,
+      const response = await axiosService.post(`http://${apiConfig.api.server}:${apiConfig.api.port.port_1}/api/viewRole`,
 
         {
           roleId: roleId,           // ← Keep it as string!

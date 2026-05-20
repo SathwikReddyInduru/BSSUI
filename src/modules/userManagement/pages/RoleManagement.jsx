@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useAppContext } from '../../../contexts/AppContext';
+import { useAppContext } from '@/contexts/AppContext.jsx';
 import { PlusCircle, Trash2, Eye, Pencil, ChevronLeft, ChevronRight, Printer, X } from 'lucide-react';
 
 import {
@@ -11,7 +11,7 @@ import {
   selectRolesLoading,
   selectRolesData,
   selectRolesError,
-} from '../../../store/slices/userManagementSlices/rolesSlice';
+} from '@/store/slices/userManagementSlices/rolesSlice.js';
 
 import {
   checkRoleUsage,
@@ -23,9 +23,9 @@ import {
   selectRoleDeleteLoading,
   selectRoleDeleteError,
   selectRoleDeleteSuccess,
-} from '../../../store/slices/userManagementSlices/roleDeleteSlice';
+} from '@/store/slices/userManagementSlices/roleDeleteSlice.js';
 
-import { showError, showSuccess } from '../../../utils/toast';
+import { showError, showSuccess } from '@/utils/toast.js';
 import styles from '../styles/rolemanagementgrid.module.css';
 
 const RoleManagement = () => {

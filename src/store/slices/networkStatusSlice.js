@@ -1,7 +1,7 @@
 // src/store/slices/networkStatusSlice.js
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import axiosService from '../../services/AxiosService';
 import { loadConfig } from './configService';
 // import { showError, showSuccess } from '.../utils/toast'; // adjust path if needed
 
@@ -30,7 +30,7 @@ export const updateNetworkStatus = createAsyncThunk(
         status_code: statusCode, // "AC" or "DA"
       };
 
-      const response = await axios.put(
+      const response = await axiosService.put(
         url,
         payload,
         {

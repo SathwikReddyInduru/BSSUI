@@ -1,0 +1,1113 @@
+/* ─── Global / Page ─────────────────────────────────── */
+.page {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #1e293b;
+    overflow: hidden;
+    box-sizing: border-box;
+    background: #f8fafc;
+}
+
+.scrollBody {
+    flex: 1;
+    
+    overflow-x: hidden;
+    padding: 24px 28px 32px;
+    box-sizing: border-box;
+}
+
+/* ─── Shimmer animation ──────────────────────────────── */
+@keyframes vpShimmer {
+    0% {
+        background-position: -600px 0;
+    }
+
+    100% {
+        background-position: 600px 0;
+    }
+}
+
+/* ─── List Top Bar ───────────────────────────────────── */
+.topBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.titleBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1e40af;
+    margin: 0;
+}
+
+.subtitle {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0;
+}
+
+.rightBar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* ─── Search ─────────────────────────────────────────── */
+.searchWrap {
+    position: relative;
+    width: 280px;
+}
+
+.searchIcon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    font-size: 14px;
+    pointer-events: none;
+}
+
+.searchInput {
+    width: 100%;
+    padding: 9px 30px 9px 34px;
+    border: 1.5px solid #bfdbfe;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #1e293b;
+    background: #fff;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.searchInput:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.clearBtn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    font-size: 13px;
+    line-height: 1;
+    padding: 0;
+}
+
+.createBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 20px;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 2px 10px rgba(37, 99, 235, 0.3);
+    letter-spacing: 0.3px;
+    transition: opacity 0.2s;
+}
+
+.createBtn:hover {
+    opacity: 0.9;
+}
+
+/* ─── Table Card ─────────────────────────────────────── */
+.tableCard {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #dbeafe;
+    box-shadow: 0 2px 12px rgba(37, 99, 235, 0.08);
+    overflow: hidden;
+    width: 100%;
+}
+
+.tableCardHeader {
+    padding: 13px 20px;
+    background: #eff6ff;
+    border-bottom: 2px solid #bfdbfe;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tableCardTitle {
+    color: #1e40af;
+    font-weight: 700;
+    font-size: 13px;
+    margin: 0;
+}
+
+.tableCardCount {
+    background: #dbeafe;
+    color: #1d4ed8;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+   
+}
+
+.thead {
+    background: #f8faff;
+}
+
+.th {
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: #000000;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    border-bottom: 2px solid #bfdbfe;
+    white-space: nowrap;
+}
+
+.thCenter {
+    text-align: center;
+}
+
+.tdBase {
+    padding: 12px 16px;
+    font-size: 13px;
+    border-bottom: 1px solid #f1f5f9;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tdMuted {
+    color: #64748b;
+    font-weight: 500;
+}
+
+.tdBold {
+    color: #475569;
+}
+
+.tdNormal {
+    color: #475569;
+}
+
+.tdCenter {
+    text-align: center;
+}
+
+.actionsCell {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+
+.viewActionBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 14px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid #bfdbfe;
+    background: #eff6ff;
+    color: #2563eb;
+    white-space: nowrap;
+    transition: all 0.15s;
+}
+
+.viewActionBtn:hover {
+    background: #dbeafe;
+}
+
+.modifyActionBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 16px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #fff;
+    white-space: nowrap;
+    box-shadow: 0 2px 6px rgba(22, 163, 74, 0.25);
+    transition: opacity 0.2s;
+    font-family: inherit;
+}
+
+.modifyActionBtn:hover {
+    opacity: 0.88;
+}
+
+.emptyCell {
+    padding: 56px;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+.errorCell {
+    padding: 56px;
+    text-align: center;
+    color: #dc2626;
+    font-size: 14px;
+}
+
+/* ─── Skeleton ───────────────────────────────────────── */
+.skelRow {
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.skelTd {
+    padding: 14px 16px;
+}
+
+.skelBar {
+    height: 13px;
+    border-radius: 5px;
+    background: linear-gradient(90deg, #dbeafe 25%, #eff6ff 50%, #dbeafe 75%);
+    background-size: 600px 100%;
+    animation: vpShimmer 1.4s infinite;
+}
+
+/* ─── Pagination ─────────────────────────────────────── */
+.paginationBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.perPageRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #64748b;
+}
+
+.perPageSelect {
+    padding: 5px 10px;
+    border: 1px solid #bfdbfe;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #1e293b;
+    background: #fff;
+    cursor: pointer;
+    outline: none;
+}
+
+.pageNumbers {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.pageBtn {
+    min-width: 34px;
+    height: 34px;
+    padding: 0 8px;
+    border: 1px solid #bfdbfe;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 400;
+    background: #fff;
+    color: #374151;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+}
+
+.pageBtn:hover:not(:disabled) {
+    background: #eff6ff;
+    border-color: #3b82f6;
+    color: #1d4ed8;
+}
+
+.pageBtnActive {
+    min-width: 34px;
+    height: 34px;
+    padding: 0 8px;
+    border: none;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+
+.pageBtnDisabled {
+    min-width: 34px;
+    height: 34px;
+    padding: 0 8px;
+    border: 1px solid #e2e8f0;
+    border-radius: 7px;
+    font-size: 13px;
+    background: #fff;
+    color: #cbd5e1;
+    cursor: not-allowed;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.resultInfo {
+    font-size: 13px;
+    color: #64748b;
+}
+
+/* ─── Form Page ──────────────────────────────────────── */
+.formPage {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #1e293b;
+    overflow-y:hidden;
+    overflow-x: hidden;
+    background: #f8fafc;
+    box-sizing: border-box;
+}
+
+/* ─── Form Top Bar (no blue header banner) ───────────── */
+.formTopBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    padding: 20px 32px 0;
+    flex-shrink: 0;
+}
+
+.backBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+    transition: opacity 0.2s;
+    flex-shrink: 0;
+}
+
+.backBtn:hover {
+    opacity: 0.88;
+}
+
+.formHeaderTextBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.formHeaderTitle {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1e40af;
+    margin: 0;
+}
+
+.formHeaderSubtitle {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0;
+}
+
+/* ─── Banners ────────────────────────────────────────── */
+.bannerWrap {
+    padding: 14px 32px 0;
+    flex-shrink: 0;
+}
+
+.successBanner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
+    background: #f0fdf4;
+    border: 1px solid #86efac;
+    border-radius: 8px;
+    color: #15803d;
+    font-size: 13.5px;
+}
+
+.errorBanner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    border-radius: 8px;
+    color: #dc2626;
+    font-size: 13.5px;
+}
+
+/* ─── Form Body ──────────────────────────────────────── */
+.formBody {
+    flex: 1;
+    padding: 20px 32px 36px;
+    box-sizing: border-box;
+}
+
+.formCard {
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid #dbeafe;
+    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.08);
+    overflow: hidden;
+    width: 100%;
+}
+
+.formCardHeader {
+    padding: 14px 24px;
+    border-bottom: 2px solid #dbeafe;
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    font-size: 14px;
+    font-weight: 700;
+    color: #1d4ed8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.formCardBody {
+    padding: 28px 28px 8px;
+}
+
+/* ─── Section Labels ─────────────────────────────────── */
+.sectionLabel {
+    font-size: 11px;
+    font-weight: 700;
+    color: #3b82f6;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sectionLine {
+    flex: 1;
+    height: 1.5px;
+    background: linear-gradient(to right, #bfdbfe, transparent);
+}
+
+/* ─── Form Grids ─────────────────────────────────────── */
+.formGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px 24px;
+    margin-bottom: 24px;
+}
+
+.formGrid2 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px 24px;
+    margin-bottom: 24px;
+}
+
+/* ─── Field ──────────────────────────────────────────── */
+.fieldGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.label {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.required {
+    color: #e74c3c;
+}
+
+/* Red left border on mandatory inputs */
+.textInputRequired,
+.selectInputRequired {
+    border-left: 3px solid #e74c3c !important;
+}
+
+.textInput {
+    width: 100%;
+    padding: 9px 13px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #1e293b;
+    background: #fff;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    font-family: inherit;
+}
+
+.textInput:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.selectInput {
+    width: 100%;
+    padding: 9px 13px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #1e293b;
+    background: #fff;
+    outline: none;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    font-family: inherit;
+}
+
+.selectInput:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.dropdownLoading {
+    width: 100%;
+    padding: 9px 13px;
+    border: 1.5px solid #bfdbfe;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #94a3b8;
+    background: #f8faff;
+    box-sizing: border-box;
+}
+
+.readonlyBox {
+    padding: 9px 13px;
+    background: #f8fafc;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #475569;
+    min-height: 38px;
+    box-sizing: border-box;
+}
+
+.checkLabel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #374151;
+    cursor: pointer;
+    padding-top: 8px;
+}
+
+/* ─── Form Buttons ───────────────────────────────────── */
+.formBtns {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    align-items: center;
+    padding: 22px 24px;
+    border-top: 1px solid #dbeafe;
+    background: #f8faff;
+}
+
+.submitBtn {
+    padding: 12px 48px;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(37, 99, 235, 0.3);
+    letter-spacing: 0.3px;
+    transition: opacity 0.2s;
+}
+
+.submitBtn:hover:not(:disabled) {
+    opacity: 0.9;
+}
+
+.submitBtnDisabled {
+    padding: 12px 48px;
+    background: #93c5fd;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: not-allowed;
+    opacity: 0.75;
+    letter-spacing: 0.3px;
+}
+
+.cancelBtn {
+    padding: 12px 36px;
+    background: #fff;
+    color: #374151;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.cancelBtn:hover {
+    background: #f1f5f9;
+    border-color: #94a3b8;
+}
+
+/* ─── View-only grid ─────────────────────────────────── */
+.viewGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.viewLabel {
+    padding: 11px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+    border-bottom: 1px solid #f0f4ff;
+    background: #f8faff;
+}
+
+.viewValue {
+    padding: 11px 20px;
+    font-size: 13px;
+    color: #1e293b;
+    border-bottom: 1px solid #f0f4ff;
+    background: #fff;
+}
+
+.feeTable {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.feeHeaderRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr 32px;
+    gap: 8px;
+    padding: 0 4px;
+}
+
+.feeColHeader {
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+}
+
+.feeRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr 32px;
+    gap: 8px;
+    align-items: start;
+}
+
+.feeCell {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.feeActions {
+    display: flex;
+    align-items: center;
+    padding-top: 6px;
+}
+
+/* ── Inline fee grid (inside formGrid 3-col) ── */
+.feeInlineRow {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.feeGridActions {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    padding-bottom: 2px;
+    padding-top: 22px;
+    /* align with input bottom */
+}
+
+.feeRemoveBtn {
+    background: none;
+    border: 1px solid #fca5a5;
+    color: #ef4444;
+    border-radius: 6px;
+    width: 32px;
+    height: 36px;
+    cursor: pointer;
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+}
+
+.feeRemoveBtn:hover {
+    background: #fef2f2;
+}
+
+.feeAddBtn {
+    display: inline-flex;
+    align-items: center;
+    height: 36px;
+    padding: 0 14px;
+    background: none;
+    border: 1px dashed #93c5fd;
+    color: #3b82f6;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: background 0.15s;
+}
+
+.feeAddBtn:hover {
+    background: #eff6ff;
+}
+
+.feeInlineError {
+    font-size: 11px;
+    color: #ef4444;
+}
+
+.inputError {
+    border-color: #ef4444 !important;
+}
+
+.viewFeeTable {
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.viewFeeTh {
+    text-align: left;
+    padding: 4px 16px 4px 0;
+    color: #64748b;
+    font-weight: 600;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.viewFeeTd {
+    padding: 4px 16px 4px 0;
+    color: #1e293b;
+}
+
+.viewLabelFull {
+    font-weight: 600;
+}
+
+/* ─── Table: auto layout ─────────────────────────────── */
+.thNoWrap {
+    white-space: nowrap;
+}
+
+.tdNoWrap {
+    white-space: nowrap;
+}
+
+/* ─── Clickable row ──────────────────────────────────── */
+.clickableRow {
+    cursor: pointer;
+}
+
+/* ─── Dash cell ──────────────────────────────────────── */
+.dashCell {
+    color: #94a3b8;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+/* ─── Status pills — consistent pill shape across all screens ── */
+.pillNA {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11.5px;
+    font-weight: 600;
+    background: #f1f5f9;
+    color: #64748b;
+    border: 1px solid #cbd5e1;
+    white-space: nowrap;
+}
+
+.pillApproved {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11.5px;
+    font-weight: 600;
+    background: #dcfce7;
+    color: #16a34a;
+    border: 1px solid #bbf7d0;
+    white-space: nowrap;
+}
+
+.pillRejected {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11.5px;
+    font-weight: 600;
+    background: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fca5a5;
+    white-space: nowrap;
+}
+
+/* ─── Table: Approve/Reject combined action button ───── */
+
+
+/* ─── View page: Approve / Reject footer bar ─────────── */
+.approveRejectBar {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    align-items: center;
+    padding: 22px 24px;
+    margin-top: 20px;
+    border-top: 1px solid #dbeafe;
+    background: #f8faff;
+    border-radius: 0 0 14px 14px;
+}
+
+.approveBtn {
+    padding: 12px 48px;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(22, 163, 74, 0.3);
+    letter-spacing: 0.3px;
+    transition: opacity 0.2s;
+}
+
+.approveBtn:hover {
+    opacity: 0.9;
+}
+
+.rejectBtn {
+    padding: 12px 48px;
+    background: linear-gradient(135deg, #f87171, #dc2626);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(220, 38, 38, 0.3);
+    letter-spacing: 0.3px;
+    transition: opacity 0.2s;
+}
+
+.rejectBtn:hover {
+    opacity: 0.9;
+}
+
+/* ─── Read-only profile name in modify mode ──────────── */
+.textInputReadOnly {
+    background-color: #f1f5f9;
+    color: #64748b;
+    cursor: not-allowed;
+    border-color: #cbd5e1;
+}
+
+/* ─── Table: Approve/Reject action button ────────────── */
+.approveRejectActionBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 16px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+     background: linear-gradient(135deg, #ef4444, #dc2626);
+    
+    color: #fff;
+    white-space: nowrap;
+    box-shadow: 0 2px 6px rgba(217, 119, 6, 0.25);
+    transition: opacity 0.2s;
+    font-family: inherit;
+}
+
+.approveRejectActionBtn:hover {
+    opacity: 0.88;
+}
+.scrollBody {
+    padding: 14px 18px 24px;
+}
+
+.topBar {
+    margin-bottom: 10px;
+}
+
+.tableCard {
+    border-radius: 10px;
+}
+
+.paginationBar {
+    margin-top: 10px;
+}
+/* constant header*/
+
+.page {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+   
+}
+
+.scrollBody {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+   
+    padding: 15px 15px 15px;
+}
+
+.topBar {
+    flex-shrink: 0;
+    margin-bottom: 10px;
+}
+
+.tableCard {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+}
+
+.paginationBar {
+    flex-shrink: 0;
+    margin-top: 10px;
+    background: #f8fafc;
+    position: relative;
+    z-index: 2;
+}
+.wrapper {
+    border-radius: 0 !important;
+}
+
+
+
+
+/*scroll bar*/
+
+.formPage {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.formTopBar {
+    flex-shrink: 0;
+}
+
+.bannerWrap {
+    flex-shrink: 0;
+}
+
+.formBody {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 20px 32px 36px;
+}
+.paginationBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: nowrap;
+}
+
+.perPageRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    min-width: max-content;
+}
+
+.perPageSelect {
+    min-width: 64px;
+}
+
+.resultInfo {
+    white-space: nowrap;
+}

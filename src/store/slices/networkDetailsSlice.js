@@ -1,7 +1,7 @@
 // src/store/slices/networkDetailsSlice.js
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import axiosService from '../../services/AxiosService';
 import { loadConfig } from './configService';
 
 let cachedConfigPromise = null;
@@ -24,7 +24,7 @@ export const fetchNetworkDetails = createAsyncThunk(
       const url = `http://${apiConfig.api.server}:${apiConfig.api.port.port_1}/network/view`;
       // ────────────────────────────────────────────────────────────────
 
-      const response = await axios.post(
+      const response = await axiosService.post(
         url,
         { networkId: Number(networkId) },
         {

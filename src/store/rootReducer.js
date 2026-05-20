@@ -34,7 +34,6 @@ import voucherProfileReducer from "./slices/plmnSlices/voucherProfileSlice";
 import voucherReducer from './slices/plmnSlices/voucherSlice';
 import voucherCategoryReducer from './slices/plmnSlices/voucherCategorySlice';
 
-
 import purchaseOrderReducer from './slices/plmnSlices/purchaseOrderSlice';
 import voucherSearchReducer from "./slices/plmnSlices/voucherSearchSlice";
 
@@ -43,11 +42,12 @@ import vendorReducer from './slices/plmnSlices/vendorSlice';
 import msisdnUploadReducer from './slices/plmnSlices/msisdnUploadSlice';
 
 import voucherActivationReducer from './slices/plmnSlices/voucherActDeactSlice';
-import {cardProfilesReducer} from "@/store/slices/plmnSlices/CardProfilesSlice.js";
+import { cardProfilesReducer } from "@/store/slices/plmnSlices/CardProfilesSlice.js";
 import cardProfileDetailsReducer from "@/store/slices/plmnSlices/CardProfileDetailsSlice.js";
-import {cardProfileDropDownReducer} from "@/store/slices/plmnSlices/CardProfileDropDownSlice.js";
-// import countriesReducer from "./slices/plmnSlices/countriesSlice";
+import { cardProfileDropDownReducer } from "@/store/slices/plmnSlices/CardProfileDropDownSlice.js";
 
+import { integratorMgmtReducer } from "./slices/plmnSlices/integratorMgmtSlice";
+import { integratorDetailsReducer } from "./slices/plmnSlices/integratorDetailsSlice";
 
 const rootReducer = combineReducers({
     // AUTH
@@ -78,7 +78,8 @@ const rootReducer = combineReducers({
     userRoles: userRolesReducer,
     workgroup: workgroupReducer,
     viewUserInfo: viewUserInfoReducer,
-    //plmn services
+
+    // PLMN
     voucherProfile: voucherProfileReducer,
     voucher: voucherReducer,
     voucherCategory: voucherCategoryReducer,
@@ -89,10 +90,13 @@ const rootReducer = combineReducers({
 
     msisdnUpload: msisdnUploadReducer,
 
-    cardProfileDropDown:cardProfileDropDownReducer,
+    cardProfileDropDown: cardProfileDropDownReducer,
     voucherActDeact: voucherActivationReducer,
     cardProfiles: cardProfilesReducer,
     cardProfileDetails: cardProfileDetailsReducer,
+
+    integratorMgmt: integratorMgmtReducer,
+    integratorDetails: integratorDetailsReducer,
 });
 
 export default rootReducer;

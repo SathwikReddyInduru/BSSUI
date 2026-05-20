@@ -10,7 +10,13 @@
             "login_API": "api/admin",
             "cardProfiles_API": "api/card-profile/cardProfiles",
             "cardProfileDetails_API": "card-profile/details",
-            "Card_Profile_DropDown_API" : "api/card-profile/getAllData"
+            "Card_Profile_DropDown_API": "api/card-profile/getAllData",
+            "integrators_API": "api/integrator/integrators",
+            "integratorDetails_API": "integrator-mngmt/view",
+            "createIntegrator_API": "integrator-mngmt/create",
+            "modifyIntegrator_API": "integrator-mngmt/modify",
+            "businessTypes_API": "api/integrator/business-types",
+            "banks_API": "api/integrator/banks"
         }
     }
 }

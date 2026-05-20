@@ -42,8 +42,11 @@ import ViewUserInfoPage from "../modules/userManagement/pages/ViewUserInfoPage";
 import ChangePassword from './../modules/userManagement/pages/ChangePassword';
 import ModifyMessagePage from './../modules/userManagement/pages/ModifyMessagePage';
 import StatusMessagePage from './../modules/userManagement/pages/StatusMessagePage';
+
 import CardProfileLayout from "@/modules/plmn/pages/CardProfileLayout.jsx";
 import VouchersLayout from "@/modules/plmn/pages/VouchersLayout.jsx";
+
+import IntegratorLayout from "@/modules/plmn/pages/IntegratorLayout.jsx";
 
 /* =========================
    ADMIN ROUTE
@@ -161,9 +164,7 @@ function AppRoutes() {
                     <Route path="/plmn/clc/card-profile" element={<CardProfileLayout />} />
 
                     <Route path="/plmn/clc/vouchers/*" element={<VouchersLayout />} />
-
-
-
+                    <Route path="/plmn/clc/integrator-management/*" element={<IntegratorLayout />} />
 
                     <Route path="/plmn/clc/upload-msisdn" element={<UploadMSISDN />} />
 

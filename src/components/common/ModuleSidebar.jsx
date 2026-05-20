@@ -123,24 +123,24 @@ export const PLMN_TABS = [
                         // ],
                     },
 
-//   {
-//     label: "Vouchers",
-//     route: "/plmn/clc/vouchers",
-//     icon: "tag",
-//     children: [
-//           { label: "Overview", route: "/plmn/clc/vouchers" },
-//     { label: "Voucher Profile Categories", route: "/plmn/clc/vouchers/voucher-profile-categories" },
-//     { label: "Voucher Profiles", route: "/plmn/clc/vouchers/voucher-profiles" },
-//     { label: "Purchase Orders", route: "/plmn/clc/vouchers/purchase-orders" },
-//     { label: "Vendor Management", route: "/plmn/clc/vouchers/vendor-management" },
-//     { label: "Voucher Search", route: "/plmn/clc/vouchers/voucher-search" },
-//     { label: "Voucher Act/Deact", route: "/plmn/clc/vouchers/voucher-act-deact" },
-//       // { label: "Voucher Tariff Map", route: "/plmn/clc/vouchers/tariff-map" },
-//       //{ label: "Expired Vouchers", route: "/plmn/clc/vouchers/expired" },
-//       //{ label: "PO History", route: "/plmn/clc/vouchers/po-history" },
-//       //{ label: "GST Profile Update", route: "/plmn/clc/vouchers/gst-profile-update" },
-//     ],
-//   },
+                    //   {
+                    //     label: "Vouchers",
+                    //     route: "/plmn/clc/vouchers",
+                    //     icon: "tag",
+                    //     children: [
+                    //           { label: "Overview", route: "/plmn/clc/vouchers" },
+                    //     { label: "Voucher Profile Categories", route: "/plmn/clc/vouchers/voucher-profile-categories" },
+                    //     { label: "Voucher Profiles", route: "/plmn/clc/vouchers/voucher-profiles" },
+                    //     { label: "Purchase Orders", route: "/plmn/clc/vouchers/purchase-orders" },
+                    //     { label: "Vendor Management", route: "/plmn/clc/vouchers/vendor-management" },
+                    //     { label: "Voucher Search", route: "/plmn/clc/vouchers/voucher-search" },
+                    //     { label: "Voucher Act/Deact", route: "/plmn/clc/vouchers/voucher-act-deact" },
+                    //       // { label: "Voucher Tariff Map", route: "/plmn/clc/vouchers/tariff-map" },
+                    //       //{ label: "Expired Vouchers", route: "/plmn/clc/vouchers/expired" },
+                    //       //{ label: "PO History", route: "/plmn/clc/vouchers/po-history" },
+                    //       //{ label: "GST Profile Update", route: "/plmn/clc/vouchers/gst-profile-update" },
+                    //     ],
+                    //   },
                     {
                         label: "Vouchers",
                         route: "/plmn/clc/vouchers",
@@ -158,14 +158,14 @@ export const PLMN_TABS = [
                         label: "Integrator Management",
                         route: "/plmn/clc/integrator-management",
                         icon: "card",
-                        children: [
-                            { label: "Manage Integrators", route: "/plmn/clc/integrator-management/manage-integrators" },
-                            { label: "Add Integrators Amount", route: "/plmn/clc/integrator-management/add-integrators-amount" },
-                            { label: "Map Integrate Users", route: "/plmn/clc/integrator-management/map-integrate-users" },
-                            { label: "Assign SIMS", route: "/plmn/clc/integrator-management/assign-sims" },
-                            { label: "Manage Tariff Packs", route: "/plmn/clc/integrator-management/manage-tariff-packs" },
-                            { label: "Assign Vouchers", route: "/plmn/clc/integrator-management/assign-vouchers" },
-                        ],
+                        // children: [
+                        //     { label: "Manage Integrators", route: "/plmn/clc/integrator-management/manage-integrators" },
+                        //     { label: "Add Integrators Amount", route: "/plmn/clc/integrator-management/add-integrators-amount" },
+                        //     { label: "Map Integrate Users", route: "/plmn/clc/integrator-management/map-integrate-users" },
+                        //     { label: "Assign SIMS", route: "/plmn/clc/integrator-management/assign-sims" },
+                        //     { label: "Manage Tariff Packs", route: "/plmn/clc/integrator-management/manage-tariff-packs" },
+                        //     { label: "Assign Vouchers", route: "/plmn/clc/integrator-management/assign-vouchers" },
+                        // ],
                     },
                 ],
             },
@@ -280,7 +280,7 @@ export const PLMN_TABS = [
 function ChevronDown({ open }) {
     return (
         <svg viewBox="0 0 16 16" fill="none" width="14" height="14"
-             style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s ease", flexShrink: 0 }}>
+            style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s ease", flexShrink: 0 }}>
             <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
     );
@@ -289,7 +289,7 @@ function ChevronDown({ open }) {
 function ChevronRight({ open }) {
     return (
         <svg viewBox="0 0 16 16" fill="none" width="13" height="13"
-             style={{ transform: open ? "rotate(90deg)" : "rotate(0deg)", transition: "transform 0.2s ease", flexShrink: 0 }}>
+            style={{ transform: open ? "rotate(90deg)" : "rotate(0deg)", transition: "transform 0.2s ease", flexShrink: 0 }}>
             <path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
     );
